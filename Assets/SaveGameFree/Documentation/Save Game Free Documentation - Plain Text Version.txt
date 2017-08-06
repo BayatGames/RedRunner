@@ -1,0 +1,101 @@
+﻿Save Game Free
+Gold Update
+
+
+
+
+Introduction
+
+
+Save Game Free is an Awesome free tool for saving and loading game data in Unity Game Engine.
+
+
+By using Save Game Free you can forgot the process of saving and loading data, you just use our API to do data manipulation.
+
+
+  
+
+Features
+
+
+Save Game Free has a lot of awesome features that makes it like professional tool.
+
+
+* Serialization Flexibility by using Custom Serializers and Built-in Serializers
+* Built-in Serializers: Binary, JSON, XML
+* Encryption Flexibility by using Custom Encryptions and Built-in Encryption
+* Built-in Encryption
+* Web & Cloud Support
+* Cross Platform (Windows, MacOS, Linux, Android, iOS, tvOS, Samsung TV, Windows Store, missed one? Let us know)
+* Awesome Customer Support (Ask anything!)
+* Auto Save, An Component that let’s you save objects automatically
+* Well Documented: Documented using Code Comments and Online Documentations
+
+
+Usage
+
+
+Here is a very simple usage of Save Game Free.
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+
+public class Example
+{
+        
+        public int score;
+
+
+        void Start ()
+        {
+                SaveGame.Save<int> ( "score", score );
+        }
+
+
+}
+
+
+Check out examples at SaveGameFree/Examples folder.
+API Documentation
+
+
+It is a small documentation of Save Game Free API.
+
+
+SaveGame.Save<T> (string identifier, T obj);
+
+
+* Identifier: The identifier.
+* Obj: The object to save.
+
+
+SaveGame.Load<T> (string identifier, T defaultValue);
+
+
+* Identifier: The identifier.
+* defaultValue: The default value.
+
+
+Find more resources at Save Game Free GitHub Page.
+Last Words
+
+
+We are very happy to see you are interesting in using our products.
+
+
+If you made a game using Save Game Free, you can add it to our Showcase.
+
+
+If you have any further questions and information, Contact Us, we are here to help.
+
+
+Show your support by rating and writing a shining review.
+
+
+Have a nice day!
+
+
+Goodbye!
