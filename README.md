@@ -17,6 +17,8 @@ It is now free and open source and always will be. :clap: :tada:
 
 ## Getting Started
 
+Follow the below instructions to get started with Red Runner source code:
+
 1. [Make sure you have all Requirements](#requirements)
 2. [Download Source Code](#download)
 3. Open Project in Unity and Enjoy!
