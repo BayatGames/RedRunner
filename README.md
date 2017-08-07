@@ -64,6 +64,13 @@ Also you can the build version of the Red Runner using the following ways:
   <img src="https://img.itch.zone/aW1hZ2UvMTU4NTg4LzczMjc3My5wbmc=/original/RAoMpO.png" />
 </p>
 
+## Credits
+
+- Graphics: [Free Platform Game Assets](https://bayat.itch.io/platform-game-assets)
+- Save System: [Save Game Pro - Save Everything](https://bayat.itch.io/save-game-pro-save-everything)
+- Game Engine: [Unity](https://unity3d.com/)
+- Thanks to all of the game development community for their awesome help.
+
 ## Related
 
 - [Awesome Unity](https://github.com/RyanNielson/awesome-unity) - A curated list of awesome Unity assets, resources, and more.
