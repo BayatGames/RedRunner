@@ -78,6 +78,10 @@ Also you can the build version of the Red Runner using the following ways:
 - [GameDev Resources](https://github.com/Kavex/GameDev-Resources) - 🎮 🎲 A wonderful list of Game Development resources.
 - [UnityLibrary](https://github.com/UnityCommunity/UnityLibrary) - 📚 Library of all kind of scripts, snippets & shaders for Unity.
 
+## Resources
+
+[:newspaper: Support and News](https://github.com/BayatGames/Support)
+
 ## License
 
 MIT @ [Bayat Games](https://github.com/BayatGames)
