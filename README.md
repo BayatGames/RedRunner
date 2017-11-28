@@ -80,6 +80,8 @@ Also you can the build version of the Red Runner using the following ways:
 
 ## Resources
 
+[:rocket: Patreon](https://www.patreon.com/BayatGames)
+
 [:newspaper: Support and News](https://github.com/BayatGames/Support)
 
 ## License
