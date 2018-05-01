@@ -313,6 +313,13 @@ namespace RedRunner.Characters
 			{
 				m_CurrentRunSpeed = Mathf.SmoothDamp ( m_Speed.x, m_MaxRunSpeed, ref m_CurrentSmoothVelocity, m_RunSmoothTime );
 			}
+			
+			Vector2 velocity = m_Rigidbody2D.velocity;		
+            		if (velocity.y < 0)
+            		{
+                		velocity.y = -10.5f;
+                		m_Rigidbody2D.velocity = velocity;
+            		}
 
 			// Input Processing
 			Move ( CrossPlatformInputManager.GetAxis ( "Horizontal" ) );
