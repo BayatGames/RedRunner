@@ -44,6 +44,8 @@ namespace RedRunner
 		private Character m_MainCharacter;
         [SerializeField]
         private Animator _mobileControlsAnimator;
+        [SerializeField]
+        private Purchaser _purchaser;
 		[SerializeField]
 		[TextArea ( 3, 30 )]
 		private string m_ShareText;
@@ -280,6 +282,18 @@ namespace RedRunner
                 ShowControls();
                 
 		}
+
+        public void OnResetButtonPressed() {
+            _purchaser.buyContinue();
+
+            //TODO remove this
+            //NOTE the buying mechanism isn't working yet. this is here to allow restarting
+            OnPurchaseSuccessful();
+        }
+
+        public void OnPurchaseSuccessful() {
+            Reset();
+        }
 
 		public void ShareOnTwitter ()
 		{

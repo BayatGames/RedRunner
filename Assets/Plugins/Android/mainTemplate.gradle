@@ -1,0 +1,84 @@
+buildscript {
+  repositories {
+    jcenter()
+    google()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:3.0.1'
+  }
+}
+
+allprojects {
+  repositories {
+    google()
+    jcenter()
+    maven { url "https://dl.bintray.com/asf/asf" }
+    flatDir {
+      dirs 'libs'
+    }
+  }
+}
+
+apply plugin: 'com.android.application'
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+  api 'com.asfoundation:appcoins:0.3.1a'
+  compile(name: 'appcoinsunity-release', ext:'aar')
+}
+
+android {
+  compileSdkVersion 27
+  buildToolsVersion '27.0.3'
+
+  defaultConfig {
+    minSdkVersion 21
+    targetSdkVersion 27
+    ndk {
+      abiFilters 'armeabi-v7a', 'x86'
+    }
+    versionCode 1
+    versionName '0.1'
+    multiDexEnabled true
+    dexOptions {
+      javaMaxHeapSize "4g"
+    }
+    compileOptions {
+      sourceCompatibility 1.8
+      targetCompatibility 1.8
+    }
+  }
+
+  lintOptions {
+    abortOnError false
+  }
+
+  aaptOptions {
+    noCompress '.unity3d', '.ress', '.resource', '.obb'
+  }
+
+
+  buildTypes {
+    debug {
+      minifyEnabled false
+      useProguard false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'
+      jniDebuggable true
+    }
+    release {
+      minifyEnabled false
+      useProguard false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'
+      signingConfig signingConfigs.debug
+      resValue 'string', 'APPCOINS_ENABLE_POA', 'true'
+    }
+  }
+  packagingOptions {
+    doNotStrip "*/armeabi-v7a/*.so"
+    doNotStrip "*/x86/*.so"
+  }
+
+} 
+
+

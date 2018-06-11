@@ -1,0 +1,60 @@
+TODO
+
+GAME
+-add aptoide branding
+	-do we keep developer logo?
+	-do we approach developer to talk about fork?
+
+-edit readme for plugin
+-edit readme for game
+	-integrate app coins on restart button (document integration)
+
+-a cena de teste funcionar em Editor também
+-ask for campaign creation for RedRunner
+
+-improve controls (transition from left to right and vice versa)
+-delete previous sections
+-create revive mechanism
+
+
+DONE
+-integrate app coins on restart button
+-make controls only show after play button is pressed
+-improve controls
+
+-automatizar a copia da build aar para o sítio certo
+-deal with POA issues
+
+-o valor ENABLE POA nao é overriden pela app sobre o plugin!!! :(
+-conversar sobre o issue de POA
+	-é preciso o valor de se ta activo ou nao, numa altura em que ainda nao da pra aceder a ele
+	-o adsSDK devia ser inicializado no OnCreate e o valor de utilizaçao ou nao do POA só é obtido dps do onCreate
+		-possiveis solucoes:
+			-iniciar smp e dps se o valor for false parar
+			-ter um mecanismo explicito para começar o POA (nao aberto aos devs mas aberto ao plugin)
+			-ter 1 lib com poa e uma lib sem poa. avaliar o bool em compile time e escolher a lib certa
+
+
+-Investigar UDP
+-Investigar projecto webcore
+-check 2048 on android
+-check red runner on android
+-check open source mobile game
+
+-patch Unity activity class
+
+-generate unitypackage automatically (bash file)
+uni
+-check why the lib isn't being compiled and UnityAppcoins can't be found
+	-It was! import was missing
+
+-find a way to force minSdkVersion to 21
+-try the integration process and see what goes wrong
+	-produced a list of errors and solutions
+-figure out how the others share their plugins (where to store the unityPackage)
+	-straight into the repo
+
+post processor to avoid going through android studio
+-patch gradle file
+-change minSdkVersion
+
