@@ -42,6 +42,8 @@ namespace RedRunner
 
 		[SerializeField]
 		private Character m_MainCharacter;
+        [SerializeField]
+        private Animator _mobileControlsAnimator;
 		[SerializeField]
 		[TextArea ( 3, 30 )]
 		private string m_ShareText;
@@ -154,6 +156,7 @@ namespace RedRunner
 			{
 				OnScoreChanged ( m_Score, m_HighScore, m_LastScore );
 			}
+            HideControls();
 		}
 
 		void Start ()
@@ -225,6 +228,7 @@ namespace RedRunner
 		public void StartGame ()
 		{
 			m_GameStarted = true;
+            ShowControls();
 			ResumeGame ();
 		}
 
@@ -271,6 +275,10 @@ namespace RedRunner
 			{
 				OnReset ();
 			}
+
+            if (gameStarted)
+                ShowControls();
+                
 		}
 
 		public void ShareOnTwitter ()
@@ -299,6 +307,13 @@ namespace RedRunner
 			
 		}
 
+        public void ShowControls() {
+            _mobileControlsAnimator.Play("MobileControlsShow",-1,0);
+        }
+
+        public void HideControls() {
+            _mobileControlsAnimator.Play("MobileControlsHide", -1, 0);
+        }
 	}
 
 }
