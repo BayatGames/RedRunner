@@ -344,18 +344,9 @@ namespace RedRunner.Characters
 				}
 			}
 
-			if ( Input.GetButtonDown ( "Roll" ) )
+			if ( CrossPlatformInputManager.GetButtonDown ( "Roll"  ))
 			{
-				Vector2 force = new Vector2 ( 0f, 0f );
-				if ( transform.localScale.z > 0f )
-				{
-					force.x = m_RollForce;
-				}
-				else if ( transform.localScale.z < 0f )
-				{
-					force.x = -m_RollForce;
-				}
-				m_Rigidbody2D.AddForce ( force );
+				Roll ();
 			}
 		}
 
@@ -368,7 +359,7 @@ namespace RedRunner.Characters
 			m_Animator.SetBool ( "IsDead", m_IsDead );
 			m_Animator.SetBool ( "Block", m_Block );
 			m_Animator.SetBool ( "Guard", m_Guard );
-			if ( Input.GetButtonDown ( "Roll" ) )
+			if ( CrossPlatformInputManager.GetButtonDown ( "Roll"  ) )
 			{
 				m_Animator.SetTrigger ( "Roll" );
 			}
@@ -478,6 +469,20 @@ namespace RedRunner.Characters
 					AudioManager.Singleton.PlayJumpSound ( m_JumpAndGroundedAudioSource );
 				}
 			}
+		}
+
+		public override void Roll ()
+		{
+			Vector2 force = new Vector2 ( 0f, 0f );
+			if ( transform.localScale.z > 0f )
+			{
+				force.x = m_RollForce;
+			}
+			else if ( transform.localScale.z < 0f )
+			{
+				force.x = -m_RollForce;
+			}
+			m_Rigidbody2D.AddForce ( force );
 		}
 
 		public override void Die ()

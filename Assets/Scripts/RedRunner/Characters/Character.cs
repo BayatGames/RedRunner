@@ -68,6 +68,8 @@ namespace RedRunner.Characters
 
 		public abstract void Jump ();
 
+		public abstract void Roll ();
+
 		public abstract void Die ();
 
 		public abstract void Die ( bool blood );
