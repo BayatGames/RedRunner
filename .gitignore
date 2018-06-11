@@ -24,7 +24,6 @@ ExportedObj/
 *.pdb
 *.DS_Store
 *.meta
-*.asset
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -36,15 +35,4 @@ sysinfo.txt
 *.apk
 *.unitypackage
 .vscode/settings.json
-Assets/.DS_Store
-Assets/Standard Assets/.DS_Store
-Assets/Plugins/Android/mainTemplate.gradle
-Assets/Plugins/Android/appcoinsunity-release.aar
-Assets/Plugins/Android/AndroidManifest.xml
-Assets/AppcoinsUnity/Scripts/Editor/AppcoinsStartup.cs
-Assets/AppcoinsUnity/Scripts/AppcoinsUnity.cs
-Assets/AppcoinsUnity/Scripts/AppcoinsSku.cs
-Assets/AppcoinsUnity/Scripts/AppcoinsPurchaser.cs
-Assets/AppcoinsUnity/Prefabs/AppcoinsUnity.prefab
-Assets/AppcoinsUnity/Example/Scripts/Purchaser.cs
-Assets/AppcoinsUnity/Example/Scene/Test Scene.unity
+
