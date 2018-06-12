@@ -35,8 +35,11 @@ namespace Codeberg.AppcoinsUnity{
         }
 
 		public void makePurchase(string skuid){
-			appcoinsUnity.makePurchase (skuid);
+
+			// CHANGES
+			if(appcoinsUnity.enableIAB) {
+				appcoinsUnity.makePurchase (skuid);
+			}
 		}
- 
 	}
 }
