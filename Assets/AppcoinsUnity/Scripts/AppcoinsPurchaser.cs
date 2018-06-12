@@ -14,6 +14,7 @@ namespace Codeberg.AppcoinsUnity{
 
 	public class AppcoinsPurchaser : MonoBehaviour {
 
+		// CHANGES
 		protected AppcoinsUnity appcoinsUnity;
 
 		void OnEnable(){
