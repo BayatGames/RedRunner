@@ -1,0 +1,16 @@
+1. Download AppCoins_Unity_Package.unitypackage
+2. In Unity: 
+    2.1. Assets -> Import Package -> Custom Package...
+    2.2. Path to AppCoins_Unity_Package.unitypackage
+    2.3. Click 'All' then click 'Import'
+    2.4. Go to Assets/AppcoinsUnity/Prefabs/AppcoinsUnity and drag it to the 'Play' Scene
+    2.5. Create each product by Assets -> Create -> Appcoins product:
+        2.5.a. Give a name, id and price 
+    2.6. Create (a Purchase Script ? or as many as you want?) and with all the IAB products that the users can buy
+         and link it with the game logic. (to purchase a product 'makeProduct' of AppcoinsPurchaser has to be called).
+    2.7. Click on AppcoinsUnity Object and go to the Inspector: (Nuno -> we can optimize this process)
+        2.7.a Open Products tab:
+        2.7.b In the size parameter put the number of all creted IAB products 
+        2.7.c For each element select a IAB product
+    2.8. Enable or Disable IAB, POA and DEBUG.
+3. DONE?
