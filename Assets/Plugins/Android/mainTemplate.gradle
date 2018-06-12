@@ -72,6 +72,7 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'
       signingConfig signingConfigs.debug
       resValue "bool", "APPCOINS_ENABLE_POA", "true"
+      resValue "bool", "APPCOINS_ENABLE_DEBUG", "false"
     }
   }
   packagingOptions {
