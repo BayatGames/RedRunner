@@ -35,12 +35,12 @@ public class Purchaser : AppcoinsPurchaser
 
         // CHANGES
         else {
-            jumpPurchases();
+            jumpPurchase();
         }
     }
 
     // CHANGES
-    public void jumpPurchases() {
+    public override void jumpPurchase() {
         GameManager.Singleton.OnPurchaseSuccessful();
     }
 }

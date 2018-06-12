@@ -36,8 +36,21 @@ namespace Codeberg.AppcoinsUnity{
 #endif
         }
 
+		//CHANGES
+		// WHAT TO DO WHEN IAB IS DISABLED
+		public virtual void jumpPurchase() {
+			return;
+		}
+
+		//CHANGES
 		public void makePurchase(string skuid){
-			appcoinsUnity.makePurchase (skuid);
+			if(appcoinsUnity.enableIAB) {
+				appcoinsUnity.makePurchase (skuid);
+			}
+
+			else {
+				jumpPurchase();
+			}
 		}
 	}
 }
