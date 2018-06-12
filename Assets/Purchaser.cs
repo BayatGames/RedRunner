@@ -20,6 +20,8 @@ public class Purchaser : AppcoinsPurchaser
         base.purchaseFailure(skuid);
         //purchase failed perhaps show some error message
 
+        GameManager.Singleton.OnPurchaseFailed();
+
     }
 
     //example methods to initiate a purchase flow

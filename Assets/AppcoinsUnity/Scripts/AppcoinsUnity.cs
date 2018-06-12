@@ -1,80 +1,101 @@
 ﻿//created by Lukmon Agboola(Codeberg)
 //Note: do not change anything here as it may break the workings of the plugin else you're very sure of what you're doing.
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Codeberg.AppcoinsUnity{
-	
-public class AppcoinsUnity : MonoBehaviour {
+namespace Codeberg.AppcoinsUnity
+{
 
-	[Header("Your wallet address for receiving Appcoins")]
-	public string receivingAddress;
-	[Header("Uncheck to disable Appcoins IAB")]
-	public bool enableIAB = true;
-	[Header("Uncheck to disable Appcoins ADS(Proof of attention)")]
-	public bool enablePOA = true;
-	[Header("Enable debug to use testnets e.g Ropsten")]
-	public bool enableDebug = false;
-	[Header("Add all your products here")]
-	public AppcoinsSku[] products;
-	[Header("Add your purchaser object here")]
-	public AppcoinsPurchaser purchaserObject;
+    public class AppcoinsUnity : MonoBehaviour
+    {
 
-	private bool previousEnablePOA = true;
+        [Header("Your wallet address for receiving Appcoins")]
+        public string receivingAddress;
+        [Header("Uncheck to disable Appcoins IAB")]
+        public bool enableIAB = true;
+        [Header("Uncheck to disable Appcoins ADS(Proof of attention)")]
+        public bool enablePOA = true;
+        [Header("Enable debug to use testnets e.g Ropsten")]
+        public bool enableDebug = false;
+        [Header("Add all your products here")]
+        public AppcoinsSku[] products;
+        [Header("Add your purchaser object here")]
+        public AppcoinsPurchaser purchaserObject;
 
-	AndroidJavaClass _class;
-	AndroidJavaObject instance { get { return _class.GetStatic<AndroidJavaObject>("instance"); } }
+        private bool previousEnablePOA = true;
 
-	// Use this for initialization
-	void Start () {
+        AndroidJavaClass _class;
+        AndroidJavaObject instance { get { return _class.GetStatic<AndroidJavaObject>("instance"); } }
 
-		//get refference to java class
-		_class = new AndroidJavaClass("com.codeberg.appcoinsunity.UnityAppcoins");
+        // Use this for initialization
+        void Start()
+        {
 
-		//setup wallet address
-		_class.CallStatic("setAddress",receivingAddress);
+            //get refference to java class
+            _class = new AndroidJavaClass("com.codeberg.appcoinsunity.UnityAppcoins");
 
-		//set debug mode
-		//NOTE: this allows you to make purchases with testnets e.g Ropsten
-		_class.CallStatic("enableDebug",enableDebug);
+            //setup wallet address
+            _class.CallStatic("setAddress", receivingAddress);
 
-			//Enable or disable In App Billing
-			_class.CallStatic("enableIAB",enableIAB);
+            //set debug mode
+            //NOTE: this allows you to make purchases with testnets e.g Ropsten
+            _class.CallStatic("enableDebug", enableDebug);
 
-		//add all your skus here
-		addAllSKUs();
+            //Enable or disable In App Billing
+            _class.CallStatic("enableIAB", enableIAB);
 
-		//start sdk
-		_class.CallStatic("start");
+            //add all your skus here
+            addAllSKUs();
 
-	}
+            //start sdk
+            _class.CallStatic("start");
 
-	// This function is called when this script is loaded or some variable changes its value.
-	void OnValidate() {
+        }
 
-		// Put new value of enablePOA in mainTemplate.gradle to enable it or disable it.
-		if(previousEnablePOA != enablePOA) {
-			previousEnablePOA = enablePOA;
+        // This function is called when this script is loaded or some variable changes its value.
+        void OnValidate()
+        {
 
-			changeMainTemplateGradle(previousEnablePOA);
-		}
-	}
+            // Put new value of enablePOA in mainTemplate.gradle to enable it or disable it.
+            if (previousEnablePOA != enablePOA)
+            {
+                previousEnablePOA = enablePOA;
+
+                changeMainTemplateGradle(previousEnablePOA);
+            }
+        }
 
 
-	//called to add all skus specified in the inpector window.
-	private void addAllSKUs(){
-		for(int i=0; i<products.Length; i++){
-			_class.CallStatic("addNewSku",products[i].Name,products[i].SKUID,products[i].Price);
-		}
-	}
+        //called to add all skus specified in the inpector window.
+        private void addAllSKUs()
+        {
+            for (int i = 0; i < products.Length; i++)
+            {
+                _class.CallStatic("addNewSku", products[i].Name, products[i].SKUID, products[i].Price);
+            }
+        }
 
-	//method used in making purchase
-	public void makePurchase(string skuid){
-		_class.CallStatic("makePurchase",skuid);
+        //method used in making purchase
+        public void makePurchase(string skuid)
+        {
+#if UNITY_EDITOR
+            if (EditorUtility.DisplayDialog("AppCoins Unity Integration","AppCoins IAB Successfully integrated","Test success","Test failure")){
+                purchaseSuccess(skuid);
+            } else {
+                purchaseFailure(skuid);
+            }
+#else
+            _class.CallStatic("makePurchase",skuid);
+#endif
+      
 	}
 
 	//callback on successful purchases
@@ -91,8 +112,8 @@ public class AppcoinsUnity : MonoBehaviour {
 	private void changeMainTemplateGradle(bool POA) {
 		string pathToMainTemplate = Application.dataPath + "/Plugins/Android/mainTemplate.gradle"; // Path to mainTemplate.gradle
 		string line;
-		string contentToChange = "resValue 'string', 'APPCOINS_ENABLE_POA', '" + POA.ToString().ToLower() + "'"; //Line to change inside test container
-		string contentInTemplate = "resValue 'string', 'APPCOINS_ENABLE_POA', '" + (!POA).ToString().ToLower() + "'";
+		string contentToChange = "resValue \"bool\", \"APPCOINS_ENABLE_POA\", \"" + POA.ToString().ToLower() + "\""; //Line to change inside test container
+		string contentInTemplate = "resValue \"bool\", \"APPCOINS_ENABLE_POA\", \"" + (!POA).ToString().ToLower() + "\"";
 		int lineToChange = -1;
 		int counter = 0;
 		int numberOfSpaces = 0;

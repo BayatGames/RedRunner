@@ -149,6 +149,8 @@ namespace RedRunner
 
 		void MainCharacter_OnDead ()
 		{
+            UIManager.Singleton.OpenEndScreen();
+
 			m_LastScore = m_Score;
 			if ( m_Score > m_HighScore )
 			{
@@ -285,14 +287,16 @@ namespace RedRunner
 
         public void OnResetButtonPressed() {
             _purchaser.buyContinue();
-
-            //TODO remove this
-            //NOTE the buying mechanism isn't working yet. this is here to allow restarting
-            OnPurchaseSuccessful();
         }
 
         public void OnPurchaseSuccessful() {
             Reset();
+            UIManager.Singleton.OpenInGameScreen();
+        }
+
+        public void OnPurchaseFailed() {
+            //If purchase failed show end screen again
+            UIManager.Singleton.OpenEndScreen();
         }
 
 		public void ShareOnTwitter ()

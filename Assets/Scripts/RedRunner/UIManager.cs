@@ -33,8 +33,12 @@ namespace RedRunner
 		private float m_CursorHideDelay = 1f;
 		[SerializeField]
 		private UIScreen m_PauseScreen;
-
-		void Awake ()
+        [SerializeField]
+        private UIScreen m_EndScreen;
+        [SerializeField]
+        private UIScreen m_InGameScreen;
+		
+        void Awake ()
 		{
 			if ( m_Singleton != null )
 			{
@@ -107,6 +111,16 @@ namespace RedRunner
 			m_ActiveScreen.Close ();
 			m_ActiveScreen = screen;
 		}
+
+        public void OpenEndScreen()
+        {
+            OpenScreen(m_EndScreen);
+        }
+
+        public void OpenInGameScreen()
+        {
+            OpenScreen(m_InGameScreen);
+        }
 
 		public void CloseScreen ( int index )
 		{
