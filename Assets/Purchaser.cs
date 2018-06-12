@@ -20,7 +20,7 @@ public class Purchaser : AppcoinsPurchaser
         base.purchaseFailure(skuid);
         //purchase failed perhaps show some error message
 
-        GameManager.Singleton.OnPurchaseFailed();
+        GameManager.Singleton.OnPurchaseFailed();   
 
     }
 

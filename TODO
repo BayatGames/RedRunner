@@ -22,6 +22,7 @@ GAME
 	-reach out to bayat games
 	-do we keep developer logo?
 	-do we approach developer to talk about fork?
+	-mail sending failed (user is gone)
 -ask for campaign creation for RedRunner
 
 -edit readme for game
@@ -33,6 +34,7 @@ GAME IMPROVEMENTS
 -create revive mechanism
 
 PLUGIN
+-turn code to dll
 -edit readme for plugin
 -editor support for POA testing
 -check code for proper documentation
