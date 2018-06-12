@@ -8,12 +8,13 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RedRunner;
 
 namespace Codeberg.AppcoinsUnity{
 
 	public class AppcoinsPurchaser : MonoBehaviour {
 
-		AppcoinsUnity appcoinsUnity;
+		protected AppcoinsUnity appcoinsUnity;
 
 		void OnEnable(){
 			//get refference to AppcoinsUnity class
@@ -35,11 +36,7 @@ namespace Codeberg.AppcoinsUnity{
         }
 
 		public void makePurchase(string skuid){
-
-			// CHANGES
-			if(appcoinsUnity.enableIAB) {
-				appcoinsUnity.makePurchase (skuid);
-			}
+			appcoinsUnity.makePurchase (skuid);
 		}
 	}
 }
