@@ -27,19 +27,6 @@ public class Purchaser : AppcoinsPurchaser
     //the string parameter of the makePurchase method is the skuid you specified in the inspector for each product
     public void buyContinue()
     {
-        // CHANGES
-        if(appcoinsUnity.enableIAB) {
-            makePurchase("continue");
-        }
-
-        // CHANGES
-        else {
-            jumpPurchase();
-        }
-    }
-
-    // CHANGES
-    public override void jumpPurchase() {
-        GameManager.Singleton.OnPurchaseSuccessful();
+        makePurchase("continue");
     }
 }

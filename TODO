@@ -45,6 +45,7 @@ GAME IMPROVEMENTS
 = DONE =
 ========
 
+-remove dependency on AppcoinsUnity object name
 -edit readme for plugin
 
 -add aptoide branding

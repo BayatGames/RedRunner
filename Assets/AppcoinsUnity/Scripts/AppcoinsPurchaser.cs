@@ -8,18 +8,16 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RedRunner;
 
 namespace Codeberg.AppcoinsUnity{
 
 	public class AppcoinsPurchaser : MonoBehaviour {
 
-		// CHANGES
-		protected AppcoinsUnity appcoinsUnity;
+		AppcoinsUnity appcoinsUnity;
 
-		void OnEnable(){
-			//get refference to AppcoinsUnity class
-			appcoinsUnity = GameObject.Find ("AppcoinsUnity").GetComponent<AppcoinsUnity>();
+        public void Init(AppcoinsUnity appcoinsUnityRef){
+            //get refference to AppcoinsUnity class
+            appcoinsUnity = appcoinsUnityRef;
 		}
 
         public virtual void purchaseSuccess(string skuid)
@@ -36,21 +34,9 @@ namespace Codeberg.AppcoinsUnity{
 #endif
         }
 
-		//CHANGES
-		// WHAT TO DO WHEN IAB IS DISABLED
-		public virtual void jumpPurchase() {
-			return;
-		}
-
-		//CHANGES
 		public void makePurchase(string skuid){
-			if(appcoinsUnity.enableIAB) {
-				appcoinsUnity.makePurchase (skuid);
-			}
-
-			else {
-				jumpPurchase();
-			}
+			appcoinsUnity.makePurchase (skuid);
 		}
+ 
 	}
 }

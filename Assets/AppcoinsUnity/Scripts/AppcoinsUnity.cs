@@ -36,6 +36,11 @@ namespace Codeberg.AppcoinsUnity
         AndroidJavaClass _class;
         AndroidJavaObject instance { get { return _class.GetStatic<AndroidJavaObject>("instance"); } }
 
+        private void Awake()
+        {
+            purchaserObject.Init(this);
+        }
+
         // Use this for initialization
         void Start()
         {
@@ -90,6 +95,12 @@ namespace Codeberg.AppcoinsUnity
         //method used in making purchase
         public void makePurchase(string skuid)
         {
+            if (!enableIAB)
+            {
+                Debug.LogWarning("Tried to make a purchase but enableIAB is false! Please set it to true on AppcoinsUnity object before using this functionality");
+                return;
+            }
+
 #if UNITY_EDITOR
             if (EditorUtility.DisplayDialog("AppCoins Unity Integration","AppCoins IAB Successfully integrated","Test success","Test failure")){
                 purchaseSuccess(skuid);
