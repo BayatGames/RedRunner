@@ -4,7 +4,7 @@ Red Runner, Awesome Platformer Game.
 
 It is now free and open source and always will be. :clap: :tada:
 
-| [:sparkles: Getting Started](#getting-started) | [:rocket: Download](#download) | [:camera: Screenshots](#screenshots) | [APPCoins Plugin Integration](#appcoins) |
+| [:sparkles: Getting Started](#getting-started) | [:rocket: Download](#download) | [:camera: Screenshots](#screenshots) | [:heavy_plus_sign: APPCoins Plugin Integration](#appcoins) |
 <p align="center">
   <img src="https://img.itch.zone/aW1hZ2UvMTU4NTg4LzcyNzg3Mi5wbmc=/original/AU5pWY.png" />
 </p>
