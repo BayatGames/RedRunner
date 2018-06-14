@@ -64,9 +64,9 @@ Also you can the build version of the Red Runner using the following ways:
 
 ## APPCoins
 This is just an example of how you can integrate the appcoins plugin into your game.
-1. Download [unity package](https://github.com/AppStoreFoundation/AppcoinsUnityPlugin/blob/develop/AppCoins_Unity_Package.unitypackage).
-2. Open Unity and import the unity package you just downloaded. You can do this by clicking in 'Assets' -> 'Import Package' -> 'Custom Package...'. You have to import everything except the '/Appcoins/Example' folder that is optional. This folder is just another integration example.
-![picture](Screenshots/Appcoins_Integration_2.gif) 
+1. Download [Appcoins unity package](https://github.com/AppStoreFoundation/AppcoinsUnityPlugin/blob/develop/AppCoins_Unity_Package.unitypackage).
+2. At Unity open your game's folder and import the unity package you just downloaded. You can do this by clicking in 'Assets' -> 'Import Package' -> 'Custom Package...'. You have to import everything except the '/Appcoins/Example' folder that is optional. This folder is just another integration example.
+![picture](Screenshots/Appcoins_Integration_2.gif)
 
 ## Credits
 
