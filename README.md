@@ -4,9 +4,7 @@ Red Runner, Awesome Platformer Game.
 
 It is now free and open source and always will be. :clap: :tada:
 
-| [:sparkles: Getting Started](#getting-started) | [:rocket: Download](#download) | [:camera: Screenshots](#screenshots) |
-| --------------- | -------- | ----------- |
-
+| [:sparkles: Getting Started](#getting-started) | [:rocket: Download](#download) | [:camera: Screenshots](#screenshots) | [APPCoins Plugin Integration](#appcoins) |
 <p align="center">
   <img src="https://img.itch.zone/aW1hZ2UvMTU4NTg4LzcyNzg3Mi5wbmc=/original/AU5pWY.png" />
 </p>
@@ -63,6 +61,11 @@ Also you can the build version of the Red Runner using the following ways:
 <p align="center">
   <img src="https://img.itch.zone/aW1hZ2UvMTU4NTg4LzczMjc3My5wbmc=/original/RAoMpO.png" />
 </p>
+
+## APPCoins
+This is just an example of how you can integrate the appcoins plugin into your game.
+1. Download [unity package](https://github.com/AppStoreFoundation/AppcoinsUnityPlugin/blob/develop/AppCoins_Unity_Package.unitypackage).
+2. Open Unity and import the unity package you just downloaded. You can do this by clicking in 'Assets' -> 'Import Package' -> 'Custom Package...'. You have to import everything except the '/Appcoins/Example' folder that is optional. This folder is just another integration example. 
 
 ## Credits
 
