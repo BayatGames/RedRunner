@@ -8,9 +8,11 @@
 = TODO =
 ========
 
-- Appcoins Unity Plugin readme.md -> explain what is the skuid like: 
+- Appcoins Unity Plugin readme.md :
+		-> Add a menu like RedRunner.
+		-> explain what is the skuid like: 
 		(the skuid parameter is a string to pass to the 'makePurchase' method of 'AppcoinsPurchaser' class to 
-		 indentify the product you want to be purchased.) 
+		indentify the product you want to be purchased.) 
 
 -Versions being used
 2018.1.3
