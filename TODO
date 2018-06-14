@@ -17,35 +17,41 @@
 5.5.0p4
 
 FABIO
--ve a integração que eu fiz. (nao o código, o jogo mm a correr)
--tenta integrar por ti
--documenta esse processo
-	-sexta feira comparamos as documentacoes e geramos uma única através do merge das duas
+-Reve a documentaçao que eu fiz do plugin
+https://github.com/AppStoreFoundation/AppcoinsUnityPlugin/tree/develop
+-Tenta replicar este estilo para a documentaçao do processo do jogo (altera o README.md na base do projecto. Um bom editor para isso é o ATOM. Quando sacares faz ctrl + shift + m para ter um live preview ;) )
 -(se ainda sobrar tempo) Começar a sacar os Unitys na lista acima  (começar pelo 2018.1.3) e integrar o plugin/documentar os passos e pain points
+	-criar subsecçoes por versao de unity na documentaçåo do plugin
 
 GAME
--add aptoide branding
-	-reach out to bayat games
-	-do we keep developer logo?
-	-do we approach developer to talk about fork?
 -ask for campaign creation for RedRunner
 
 -edit readme for game
 	-integrate app coins on restart button (document integration)
+
+
+PLUGIN
+-put code into DLL https://ericeastwood.com/blog/17/unity-and-dlls-c-managed-and-c-unmanaged
+-change location of created product to be AppcoinsUnity/products
+-editor support for POA testing (should notifiy start and end of test)
+-check code for proper documentation
 
 GAME IMPROVEMENTS
 -improve controls (transition from left to right and vice versa)
 -delete previous sections
 -create revive mechanism
 
-PLUGIN
--edit readme for plugin
--editor support for POA testing
--check code for proper documentation
-
 ========
 = DONE =
 ========
+
+-edit readme for plugin
+
+-add aptoide branding
+	-reach out to bayat games
+	-do we keep developer logo?
+	-do we approach developer to talk about fork?
+
 -a cena de teste funcionar em Editor também
 
 -integrate app coins on restart button
