@@ -63,7 +63,7 @@ Also you can the build version of the Red Runner using the following ways:
 </p>
 
 ## APPCoins Plugin Integration Example
-This is just an example of how you can integrate the appcoins plugin into your game.
+This is just an example of how you can integrate the appcoins plugin into your game. For this example, after the first death if the player wants to play again he has to buy a life.
 1. Download [Appcoins unity package](https://github.com/AppStoreFoundation/AppcoinsUnityPlugin/blob/develop/AppCoins_Unity_Package.unitypackage).
 2. At Unity open your game's folder and import the Appcoins unity package you just downloaded. You can do this by clicking in 'Assets' -> 'Import Package' -> 'Custom Package...'. You have to import everything except the '/Appcoins/Example' folder that is optional. This folder is just another integration example.
 ![picture](Screenshots/Appcoins_Integration_2.gif)
@@ -71,10 +71,10 @@ This is just an example of how you can integrate the appcoins plugin into your g
 3. Drag and drop to your hierarchy window the 'Assets/AppCoins/Prefabs/AppCoinsUnity.prefab' prefab file. If you want you can change the name of the AppcoinsUnity game object to whatever you want to.
 ![picture](Screenshots/Appcoins_Integration_3.gif)
 
-4. Open AppcoinsUnity game object in the inspector window and put the wallet's address where you want to receive your appcoins in the 'receiving address' box.
+4. Open AppcoinsUnity game object in the inspector window and put the wallet's address where you want to receive your appcoins in the 'receiving address' slot.
 ![picture](Screenshots/Appcoins_Integration_4.gif)
 
-5. For this example, after the first death if the player wants to play again he has to buy a life. So when the restart button is clicked I will redirect the game's flow to my 'Purchaser' class calling the 'buyContinue' method in 'OnResetButtonPressed' in 'GameManager.cs' (the 'Purchaser' class have to inherit from 'AppcoinsPurchaser' class). My 'Purchaser.cs' file:
+5. The game logic I am changing is when the restart button is clicked I will redirect the game's flow to my 'Purchaser' class calling the 'buyContinue' method in 'OnReset' method in 'GameManager.cs' (the 'Purchaser' class have to inherit from 'AppcoinsPurchaser' class). My 'Purchaser.cs' file:
 
 ```
 /* add this namespace to your script to give you  access to
@@ -118,7 +118,7 @@ public class Purchaser : AppcoinsPurchaser
 ![picture](Screenshots/Appcoins_Integration_6.gif)
 
 7. Now I just have to create a product with the 'skuid' named 'continue'. To do this create a folder with the name 'Appcoins_Products' in the '/Assets' folder (This step is optional).
-Then go to 'Assets' -> 'Create' -> 'Appcoins Product'. At the inspector window after you clicked the 'AppcoinsUnity' game object go to the Products' slot, put the size to '1', then drag and drop your created product to Element 0's slot.
+Then go to 'Assets' -> 'Create' -> 'Appcoins Product', add a name at your choice, the 'skuid' will be 'continue' and add a price at your choice also. At the inspector window after you clicked the 'AppcoinsUnity' game object go to the Products' slot, put the size to '1', then drag and drop your created product to Element 0's slot.
 ![picture](Screenshots/Appcoins_Integration_7.gif)
 
 8. Your game is ready to rock!
