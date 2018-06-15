@@ -4,6 +4,18 @@
 - Instead of AppcoinsUnity's Object receive only one Purchaser script, make him be able to receive
   a list of Purchaser scripts (Distinguish different 'things' that you can buy) Ex: - Clash Royale: Chests; Cards; Gems; Coins.
 
+- Should we explain what IAP, POA and skuid are in unity's plugin or redrunner's plugin?
+
+=========================
+=PREVIOUS UNITY VERSIONS=
+=========================
+2018.1.3:
+	1. Change the name of this folder to something like: 'lib 4.0' /Applications/Unity 2018.1.3/PlaybackEngines/AndroidPlayer/Tools/gradle/lib and
+		copy the the new gradle lib folder to /Applications/Unity 2018.1.3/PlaybackEngines/AndroidPlayer/Tools/gradle with the name 'lib' (4.2 or above)
+
+	2. Change the file Path-to-Unity-Project/Temp/gradleOut/build/outputs/apk/release/gradleOut-release.apk to 
+		Path-to-Unity-Project/Temp/gradleOut/build/outputs/apk folder.
+
 ========
 = TODO =
 ========
@@ -15,7 +27,9 @@
 		indentify the product you want to be purchased.) 
 
 -Versions being used
-2018.1.3 - change gradle version
+2018.1.3:
+	1. change gradle version
+
 2018.1.0f2
 2017.4.1f1
 5.6.4p3
