@@ -22,6 +22,34 @@
 = TODO =
 ========
 
+
+Steps
+
+Find gradle exec
+	-it's in android studio
+	/Applications/Android Studio.app/Contents/gradle/gradle-4.4/bin
+
+	-get android studio path
+		-search for gradle folder
+		-search for gradle version/bin
+Still need to Set permissions to executable <==== THIS IS TERRIBLE!
+./gradle build
+
+
+-issue with project having spaces
+-the debug flag has an issue with not verifying its state. If the value is false on gradle and the value is true by default on the prefab nothing changes! Force check!
+-find a way to solve the dependency of having to add by hand new scripts to exportPackageAutomatically
+	-maybe use a blacklist system to have the file we dont want rejected and all others added by default
+
+-crash when no folder created on custom build
+
+-ver output do process run pra determinar erros
+	-scan "build successful" 
+	-clear gui panel and add building and time estimate
+	
+
+-tentar automatizar o export folder pra "Android"
+
 -tentar remover dependencia do nome (esta dependente no lado de android. UnityAppcoins.java )
 	UnityPlayer.UnitySendMessage("AppcoinsUnity","purchaseSuccess",skuId);
 
@@ -50,7 +78,6 @@ GAME
 
 PLUGIN
 -put code into DLL https://ericeastwood.com/blog/17/unity-and-dlls-c-managed-and-c-unmanaged
--change location of created product to be AppcoinsUnity/products
 -editor support for POA testing (should notifiy start and end of test)
 -check code for proper documentation
 
@@ -63,6 +90,7 @@ GAME IMPROVEMENTS
 = DONE =
 ========
 
+-change location of created product to be AppcoinsUnity/products
 -importar nova versao do plugin pro red runner
 -edit readme for game
 	-integrate app coins on restart button (document integration)

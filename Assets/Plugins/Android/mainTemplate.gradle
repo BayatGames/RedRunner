@@ -24,8 +24,8 @@ apply plugin: 'com.android.application'
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
-  api 'com.asfoundation:appcoins:0.3.1a'
-  compile(name: 'appcoinsunity-release', ext:'aar')
+  api 'com.asfoundation:appcoins:0.3.6a'
+  implementation fileTree(dir: 'libs', include: ['*.aar'])
 }
 
 android {
@@ -72,7 +72,7 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'
       signingConfig signingConfigs.debug
       resValue "bool", "APPCOINS_ENABLE_POA", "true"
-      resValue "bool", "APPCOINS_ENABLE_DEBUG", "true"
+      resValue "bool", "APPCOINS_ENABLE_DEBUG", "false"
     }
   }
   packagingOptions {
