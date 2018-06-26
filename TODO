@@ -22,9 +22,28 @@
 = TODO =
 ========
 
+-criar guiao de testes
+
+-testar cross platform
+	-correr a build pelo Unity
+	-paths para os executaveis
+	-executar em cmd line
+	-instalar com adb
+
+-package name tá a ser martelado para com.aptoide.appcoins!!! :|
+-Assinar o RedRunner
+
+-the debug flag has an issue with not verifying its state. If the value is false on gradle and the value is true by default on the prefab nothing changes! Force check!
+-find a way to solve the dependency of having to add by hand new scripts to exportPackageAutomatically
+	-maybe use a blacklist system to have the file we dont want rejected and all others added by default
+
+
+======Custom Build==============================================================================================================================================
+
+-the deletion of the folder is very dangerous! What if I pick the wrong folder?!?!?
+-close window on build error
 
 Steps
-
 Find gradle exec
 	-it's in android studio
 	/Applications/Android Studio.app/Contents/gradle/gradle-4.4/bin
@@ -35,24 +54,14 @@ Find gradle exec
 Still need to Set permissions to executable <==== THIS IS TERRIBLE!
 ./gradle build
 
-
 -issue with project having spaces
--the debug flag has an issue with not verifying its state. If the value is false on gradle and the value is true by default on the prefab nothing changes! Force check!
--find a way to solve the dependency of having to add by hand new scripts to exportPackageAutomatically
-	-maybe use a blacklist system to have the file we dont want rejected and all others added by default
-
 -crash when no folder created on custom build
 
 -ver output do process run pra determinar erros
 	-scan "build successful" 
 	-clear gui panel and add building and time estimate
-	
 
--tentar automatizar o export folder pra "Android"
-
--tentar remover dependencia do nome (esta dependente no lado de android. UnityAppcoins.java )
-	UnityPlayer.UnitySendMessage("AppcoinsUnity","purchaseSuccess",skuId);
-
+=================================================================================================================================================================
 
 -Para falar com o Diogo:
 	-meter um produçao (passar uma versao pra master)
@@ -89,6 +98,10 @@ GAME IMPROVEMENTS
 ========
 = DONE =
 ========
+
+-tentar remover dependencia do nome (esta dependente no lado de android. UnityAppcoins.java )
+	UnityPlayer.UnitySendMessage("AppcoinsUnity","purchaseSuccess",skuId);
+	-NAO DÁ (o nome pode ser mudado em runtime, por isso nunca conseguimos garantir que funcione com um nome diferente. Daí é melhor forçar o nome a nao mudar)
 
 -change location of created product to be AppcoinsUnity/products
 -importar nova versao do plugin pro red runner
