@@ -13,7 +13,7 @@ Process of integration:
 2. At Unity open your game's folder and import the _Appcoins_ unity package you just downloaded. You can do this by clicking in Assets -> Import Package -> Custom Package... .You have to import everything except the '/Appcoins/Example' folder that is optional. This folder is just another integration example.
 ![picture](Screenshots/Appcoins_Integration_2.gif)
 
-3. Drag and drop to your hierarchy window the 'Assets/AppCoins/Prefabs/AppCoinsUnity.prefab' prefab file. If you want you can change the name of the AppcoinsUnity game object to whatever you want to.
+3. Drag and drop to your hierarchy window the 'Assets/AppCoins/Prefabs/AppCoinsUnity.prefab' prefab file. ** Note:do not change the name of the AppcoinsUnity prefab.**
 ![picture](Screenshots/Appcoins_Integration_3.gif)
 
 4. Open AppcoinsUnity game object in the inspector window and put the wallet's address where you want to receive your appcoins in the _Receiving Address_ slot.
@@ -62,8 +62,8 @@ public class Purchaser : AppcoinsPurchaser
 6. Create an empty game object with the name you want (we named it _Purchaser_) and add a component with the script that has the _Purchaser_ class. Then drag and drop it to the slot named _Purchaser Object_ in _AppcoinsUnity_ game object.
 ![picture](Screenshots/Appcoins_Integration_6.gif)
 
-7. Now we just have to create a product with the _SKUID_ named _continue_. To do this create a folder with the name _Appcoins_Products_ in the '/Assets' folder (This step is optional).
-Then go to Assets -> Create -> Appcoins Product, add a name at your choice, the _SKUID_ will be _continue_ and add a price at your choice also. At the inspector window after you clicked the _AppcoinsUnity_ game object go to the Products' slot, put the size to _1_, then drag and drop your created product to Element 0's slot.
-![picture](Screenshots/Appcoins_Integration_7.gif)
+7. Now we just have to create a product with the _SKUID_ named _continue_. To do this go to Assets -> Create -> AppCoins Product, add a name of your choice, the _SKUID_ will be _continue_ and add a price of your choice also. Ticking "Add to list" will make sure that the product is automatically added to the product list on the _AppcoinsUnity_ game object. If not, don't forget at the inspector window after you clicked the _AppcoinsUnity_ game object, to go to the Products' slot, put the size to _1_, then drag and drop your created product to Element 0's slot.
+When every field is filled with info, don't forget to press "Apply". This will create the product in a folder called "Products" inside the Assets folder.
+![picture](Screenshots/CreateProduct.gif)
 
 8. Your game is ready to rock!

@@ -22,8 +22,52 @@
 = TODO =
 ========
 
+-criar guiao de testes
+
+-testar cross platform
+	-correr a build pelo Unity
+	-paths para os executaveis
+	-executar em cmd line
+	-instalar com adb
+
+-package name tá a ser martelado para com.aptoide.appcoins!!! :|
+-Assinar o RedRunner
+
+-the debug flag has an issue with not verifying its state. If the value is false on gradle and the value is true by default on the prefab nothing changes! Force check!
+-find a way to solve the dependency of having to add by hand new scripts to exportPackageAutomatically
+	-maybe use a blacklist system to have the file we dont want rejected and all others added by default
+
+
+======Custom Build==============================================================================================================================================
+
+-the deletion of the folder is very dangerous! What if I pick the wrong folder?!?!?
+-close window on build error
+
+Steps
+Find gradle exec
+	-it's in android studio
+	/Applications/Android Studio.app/Contents/gradle/gradle-4.4/bin
+
+	-get android studio path
+		-search for gradle folder
+		-search for gradle version/bin
+Still need to Set permissions to executable <==== THIS IS TERRIBLE!
+./gradle build
+
+-issue with project having spaces
+-crash when no folder created on custom build
+
+-ver output do process run pra determinar erros
+	-scan "build successful" 
+	-clear gui panel and add building and time estimate
+
+=================================================================================================================================================================
+
+-Para falar com o Diogo:
+	-meter um produçao (passar uma versao pra master)
+	-erros do ronaldo
+
 - Appcoins Unity Plugin readme.md :
-		-> Add a menu like RedRunner.
 		-> explain what is the skuid like: 
 		(the skuid parameter is a string to pass to the 'makePurchase' method of 'AppcoinsPurchaser' class to 
 		indentify the product you want to be purchased.) 
@@ -38,23 +82,11 @@
 5.6.3
 5.5.0p4
 
-FABIO
--Reve a documentaçao que eu fiz do plugin
-https://github.com/AppStoreFoundation/AppcoinsUnityPlugin/tree/develop
--Tenta replicar este estilo para a documentaçao do processo do jogo (altera o README.md na base do projecto. Um bom editor para isso é o ATOM. Quando sacares faz ctrl + shift + m para ter um live preview ;) )
--(se ainda sobrar tempo) Começar a sacar os Unitys na lista acima  (começar pelo 2018.1.3) e integrar o plugin/documentar os passos e pain points
-	-criar subsecçoes por versao de unity na documentaçåo do plugin
-
 GAME
 -ask for campaign creation for RedRunner
 
--edit readme for game
-	-integrate app coins on restart button (document integration)
-
-
 PLUGIN
 -put code into DLL https://ericeastwood.com/blog/17/unity-and-dlls-c-managed-and-c-unmanaged
--change location of created product to be AppcoinsUnity/products
 -editor support for POA testing (should notifiy start and end of test)
 -check code for proper documentation
 
@@ -67,6 +99,22 @@ GAME IMPROVEMENTS
 = DONE =
 ========
 
+-tentar remover dependencia do nome (esta dependente no lado de android. UnityAppcoins.java )
+	UnityPlayer.UnitySendMessage("AppcoinsUnity","purchaseSuccess",skuId);
+	-NAO DÁ (o nome pode ser mudado em runtime, por isso nunca conseguimos garantir que funcione com um nome diferente. Daí é melhor forçar o nome a nao mudar)
+
+-change location of created product to be AppcoinsUnity/products
+-importar nova versao do plugin pro red runner
+-edit readme for game
+	-integrate app coins on restart button (document integration)
+- Red Runner readme.md:
+	-update the gif for appcoins product creation
+
+- Appcoins Unity Plugin readme.md :
+	-change codeberg to aptoide
+	-add explanation about add to list
+
+-mudar namespace codeberg pra aptoide? SIM!
 -remove dependency on AppcoinsUnity object name
 -edit readme for plugin
 
