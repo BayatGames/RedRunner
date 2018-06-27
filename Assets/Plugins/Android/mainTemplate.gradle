@@ -24,8 +24,8 @@ apply plugin: 'com.android.application'
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
-  api 'com.asfoundation:appcoins:0.3.1a'
-  compile(name: 'appcoinsunity-release', ext:'aar')
+  api 'com.asfoundation:appcoins:0.3.6a'
+  implementation fileTree(dir: 'libs', include: ['*.aar'])
 }
 
 android {
@@ -33,6 +33,7 @@ android {
   buildToolsVersion '27.0.3'
 
   defaultConfig {
+    applicationId '**APPLICATIONID**'
     minSdkVersion 21
     targetSdkVersion 27
     ndk {

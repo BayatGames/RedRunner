@@ -1,5 +1,5 @@
 ﻿//add this namespace to your script to give you  access to the plugin classes.
-using Codeberg.AppcoinsUnity;
+using Aptoide.AppcoinsUnity;
 using RedRunner;
 
 public class Purchaser : AppcoinsPurchaser

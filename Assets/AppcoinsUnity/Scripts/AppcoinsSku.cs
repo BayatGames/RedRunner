@@ -1,17 +1,15 @@
 ﻿//created by Lukmon Agboola(Codeberg)
+//Modifief by Aptoide
 
 using System.Collections;
 using UnityEngine;
 
-namespace Codeberg.AppcoinsUnity{
+namespace Aptoide.AppcoinsUnity{
 
-[CreateAssetMenu(fileName = "AppcoinsProduct", menuName = "Appcoins Product", order = 1)]
-public class AppcoinsSku : ScriptableObject {
-	[Header("The name of your in-app product")]
-	public string Name;
-	[Header("The skuid of your in-app product")]
-	public string SKUID;
-	[Header("Price in Appcoins currency(APPC)")]
-	public double Price;
-  }
+    public class AppcoinsSku : ScriptableObject
+    {
+        public string Name;
+        public string SKUID;
+        public double Price;
+    }
 }

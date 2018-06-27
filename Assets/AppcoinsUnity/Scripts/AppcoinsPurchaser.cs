@@ -1,4 +1,5 @@
 ﻿//created by Lukmon Agboola(Codeberg)
+//Modified by Aptoide
 //Inherit this class to create your own purchaser class, see the example scene for more info
 
 #if UNITY_EDITOR
@@ -9,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Codeberg.AppcoinsUnity{
+namespace Aptoide.AppcoinsUnity{
 
 	public class AppcoinsPurchaser : MonoBehaviour {
 
