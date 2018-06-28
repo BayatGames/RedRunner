@@ -28,26 +28,52 @@ public class CustomBuildMenuItem : EditorWindow {
     //     unixBuild.AdbInstall(path);
     // }
 
+    // private static StringBuilder sortOutput = null;
+    // private static UnityEvent terminalEvent = new UnityEvent();
+    // private static bool finished = false;
     // [MenuItem("Custom Build/Terminal")]
+    // public static void RunTerminal()
+    // {
+    //     // // Thread t = new Thread(CustomBuildMenuItem.Terminal);
+    //     // // t.Start();
+    //     // System.Threading.Tasks.Task.Run(() => Terminal());
+    //     // CustomBuildMenuItem.terminalEvent.AddListener(
+    //     //     delegate
+    //     //     {
+    //     //         UnityEngine.Debug.Log("a");
+    //     //     }
+    //     // );
+    //     // while(!CustomBuildMenuItem.finished);
+
+    //     Terminal();
+    // }
+
     // public static void Terminal()
     // {
     //     Process newProcess = new Process();
     //     newProcess.StartInfo.FileName = "/bin/bash";
     //     newProcess.StartInfo.WorkingDirectory = "/";
-    //     // newProcess.StartInfo.Arguments = "-c \"say hello\"";
+    //     newProcess.StartInfo.Arguments = "-c \"echo hello world! && ls -a -l && seq 1 50000\"";
     //     newProcess.StartInfo.UseShellExecute = false;
-    //     newProcess.StartInfo.RedirectStandardInput = true;
     //     newProcess.StartInfo.RedirectStandardOutput = true;
     //     newProcess.StartInfo.ErrorDialog = false;
-
+    //     sortOutput = new StringBuilder("");
+    //     newProcess.OutputDataReceived += new DataReceivedEventHandler(SortOutputHandler);
     //     newProcess.Start();
-    //     StreamWriter sWriter = newProcess.StandardInput;
-    //     sWriter.WriteLine("say hello");
-    //     sWriter.WriteLine("exit");
-    //     newProcess.StandardInput.Flush();
-    //     newProcess.StandardInput.Close();
+    //     newProcess.BeginOutputReadLine();
     //     // string out = newProcess.StandardOutput.ReadToEnd();
-    //     newProcess.WaitForExit();
+    //     while(!newProcess.HasExited);
+    //     CustomBuildMenuItem.finished = true;
+    // }
+
+    // private static void SortOutputHandler(object sendingProcess, 
+    //         DataReceivedEventArgs outLine)
+    // {
+    //     // Collect the sort command output.
+    //     if (!String.IsNullOrEmpty(outLine.Data))
+    //     {
+    //         UnityEngine.Debug.Log(outLine.Data);
+    //     }
     // }
 }
 
@@ -65,7 +91,9 @@ public class CustomBuild
         DONE,
     }
 
-    public static string gradlePath = "/Applications/Android\\ Studio.app/Contents/gradle/gradle-4.4/bin/";
+    public static string gradlePath = null;
+    private static string gradleWindowsPath = "C:\\Program Files\\Android\\Android Studio\\gradle\\gradle-4.4\\bin\\gradle";
+    private static string gradleUnixPath = "/Applications/Android Studio.app/Contents/gradle/gradle-4.4/bin/";
     public static string adbPath = EditorPrefs.GetString("AndroidSdkRoot") + "/platform-tools/adb";
     public static bool runAdbInstall = false;
     public static BuildStage stage;
@@ -81,11 +109,13 @@ public class CustomBuild
             SystemInfo.operatingSystemFamily == OperatingSystemFamily.Linux)
         {
             TERMINAL_CHOOSED = BASH_LOCATION;
+            gradlePath = gradleUnixPath;
         }
 
         else if(SystemInfo.operatingSystemFamily == OperatingSystemFamily.Windows)
         {
             TERMINAL_CHOOSED = CMD_LOCATION;
+            gradlePath = gradleWindowsPath;
         }
 
         else {
@@ -198,23 +228,23 @@ public class CustomBuild
     protected void Build(string path) 
     {
         this.CheckAppPath(ref CustomBuild.gradlePath, "gradle");
-        UnityEngine.Debug.Log(CustomBuild.gradlePath);
 
-        string gradleCmd = gradlePath + "gradle build";
-        string cmdPath = path + "/" + PlayerSettings.productName;
+        string gradleCmd = "'" + gradlePath + "gradle' build";
+        string cmdPath = "'" + path + "/" + PlayerSettings.productName + "'";
 
         BashUtils.RunCommandInPath(TERMINAL_CHOOSED, gradleCmd, cmdPath);
+        // BashUtils.RunCommandWithGUI(gradleCmd, cmdPath);
     }
 
     protected void AdbInstall(string path) 
     {
         this.CheckAppPath(ref CustomBuild.adbPath, "adb");
-        UnityEngine.Debug.Log(CustomBuild.adbPath);
 
-        string adbCmd = CustomBuild.adbPath + "adb install -r './build/outputs/apk/release/" + PlayerSettings.productName + "-release.apk'";
-        string cmdPath = path + "/" + PlayerSettings.productName;
+        string adbCmd = "'" + CustomBuild.adbPath + "adb' install -r './build/outputs/apk/release/" + PlayerSettings.productName + "-release.apk'";
+        string cmdPath = "'" + path + "/" + PlayerSettings.productName + "'";
 
         BashUtils.RunCommandInPath(TERMINAL_CHOOSED, adbCmd, cmdPath);
+        // BashUtils.RunCommandWithGUI(adbCmd, cmdPath);
     }
 }
 
