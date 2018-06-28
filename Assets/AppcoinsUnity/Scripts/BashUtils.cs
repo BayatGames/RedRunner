@@ -74,7 +74,7 @@ public class BashUtils {
 
         processInfo.UseShellExecute = false;
 
-	    Process newProcess = new Process();   
+	    Process newProcess = new Process();
 	    newProcess.StartInfo = processInfo;
 	    newProcess.Start();
         newProcess.WaitForExit();
