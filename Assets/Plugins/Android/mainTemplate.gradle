@@ -59,6 +59,7 @@ android {
     noCompress '.unity3d', '.ress', '.resource', '.obb'
   }
 
+**SIGN**
 
   buildTypes {
     debug {
@@ -71,9 +72,10 @@ android {
       minifyEnabled false
       useProguard false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'
-      signingConfig signingConfigs.debug
       resValue "bool", "APPCOINS_ENABLE_POA", "true"
       resValue "bool", "APPCOINS_ENABLE_DEBUG", "true"
+
+      **SIGNCONFIG**
     }
   }
   packagingOptions {
