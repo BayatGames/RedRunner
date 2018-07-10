@@ -9,8 +9,9 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 
-public class CustomBuildMenuItem : EditorWindow {
-    
+public class CustomBuildMenuItem : EditorWindow
+{
+
     [MenuItem("Custom Build/Custom Android Build")]
     public static void CallAndroidCustomBuild()
     {
@@ -38,6 +39,8 @@ public class CustomBuild
     private static string gradleUnixPath = "/Applications/Android Studio.app/Contents/gradle/gradle-4.4/bin/";
     public static string adbPath = EditorPrefs.GetString("AndroidSdkRoot") + "/platform-tools/adb";
     public static bool runAdbInstall = false;
+    public static bool runAdbRun = false;
+    public static string mainActivityPath = "com.unity3d.player.UnityPlayerActivity";
     public static BuildStage stage;
 
     protected string ANDROID_STRING = "android";
@@ -50,33 +53,34 @@ public class CustomBuild
     public CustomBuild()
     {
         StateBuildIdle();
-        if(SystemInfo.operatingSystemFamily == OperatingSystemFamily.MacOSX ||
+        if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.MacOSX ||
             SystemInfo.operatingSystemFamily == OperatingSystemFamily.Linux)
         {
             TERMINAL_CHOSEN = BASH_LOCATION;
             gradlePath = gradleUnixPath;
         }
 
-        else if(SystemInfo.operatingSystemFamily == OperatingSystemFamily.Windows)
+        else if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Windows)
         {
             TERMINAL_CHOSEN = CMD_LOCATION;
             gradlePath = gradleWindowsPath;
         }
 
-        else {
+        else
+        {
             UnityEngine.Debug.LogError("Please run Unity on a desktop OS");
         }
     }
 
     public void ExecuteCustomBuild(string target)
     {
-        if(TERMINAL_CHOSEN != null)
+        if (TERMINAL_CHOSEN != null)
         {
             ExportScenes expScenes = new ExportScenes();
             string[] scenesPath = expScenes.ScenesToString(expScenes.AllScenesToExport());
             CustomBuild.continueProcessEvent.RemoveAllListeners();
             CustomBuild.continueProcessEvent.AddListener(
-                delegate 
+                delegate
                 {
                     this.ExportAndBuildCustomBuildTarget(target, scenesPath);
                 }
@@ -92,64 +96,143 @@ public class CustomBuild
     protected void ExportAndBuildCustomBuildTarget(string target, string[] scenesPath)
     {
         _buildPath = null;
-        if(target.ToLower() == ANDROID_STRING)
+        if (target.ToLower() == ANDROID_STRING)
         {
             StateUnityBuild();
             _buildPath = this.AndroidCustomBuild(scenesPath);
         }
 
-        if(_buildPath != null)
+        if (_buildPath != null)
         {
             StateGradleBuild();
-            Build(_buildPath);
-            
-            if(CustomBuild.runAdbInstall)
+            Build(_buildPath, (int retCode) =>
             {
-                StateAdbInstall();
-                AdbInstall(_buildPath);
-            }
+
+                UnityEngine.Debug.Log("Gradle finished with retcode " + retCode);
+
+                if (retCode == 0)
+                {
+                    //Check if the user marked the build to be auto installed on the device
+                    if (CustomBuild.runAdbInstall)
+                    {
+                        StateAdbInstall();
+
+                        AdbInstall(_buildPath, (int returnCode) =>
+                        {
+
+                            UnityEngine.Debug.Log("adb install finished with returnCode " + returnCode);
+
+                            if (returnCode == 0)
+                            {
+                                if (CustomBuild.runAdbRun)
+                                {
+                                    StateAdbRun();
+
+                                    AdbRun(_buildPath, (int rCode) =>
+                                    {
+
+                                        UnityEngine.Debug.Log("adb run finished with returnCode " + rCode);
+
+                                        if (rCode == 0)
+                                        {
+                                            StateBuildDone();
+                                        }
+                                        else
+                                        {
+                                            StateBuildFailed("Error running build (ADB). For more information open ProcessLog.out located in projectRoot/Assets/AppcoinsUnity/Tools");
+                                        }
+
+                                    });
+
+                                }
+                                else
+                                {
+                                    StateBuildDone();
+                                }
+                            }
+                            else
+                            {
+                                StateBuildFailed("Error installing build (ADB). For more information open ProcessLog.out located in projectRoot/Assets/AppcoinsUnity/Tools");
+                            }
+
+                        });
+
+                    }
+                    else
+                    {
+                        StateBuildDone();
+                    }
+                }
+                else
+                {
+                    StateBuildFailed("Error building (Gradle). For more information open ProcessLog.out located in projectRoot/Assets/AppcoinsUnity/Tools");
+                }
+
+            });
+        }
+        else
+        {
+            StateBuildFailed("Error building (Unity)");
         }
 
-        StateBuildDone();
     }
 
-#region State Handling
+    #region State Handling
 
-    private void ChangeStage(BuildStage theStage) {
+    private void ChangeStage(BuildStage theStage)
+    {
         stage = theStage;
     }
 
-    public void StateBuildIdle(){
+    public void StateBuildIdle()
+    {
         ChangeStage(BuildStage.IDLE);
     }
 
-    public void StateUnityBuild() {
+    public void StateUnityBuild()
+    {
         ChangeStage(BuildStage.UNITY_BUILD);
     }
 
-    public void StateGradleBuild() {
+    public void StateGradleBuild()
+    {
         ChangeStage(BuildStage.GRADLE_BUILD);
     }
 
-    public void StateAdbInstall() {
+    public void StateAdbInstall()
+    {
         ChangeStage(BuildStage.ADB_INSTALL);
     }
 
-    public void StateBuildDone() {
+    public void StateAdbRun()
+    {
+        ChangeStage(BuildStage.ADB_RUN);
+    }
+
+    public void StateBuildDone()
+    {
         ChangeStage(BuildStage.DONE);
 
         if (_buildPath != null)
             EditorUtility.DisplayDialog("Custom Build", "Build Done!", "OK");
     }
 
-#endregion
+    public void StateBuildFailed(string errorMsg)
+    {
+        ChangeStage(BuildStage.IDLE);
+
+        EditorUtility.DisplayDialog("Custom Build", "Build Failed!\n" + errorMsg, "OK");
+    }
+
+    #endregion
 
     protected string AndroidCustomBuild(string[] scenesPath)
     {
         return GenericBuild(scenesPath, null, BuildTarget.Android, BuildOptions.AcceptExternalModificationsToPlayer);
     }
 
-    public static string GetProjectPath() {
+    public static string GetProjectPath()
+    {
         string projPath = Application.dataPath;
 
         int index = projPath.LastIndexOf('/');
@@ -158,25 +241,39 @@ public class CustomBuild
         return projPath;
     }
 
-    protected string GenericBuild (string[] scenesPath, string target_dir, BuildTarget build_target, BuildOptions build_options)
+    protected string GenericBuild(string[] scenesPath, string target_dir, BuildTarget build_target, BuildOptions build_options)
     {
         string path = this.SelectPath();
 
+        if (path == null || path.Length == 0)
+        {
+            return null;
+        }
+
         string projPath = CustomBuild.GetProjectPath();
 
-        if (path == projPath) {
+        if (path == projPath)
+        {
             EditorUtility.DisplayDialog("Custom Build", "Please pick a folder that is not the project root", "Got it");
             return null;
-        } 
+        }
 
         this.DeleteIfFolderAlreadyExists(path);
 
-        EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
+        #if UNITY_5_6_OR_NEWER
+            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
+
+        #else
+            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTarget.Android);
+
+        #endif
+
         BuildPipeline.BuildPlayer(scenesPath, path, build_target, build_options);
         return path;
     }
 
-    protected string SelectPath() {
+    protected string SelectPath()
+    {
         return EditorUtility.SaveFolderPanel("Save Android Project to folder", "", "");
     }
 
@@ -185,19 +282,19 @@ public class CustomBuild
     {
         string[] folders = Directory.GetDirectories(path);
 
-        for(int i = 0; i < folders.Length; i++)
+        for (int i = 0; i < folders.Length; i++)
         {
-            if((new DirectoryInfo(folders[i]).Name) == PlayerSettings.productName)
+            if ((new DirectoryInfo(folders[i]).Name) == PlayerSettings.productName)
             {
                 System.IO.DirectoryInfo di = new DirectoryInfo(folders[i]);
 
                 foreach (FileInfo file in di.GetFiles())
                 {
-                    file.Delete(); 
+                    file.Delete();
                 }
                 foreach (DirectoryInfo dir in di.GetDirectories())
                 {
-                    dir.Delete(true); 
+                    dir.Delete(true);
                 }
             }
         }
@@ -214,15 +311,16 @@ public class CustomBuild
         }
     }
 
-    protected void Build(string path) 
+    protected void Build(string path, System.Action<int> onDoneCallback)
     {
         this.FixAppPath(ref CustomBuild.gradlePath, "gradle");
 
-        string gradleCmd = "'" + gradlePath + "gradle' build";
+        string gradleCmd = "'" + gradlePath + "gradle'";
+        string gradleArgs = "build";
         string cmdPath = "'" + path + "/" + PlayerSettings.productName + "'";
 
         Terminal terminal = null;
-        if(TERMINAL_CHOSEN == CMD_LOCATION)
+        if (TERMINAL_CHOSEN == CMD_LOCATION)
         {
             terminal = new CMD();
         }
@@ -232,19 +330,44 @@ public class CustomBuild
             terminal = new Bash();
         }
 
-        terminal.RunCommand(gradleCmd, cmdPath);
+        //If we're not in windows we need to make sure that the gradle file has exec permission
+        //and if not, set them
+        if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.MacOSX ||
+            SystemInfo.operatingSystemFamily == OperatingSystemFamily.Linux)
+        {
+            string chmodCmd = "chmod";
+            string chmodArgs = "+x '" + gradlePath + "gradle'";
+
+            terminal.RunCommand(0, chmodCmd, chmodArgs, ".", (int retCode) =>
+            {
+                if (retCode == 0)
+                {
+                    terminal.RunCommand(1, gradleCmd, gradleArgs, cmdPath, onDoneCallback);
+                }
+                else
+                {
+                    onDoneCallback.Invoke(-1);
+                }
+            });
+
+        }
+        else
+        {
+            terminal.RunCommand(1, gradleCmd, gradleArgs, cmdPath, onDoneCallback);
+        }
     }
 
     //Runs overriding ADB install process
-    protected void AdbInstall(string path) 
+    protected void AdbInstall(string path, System.Action<int> onDoneCallback)
     {
         this.FixAppPath(ref CustomBuild.adbPath, "adb");
 
-        string adbCmd = "'" + CustomBuild.adbPath + "adb' install -r './build/outputs/apk/release/" + PlayerSettings.productName + "-release.apk'";
+        string adbCmd = "'" + CustomBuild.adbPath + "adb'";
+        string adbArgs = "-d install -r './build/outputs/apk/release/" + PlayerSettings.productName + "-release.apk'";
         string cmdPath = "'" + path + "/" + PlayerSettings.productName + "'";
 
         Terminal terminal = null;
-        if(TERMINAL_CHOSEN == CMD_LOCATION)
+        if (TERMINAL_CHOSEN == CMD_LOCATION)
         {
             terminal = new CMD();
         }
@@ -254,7 +377,33 @@ public class CustomBuild
             terminal = new Bash();
         }
 
-        terminal.RunCommand(adbCmd, cmdPath);
+        terminal.RunCommand(2, adbCmd, adbArgs, cmdPath, onDoneCallback);
+    }
+
+    protected void AdbRun(string path, System.Action<int> onDoneCallback)
+    {
+        this.FixAppPath(ref CustomBuild.adbPath, "adb");
+
+        string adbCmd = "'" + CustomBuild.adbPath + "adb'";
+#if UNITY_5_6_OR_NEWER
+        string adbArgs = "shell am start -n '" + PlayerSettings.applicationIdentifier + "/" + CustomBuild.mainActivityPath + "'";
+#else
+        string adbArgs = "shell am start -n '" + PlayerSettings.bundleIdentifier + "/" + CustomBuild.mainActivityPath + "'";
+#endif
+        string cmdPath = "'" + path + "/" + PlayerSettings.productName + "'";
+
+        Terminal terminal = null;
+        if (TERMINAL_CHOSEN == CMD_LOCATION)
+        {
+            terminal = new CMD();
+        }
+
+        else
+        {
+            terminal = new Bash();
+        }
+
+        terminal.RunCommand(2, adbCmd, adbArgs, cmdPath, onDoneCallback);
     }
 }
 
@@ -270,13 +419,13 @@ public class CustomBuildWindow : EditorWindow
     {
         CustomBuildWindow.instance = (CustomBuildWindow)EditorWindow.GetWindowWithRect(
             typeof(CustomBuildWindow),
-            new Rect(0, 0, 600, 400),
+            new Rect(0, 0, 600, 500),
             true,
             "Custom Build Settings"
         );
 
         instance.scenes = openScenes;
-        instance.minSize = new Vector2(600, 400);
+        instance.minSize = new Vector2(600, 500);
         instance.autoRepaintOnSceneChange = true;
         instance.Show();
     }
@@ -326,27 +475,34 @@ public class CustomBuildWindow : EditorWindow
         adbPartHeight += 20;
         CustomBuild.runAdbInstall = GUI.Toggle(new Rect(5, adbPartHeight, 590, 20), CustomBuild.runAdbInstall, "Install build when done?");
 
-        float scenesPartHeight = adbPartHeight + 20;
+        float adbRunPartHeight = adbPartHeight + 20;
+        GUI.Label(new Rect(5, adbRunPartHeight, 590, 40), "Path to the main activity name (com.unity3d.player.UnityPlayerActivity by default)");
+        adbRunPartHeight += 20;
+        CustomBuild.mainActivityPath = GUI.TextField(new Rect(5, adbRunPartHeight, 590, 20), CustomBuild.mainActivityPath);
+        adbRunPartHeight += 20;
+        CustomBuild.runAdbRun = GUI.Toggle(new Rect(5, adbRunPartHeight, 590, 20), CustomBuild.runAdbRun, "Run build when done?"); 
+
+        float scenesPartHeight = adbRunPartHeight + 20;
         GUI.Label(new Rect(5, scenesPartHeight, 590, 40), "Select what scenes you want to export:\n(Only scenes that are in build settings are true by default)");
         float scrollViewLength = scenes.Length * 25f;
-        scenesPartHeight += 25;
-        scrollViewVector = GUI.BeginScrollView(new Rect(5, scenesPartHeight, 590, 330), scrollViewVector, new Rect(0, 0, 590, scrollViewLength));
+        scenesPartHeight += 30;
+        scrollViewVector = GUI.BeginScrollView(new Rect(5, scenesPartHeight, 590, 215), scrollViewVector, new Rect(0, 0, 500, scrollViewLength));
         for (int i = 0; i < scenes.Length; i++)
         {
-            scenes[i].exportScene = GUI.Toggle(new Rect(10, 10 + i * 20, 100, 20), scenes[i].exportScene, scenes[i].scene.name);
+            scenes[i].exportScene = GUI.Toggle(new Rect(10, 10 + i * 20, 500, 20), scenes[i].exportScene, scenes[i].scene.path);
         }
         GUI.EndScrollView();
 
-        if (GUI.Button(new Rect(5, 370, 100, 20), "Player Settings"))
+        if (GUI.Button(new Rect(5, 470, 100, 20), "Player Settings"))
         {
             EditorApplication.ExecuteMenuItem("Edit/Project Settings/Player");
         }
-        if (GUI.Button(new Rect(460, 370, 60, 20), "Cancel"))
+        if (GUI.Button(new Rect(460, 470, 60, 20), "Cancel"))
         {
             this.Close();
         }
 
-        if (CustomBuild.gradlePath != "" && GUI.Button(new Rect(530, 370, 60, 20), "Confirm"))
+        if (CustomBuild.gradlePath != "" && GUI.Button(new Rect(530, 470, 60, 20), "Confirm"))
         {
             CustomBuild.continueProcessEvent.Invoke();
             this.Close();
@@ -383,12 +539,15 @@ public class ExportScenes
 
     public void getAllOpenScenes()
     {
-        int sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCount;    
+        var allScenes = EditorBuildSettings.scenes;
+        int sceneCount = allScenes.Length;
+        //        int sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCount;  
         scenes = new SceneToExport[sceneCount];
 
         for(int i = 0; i < sceneCount; i++)
         {
-            UnityEngine.SceneManagement.Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i);
+            //UnityEngine.SceneManagement.Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i);
+            EditorBuildSettingsScene scene = allScenes[i];
 
             if(scenes[i] == null) 
             {
@@ -396,7 +555,7 @@ public class ExportScenes
             }
 
             scenes[i].scene = scene;
-            scenes[i].exportScene = scene.buildIndex != -1 ? true : false;
+            scenes[i].exportScene = scene.enabled ? true : false;
         }
     }
 
@@ -418,8 +577,8 @@ public class SceneToExport
         set { _exportScene = value; }
     }
 
-    private UnityEngine.SceneManagement.Scene _scene;
-    public UnityEngine.SceneManagement.Scene scene
+    private EditorBuildSettingsScene _scene;
+    public EditorBuildSettingsScene scene
     {
         get { return _scene; }
         set { _scene = value; }

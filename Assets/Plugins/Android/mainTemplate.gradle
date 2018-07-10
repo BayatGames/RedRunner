@@ -42,9 +42,6 @@ android {
     versionCode 1
     versionName '0.1'
     multiDexEnabled true
-    dexOptions {
-      javaMaxHeapSize "4g"
-    }
     compileOptions {
       sourceCompatibility 1.8
       targetCompatibility 1.8
