@@ -38,6 +38,6 @@ namespace Aptoide.AppcoinsUnity{
 		public void makePurchase(string skuid){
 			appcoinsUnity.makePurchase (skuid);
 		}
- 
+
 	}
 }

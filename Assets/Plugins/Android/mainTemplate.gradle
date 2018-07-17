@@ -23,9 +23,9 @@ allprojects {
 apply plugin: 'com.android.application'
 
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
+  compile fileTree(dir: 'libs', excludes: ['com.android.support.support-annotations*.jar'], include: ['*.jar'])
   api 'com.asfoundation:appcoins:0.3.6a'
-  implementation fileTree(dir: 'libs', include: ['*.aar'])
+  **DEPS**
 }
 
 android {
@@ -64,6 +64,9 @@ android {
       useProguard false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'
       jniDebuggable true
+      resValue "bool", "APPCOINS_ENABLE_POA", "true"
+      resValue "bool", "APPCOINS_ENABLE_DEBUG", "true"
+      resValue "string", "APPCOINS_PREFAB", "AppcoinsUnity"
     }
     release {
       minifyEnabled false
@@ -71,6 +74,7 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'
       resValue "bool", "APPCOINS_ENABLE_POA", "true"
       resValue "bool", "APPCOINS_ENABLE_DEBUG", "true"
+      resValue "string", "APPCOINS_PREFAB", "AppcoinsUnity"
 
       **SIGNCONFIG**
     }
@@ -81,5 +85,4 @@ android {
   }
 
 } 
-
 

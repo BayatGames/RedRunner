@@ -40,7 +40,9 @@ public class CustomBuild
     public static string adbPath = EditorPrefs.GetString("AndroidSdkRoot") + "/platform-tools/adb";
     public static bool runAdbInstall = false;
     public static bool runAdbRun = false;
-    public static string mainActivityPath = "com.unity3d.player.UnityPlayerActivity";
+    public static bool debugMode = false;
+    // public static string mainActivityPath = "com.unity3d.player.UnityPlayerActivity";
+    public static string mainActivityPath = ".UnityPlayerActivity";
     public static BuildStage stage;
 
     protected string ANDROID_STRING = "android";
@@ -77,11 +79,12 @@ public class CustomBuild
         if (TERMINAL_CHOSEN != null)
         {
             ExportScenes expScenes = new ExportScenes();
-            string[] scenesPath = expScenes.ScenesToString(expScenes.AllScenesToExport());
+            expScenes.AllScenesToExport();
             CustomBuild.continueProcessEvent.RemoveAllListeners();
             CustomBuild.continueProcessEvent.AddListener(
                 delegate
                 {
+                    string[] scenesPath = expScenes.ScenesToString();
                     this.ExportAndBuildCustomBuildTarget(target, scenesPath);
                 }
             );
@@ -319,6 +322,11 @@ public class CustomBuild
         string gradleArgs = "build";
         string cmdPath = "'" + path + "/" + PlayerSettings.productName + "'";
 
+        if(CustomBuild.debugMode)
+        {
+            gradleArgs += " --debug";
+        }
+
         Terminal terminal = null;
         if (TERMINAL_CHOSEN == CMD_LOCATION)
         {
@@ -338,11 +346,11 @@ public class CustomBuild
             string chmodCmd = "chmod";
             string chmodArgs = "+x '" + gradlePath + "gradle'";
 
-            terminal.RunCommand(0, chmodCmd, chmodArgs, ".", (int retCode) =>
+            terminal.RunCommand(0, chmodCmd, chmodArgs, ".", false, (int retCode) =>
             {
                 if (retCode == 0)
                 {
-                    terminal.RunCommand(1, gradleCmd, gradleArgs, cmdPath, onDoneCallback);
+                    terminal.RunCommand(1, gradleCmd, gradleArgs, cmdPath, CustomBuild.debugMode, onDoneCallback);
                 }
                 else
                 {
@@ -353,7 +361,7 @@ public class CustomBuild
         }
         else
         {
-            terminal.RunCommand(1, gradleCmd, gradleArgs, cmdPath, onDoneCallback);
+            terminal.RunCommand(1, gradleCmd, gradleArgs, cmdPath, CustomBuild.debugMode, onDoneCallback);
         }
     }
 
@@ -377,7 +385,7 @@ public class CustomBuild
             terminal = new Bash();
         }
 
-        terminal.RunCommand(2, adbCmd, adbArgs, cmdPath, onDoneCallback);
+        terminal.RunCommand(2, adbCmd, adbArgs, cmdPath, false, onDoneCallback);
     }
 
     protected void AdbRun(string path, System.Action<int> onDoneCallback)
@@ -403,7 +411,7 @@ public class CustomBuild
             terminal = new Bash();
         }
 
-        terminal.RunCommand(2, adbCmd, adbArgs, cmdPath, onDoneCallback);
+        terminal.RunCommand(2, adbCmd, adbArgs, cmdPath, false, onDoneCallback);
     }
 }
 
@@ -415,7 +423,7 @@ public class CustomBuildWindow : EditorWindow
     public Vector2 scrollViewVector = Vector2.zero;
 
     //Create the custom Editor Window
-    public static void CreateExportScenesWindow(SceneToExport[] openScenes)
+    public static void CreateExportScenesWindow(ref SceneToExport[] openScenes)
     {
         CustomBuildWindow.instance = (CustomBuildWindow)EditorWindow.GetWindowWithRect(
             typeof(CustomBuildWindow),
@@ -476,13 +484,17 @@ public class CustomBuildWindow : EditorWindow
         CustomBuild.runAdbInstall = GUI.Toggle(new Rect(5, adbPartHeight, 590, 20), CustomBuild.runAdbInstall, "Install build when done?");
 
         float adbRunPartHeight = adbPartHeight + 20;
-        GUI.Label(new Rect(5, adbRunPartHeight, 590, 40), "Path to the main activity name (com.unity3d.player.UnityPlayerActivity by default)");
+                                                                                    // com.unity3d.player.UnityPlayerActivity
+        GUI.Label(new Rect(5, adbRunPartHeight, 590, 40), "Path to the main activity name (.UnityPlayerActivity by default)");
         adbRunPartHeight += 20;
         CustomBuild.mainActivityPath = GUI.TextField(new Rect(5, adbRunPartHeight, 590, 20), CustomBuild.mainActivityPath);
         adbRunPartHeight += 20;
         CustomBuild.runAdbRun = GUI.Toggle(new Rect(5, adbRunPartHeight, 590, 20), CustomBuild.runAdbRun, "Run build when done?"); 
 
-        float scenesPartHeight = adbRunPartHeight + 20;
+        float debugModeHeight = adbRunPartHeight + 20;
+        CustomBuild.debugMode = GUI.Toggle(new Rect(5, debugModeHeight, 590, 20), CustomBuild.debugMode, "Run gradle in debug mode? This will not end gradle terminal automatically.");
+
+        float scenesPartHeight = debugModeHeight + 20;
         GUI.Label(new Rect(5, scenesPartHeight, 590, 40), "Select what scenes you want to export:\n(Only scenes that are in build settings are true by default)");
         float scrollViewLength = scenes.Length * 25f;
         scenesPartHeight += 30;
@@ -514,9 +526,9 @@ public class CustomBuildWindow : EditorWindow
 // Get all the loaded scenes and asks the user what scenes he wants to export by 'ExportScenesWindow' class.
 public class ExportScenes
 {
-    private SceneToExport[] scenes;
+    private SceneToExport[] scenes = null;
 
-    public string[] ScenesToString(SceneToExport[] scenes) 
+    public string[] ScenesToString() 
     {
         ArrayList pathScenes = new ArrayList();
 
@@ -531,10 +543,10 @@ public class ExportScenes
         return (pathScenes.ToArray(typeof(string)) as string[]);
     }
 
-    public SceneToExport[] AllScenesToExport()
+    public void AllScenesToExport()
     {
         this.getAllOpenScenes();
-        return this.SelectScenesToExport();
+        this.SelectScenesToExport();
     } 
 
     public void getAllOpenScenes()
@@ -560,10 +572,9 @@ public class ExportScenes
     }
 
     // Opens ExportScenesWindow window.
-    public SceneToExport[] SelectScenesToExport() 
+    public void SelectScenesToExport() 
     {
-        CustomBuildWindow.CreateExportScenesWindow(scenes);
-        return scenes;
+        CustomBuildWindow.CreateExportScenesWindow(ref scenes);
     }
 }
 

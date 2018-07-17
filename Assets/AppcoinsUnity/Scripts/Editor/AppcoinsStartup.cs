@@ -24,11 +24,11 @@ public class Startup
 
         //Check if the bunde id is the default one and change it if it to avoid that error        
         #if UNITY_5_6_OR_NEWER
-            if (PlayerSettings.applicationIdentifier == DEFAULT_UNITY_PACKAGE_IDENTIFIER)
-                PlayerSettings.applicationIdentifier = "com.aptoide.appcoins";
+            if (PlayerSettings.applicationIdentifier.Equals(DEFAULT_UNITY_PACKAGE_IDENTIFIER))
+                PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, "com.aptoide.appcoins");
 
         #else
-            if (PlayerSettings.bundleIdentifier == DEFAULT_UNITY_PACKAGE_IDENTIFIER)
+            if (PlayerSettings.bundleIdentifier.Equals(DEFAULT_UNITY_PACKAGE_IDENTIFIER))
                 PlayerSettings.bundleIdentifier = "com.aptoide.appcoins";
         
         #endif
