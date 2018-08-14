@@ -54,8 +54,12 @@ namespace RedRunner
 		{
 			if ( Input.GetButtonDown ( "Cancel" ) )
 			{
-				OpenScreen ( m_PauseScreen );
-			}
+                //If the pause screen is not open : open it otherwise close it
+                if (!m_PauseScreen.open)
+                    OpenScreen(m_PauseScreen);
+                else
+                    CloseScreen(m_PauseScreen);
+            }
 			if ( Input.GetMouseButtonDown ( 0 ) )
 			{
 				Cursor.SetCursor ( m_CursorClickTexture, Vector2.zero, CursorMode.Auto );
@@ -111,6 +115,8 @@ namespace RedRunner
 		public void CloseScreen ( int index )
 		{
 			CloseScreen ( m_Screens [ index ] );
+            //We are sure that we want to resume the game when we close a screen
+            GameManager.Singleton.ResumeGame();
 		}
 
 		public void CloseScreen ( UIScreen screen )
