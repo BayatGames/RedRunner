@@ -58,7 +58,11 @@ namespace RedRunner
                 if (!m_PauseScreen.open)
                     OpenScreen(m_PauseScreen);
                 else
+                {
                     CloseScreen(m_PauseScreen);
+                    ////We are sure that we want to resume the game when we close a screen
+                    GameManager.Singleton.ResumeGame();
+                }
             }
 			if ( Input.GetMouseButtonDown ( 0 ) )
 			{
@@ -115,8 +119,7 @@ namespace RedRunner
 		public void CloseScreen ( int index )
 		{
 			CloseScreen ( m_Screens [ index ] );
-            ////We are sure that we want to resume the game when we close a screen
-            //GameManager.Singleton.ResumeGame();
+
 		}
 
 		public void CloseScreen ( UIScreen screen )
