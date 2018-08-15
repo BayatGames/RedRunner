@@ -16,11 +16,15 @@ namespace RedRunner.UI
 
 		protected override void Awake ()
 		{
-			Coin.OnCoinCollected += Coin_OnCoinCollected;
 			base.Awake ();
 		}
 
-		void Coin_OnCoinCollected (Coin coin)
+        protected override void Start()
+        {
+            GameManager.Singleton.m_Coin.AddEventAndFire(Coin_OnCoinCollected, this);
+        }
+
+        void Coin_OnCoinCollected (int coinValue)
 		{
 			GetComponent<Animator> ().SetTrigger ("Collect");
 		}
@@ -29,7 +33,5 @@ namespace RedRunner.UI
 		{
 			m_ParticleSystem.Play ();
 		}
-
 	}
-
 }

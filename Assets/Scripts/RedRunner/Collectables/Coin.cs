@@ -7,14 +7,8 @@ using RedRunner.Characters;
 
 namespace RedRunner.Collectables
 {
-
 	public class Coin : Collectable
 	{
-
-		public delegate void CoinCollectHandler (Coin coin);
-
-		public static event CoinCollectHandler OnCoinCollected;
-
 		[SerializeField]
 		protected ParticleSystem m_ParticleSystem;
 		[SerializeField]
@@ -71,9 +65,7 @@ namespace RedRunner.Collectables
 
 		public override void Collect ()
 		{
-			if (OnCoinCollected != null) {
-				OnCoinCollected (this);
-			}
+            GameManager.Singleton.m_Coin.Value++;
 			m_Animator.SetTrigger (COLLECT_TRIGGER);
 			m_ParticleSystem.Play ();
 			m_SpriteRenderer.enabled = false;
@@ -81,7 +73,5 @@ namespace RedRunner.Collectables
 			Destroy (gameObject, m_ParticleSystem.main.duration);
 			AudioManager.Singleton.PlayCoinSound (transform.position);
 		}
-
 	}
-
 }
