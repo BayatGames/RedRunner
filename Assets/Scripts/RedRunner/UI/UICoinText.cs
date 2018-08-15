@@ -3,33 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using RedRunner.Collectables;
+using System;
 
 namespace RedRunner.UI
 {
-
 	public class UICoinText : UIText
 	{
-
 		[SerializeField]
 		protected string m_CoinTextFormat = "x {0}";
 
 		protected override void Awake ()
 		{
-			GameManager.OnCoinChanged += GameManager_OnCoinChanged;
-			Coin.OnCoinCollected += Coin_OnCoinCollected;
 			base.Awake ();
 		}
 
-		void Coin_OnCoinCollected (Coin coin)
-		{
-			GetComponent<Animator> ().SetTrigger ("Collect");
-		}
+        protected override void Start()
+        {
+            GameManager.Singleton.m_Coin.AddEventAndFire(UpdateCoinsText, this);
+        }
 
-		void GameManager_OnCoinChanged (int coin)
-		{
-			text = string.Format (m_CoinTextFormat, coin);
-		}
-
+        private void UpdateCoinsText(int newCoinValue)
+        {
+            GetComponent<Animator>().SetTrigger("Collect");
+            text = string.Format(m_CoinTextFormat, newCoinValue);
+        }
 	}
-
 }

@@ -7,10 +7,8 @@ using UnityEngine.EventSystems;
 
 namespace RedRunner.UI
 {
-
 	public class UIScreen : MonoBehaviour
 	{
-
 		public delegate void CloseHandler ();
 
 		public delegate void OpenHandler ();
