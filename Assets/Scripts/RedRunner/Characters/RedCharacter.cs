@@ -12,9 +12,6 @@ namespace RedRunner.Characters
 
 	public class RedCharacter : Character
 	{
-
-		public override event DeadHandler OnDead;
-
 		#region Fields
 
 		[Header ( "Character Details" )]
@@ -66,16 +63,10 @@ namespace RedRunner.Characters
 		[SerializeField]
 		protected AudioSource m_JumpAndGroundedAudioSource;
 
-		[Header ( "Character Events" )]
-		[Space]
-		[SerializeField]
-		protected CharacterDeadEvent m_OnCharacterDead;
-
 		#endregion
 
 		#region Private Variables
 
-		protected bool m_IsDead = false;
 		protected bool m_ClosingEye = false;
 		protected bool m_Guard = false;
 		protected bool m_Block = false;
@@ -234,15 +225,7 @@ namespace RedRunner.Characters
 			}
 		}
 
-		public override bool IsDead
-		{
-			get
-			{
-				return m_IsDead;
-			}
-		}
-
-		public override bool ClosingEye
+        public override bool ClosingEye
 		{
 			get
 			{
@@ -284,7 +267,7 @@ namespace RedRunner.Characters
 			m_InitialScale = transform.localScale;
 			m_GroundCheck.OnGrounded += GroundCheck_OnGrounded;
 			m_Skeleton.OnActiveChanged += Skeleton_OnActiveChanged;
-			m_IsDead = false;
+            IsDead = new Property<bool>(false);
 			m_ClosingEye = false;
 			m_Guard = false;
 			m_Block = false;
@@ -320,7 +303,7 @@ namespace RedRunner.Characters
 			{
 				Jump ();
 			}
-			if ( m_IsDead && !m_ClosingEye )
+			if ( IsDead.Value && !m_ClosingEye )
 			{
 				StartCoroutine ( CloseEye () );
 			}
@@ -365,7 +348,7 @@ namespace RedRunner.Characters
 			m_Animator.SetFloat ( "VelocityX", Mathf.Abs ( m_Rigidbody2D.velocity.x ) );
 			m_Animator.SetFloat ( "VelocityY", m_Rigidbody2D.velocity.y );
 			m_Animator.SetBool ( "IsGrounded", m_GroundCheck.IsGrounded );
-			m_Animator.SetBool ( "IsDead", m_IsDead );
+			m_Animator.SetBool ( "IsDead", IsDead.Value );
 			m_Animator.SetBool ( "Block", m_Block );
 			m_Animator.SetBool ( "Guard", m_Guard );
 			if ( Input.GetButtonDown ( "Roll" ) )
@@ -438,7 +421,7 @@ namespace RedRunner.Characters
 
 		public override void Move ( float horizontalAxis )
 		{
-			if ( !m_IsDead )
+			if ( !IsDead.Value )
 			{
 				float speed = m_CurrentRunSpeed;
 //				if ( CrossPlatformInputManager.GetButton ( "Walk" ) )
@@ -465,7 +448,7 @@ namespace RedRunner.Characters
 
 		public override void Jump ()
 		{
-			if ( !m_IsDead )
+			if ( !IsDead.Value )
 			{
 				if ( m_GroundCheck.IsGrounded )
 				{
@@ -487,13 +470,9 @@ namespace RedRunner.Characters
 
 		public override void Die ( bool blood )
 		{
-			if ( !m_IsDead )
+			if ( !IsDead.Value )
 			{
-				if ( OnDead != null )
-				{
-					OnDead ();
-				}
-				m_IsDead = true;
+                IsDead.Value = true;
 				m_Skeleton.SetActive ( true, m_Rigidbody2D.velocity );
 				if ( blood )
 				{
@@ -503,14 +482,13 @@ namespace RedRunner.Characters
 						                          Quaternion.identity );
 					Destroy ( particle.gameObject, particle.main.duration );
 				}
-				m_OnCharacterDead.Invoke ();
 				CameraController.Singleton.fastMove = true;
 			}
 		}
 
 		public override void EmitRunParticle ()
 		{
-			if ( !m_IsDead )
+			if ( !IsDead.Value )
 			{
 				m_RunParticleSystem.Emit ( 1 );
 			}
@@ -518,7 +496,7 @@ namespace RedRunner.Characters
 
 		public override void Reset ()
 		{
-			m_IsDead = false;
+            IsDead.Value = false;
 			m_ClosingEye = false;
 			m_Guard = false;
 			m_Block = false;
@@ -547,7 +525,7 @@ namespace RedRunner.Characters
 
 		void GroundCheck_OnGrounded ()
 		{
-			if ( !m_IsDead )
+			if ( !IsDead.Value )
 			{
 				m_JumpParticleSystem.Play ();
 				AudioManager.Singleton.PlayGroundedSound ( m_JumpAndGroundedAudioSource );

@@ -47,6 +47,11 @@ namespace RedRunner
             }
         }
 
+        public UIScreen GetUIScreen(UIScreenInfo screenInfo)
+        {
+            return m_Screens.Find(el => el.ScreenInfo == screenInfo);
+        }
+
         void Awake()
         {
             if (m_Singleton != null)
@@ -60,16 +65,22 @@ namespace RedRunner
 
         void Start()
         {
-            OpenScreen(m_Screens[0]);
+            Init();
+        }
+
+        public void Init()
+        {
+            var loadingScreen = GetUIScreen(UIScreenInfo.LOADING_SCREEN);
+            OpenScreen(loadingScreen);
         }
 
         void Update()
         {
-            if (Input.GetButtonDown("Cancel"))
+            if (Input.GetButtonDown("Cancel") && GameManager.Singleton.gameRunning)
             {
                 //Added enumeration to store screen info, aka type, so it will be easier to understand it
-                var pauseScreen = m_Screens.Find(el => el.ScreenInfo == UIScreenInfo.PAUSE_SCREEN);
-                var ingameScreen = m_Screens.Find(el => el.ScreenInfo == UIScreenInfo.IN_GAME_SCREEN);
+                var pauseScreen = GetUIScreen(UIScreenInfo.PAUSE_SCREEN);
+                var ingameScreen = GetUIScreen(UIScreenInfo.IN_GAME_SCREEN);
 
                 //If the pause screen is not open : open it otherwise close it
                 if (!pauseScreen.IsOpen)
@@ -122,13 +133,6 @@ namespace RedRunner
         public void OpenScreen(UIScreen screen)
         {
             CloseAllScreens();
-            if (m_ActiveScreen == null)
-            {
-                m_ActiveScreen = screen;
-                m_ActiveScreen.UpdateScreenStatus(true);
-                return;
-            }
-            m_ActiveScreen.UpdateScreenStatus(false);
             screen.UpdateScreenStatus(true);
             m_ActiveScreen = screen;
         }

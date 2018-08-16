@@ -42,8 +42,6 @@ namespace RedRunner
         private string m_ShareText;
         [SerializeField]
         private string m_ShareUrl;
-        [SerializeField]
-        private LoadEvent m_OnLoaded;
         private float m_StartScoreX = 0f;
         private float m_HighScore = 0f;
         private float m_LastScore = 0f;
@@ -58,6 +56,7 @@ namespace RedRunner
         /// with this in-house developed callbacks feature, we garantee that the callback will be removed when we don't need it.
         /// </summary>
         public Property<int> m_Coin = new Property<int>(0);
+
 
         #region Getters
         public bool gameStarted
@@ -94,7 +93,6 @@ namespace RedRunner
             }
             SaveGame.Serializer = new SaveGameBinarySerializer();
             m_Singleton = this;
-            EndGame();
             m_Score = 0f;
 
             if (SaveGame.Exists("coin"))
@@ -130,11 +128,21 @@ namespace RedRunner
                 m_HighScore = 0f;
             }
 
-            m_MainCharacter.OnDead += MainCharacter_OnDead;
-            m_StartScoreX = m_MainCharacter.transform.position.x;
         }
 
-        void MainCharacter_OnDead()
+        void UpdateDeathEvent(bool isDead)
+        {
+            if (isDead)
+            {
+                StartCoroutine(DeathCrt());
+            }
+            else
+            {
+                StopCoroutine("DeathCrt");
+            }
+        }
+
+        IEnumerator DeathCrt()
         {
             m_LastScore = m_Score;
             if (m_Score > m_HighScore)
@@ -145,10 +153,25 @@ namespace RedRunner
             {
                 OnScoreChanged(m_Score, m_HighScore, m_LastScore);
             }
+
+            yield return new WaitForSecondsRealtime(1.5f);
+
+            EndGame();
+            var endScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.END_SCREEN);
+            UIManager.Singleton.OpenScreen(endScreen);
         }
 
-        void Start()
+        private void Start()
         {
+            m_MainCharacter.IsDead.AddEventAndFire(UpdateDeathEvent, this);
+            m_StartScoreX = m_MainCharacter.transform.position.x;
+            Init();
+        }
+
+        public void Init()
+        {
+            EndGame();
+            UIManager.Singleton.Init();
             StartCoroutine(Load());
         }
 
@@ -169,8 +192,9 @@ namespace RedRunner
 
         IEnumerator Load()
         {
+            var startScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.START_SCREEN);
             yield return new WaitForSecondsRealtime(3f);
-            m_OnLoaded.Invoke();
+            UIManager.Singleton.OpenScreen(startScreen);
         }
 
         void OnApplicationQuit()

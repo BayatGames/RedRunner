@@ -24,7 +24,7 @@ namespace RedRunner.Enemies
 		void OnCollisionStay2D (Collision2D collision2D)
 		{
 			Character character = collision2D.collider.GetComponent<Character> ();
-			if (character && !character.IsDead) {
+			if (character && !character.IsDead.Value) {
 				bool isTop = false;
 				ContactPoint2D mainPoint;
 				for (int i = 0; i < collision2D.contacts.Length; i++) {
