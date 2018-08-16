@@ -60,7 +60,13 @@ namespace RedRunner
 
         void Start()
         {
-            OpenScreen(m_Screens[0]);
+            Init();
+        }
+
+        public void Init()
+        {
+            var loadingScreen = m_Screens.Find(el => el.ScreenInfo == UIScreenInfo.LOADING_SCREEN);
+            OpenScreen(loadingScreen);
         }
 
         void Update()
@@ -122,13 +128,6 @@ namespace RedRunner
         public void OpenScreen(UIScreen screen)
         {
             CloseAllScreens();
-            if (m_ActiveScreen == null)
-            {
-                m_ActiveScreen = screen;
-                m_ActiveScreen.UpdateScreenStatus(true);
-                return;
-            }
-            m_ActiveScreen.UpdateScreenStatus(false);
             screen.UpdateScreenStatus(true);
             m_ActiveScreen = screen;
         }

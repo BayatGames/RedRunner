@@ -27,9 +27,7 @@ namespace RedRunner.UI
 
             HomeButton.SetButtonAction(() =>
             {
-                var loadingScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.LOADING_SCREEN);
-                UIManager.Singleton.OpenScreen(loadingScreen);
-                GameManager.Singleton.StopGame();
+                GameManager.Singleton.Init();
             });
         }
 

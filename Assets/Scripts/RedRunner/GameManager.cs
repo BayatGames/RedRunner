@@ -42,8 +42,6 @@ namespace RedRunner
         private string m_ShareText;
         [SerializeField]
         private string m_ShareUrl;
-        [SerializeField]
-        private LoadEvent m_OnLoaded;
         private float m_StartScoreX = 0f;
         private float m_HighScore = 0f;
         private float m_LastScore = 0f;
@@ -94,7 +92,6 @@ namespace RedRunner
             }
             SaveGame.Serializer = new SaveGameBinarySerializer();
             m_Singleton = this;
-            EndGame();
             m_Score = 0f;
 
             if (SaveGame.Exists("coin"))
@@ -147,8 +144,15 @@ namespace RedRunner
             }
         }
 
-        void Start()
+        private void Start()
         {
+            Init();
+        }
+
+        public void Init()
+        {
+            EndGame();
+            UIManager.Singleton.Init();
             StartCoroutine(Load());
         }
 
@@ -169,8 +173,9 @@ namespace RedRunner
 
         IEnumerator Load()
         {
+            var startScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.START_SCREEN);
             yield return new WaitForSecondsRealtime(3f);
-            m_OnLoaded.Invoke();
+            UIManager.Singleton.OpenScreen(startScreen);
         }
 
         void OnApplicationQuit()
