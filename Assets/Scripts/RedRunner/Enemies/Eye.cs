@@ -94,7 +94,7 @@ namespace RedRunner.Enemies
 			{
 				float speed = m_Speed;
 				Vector3 distanceToTarget = m_LatestCharacter.transform.position - m_Pupil.position;
-				if ( m_LatestCharacter.IsDead )
+				if ( m_LatestCharacter.IsDead.Value )
 				{
 					speed = m_DeadSpeed;
 					distanceToTarget = Vector3.ClampMagnitude ( m_DeadPosition, m_Radius );

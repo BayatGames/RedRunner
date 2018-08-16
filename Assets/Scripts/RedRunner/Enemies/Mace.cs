@@ -64,7 +64,7 @@ namespace RedRunner.Enemies
 			if (pressable && character == null && !collision2D.collider.CompareTag ("Player")) {
 				Slam (position);
 			}
-			if (character != null && !character.IsDead) {
+			if (character != null && !character.IsDead.Value) {
 				if (pressable) {
 					Slam (position);
 					Vector3 scale = character.transform.localScale;

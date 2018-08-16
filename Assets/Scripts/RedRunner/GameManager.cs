@@ -57,6 +57,7 @@ namespace RedRunner
         /// </summary>
         public Property<int> m_Coin = new Property<int>(0);
 
+
         #region Getters
         public bool gameStarted
         {
@@ -127,11 +128,21 @@ namespace RedRunner
                 m_HighScore = 0f;
             }
 
-            m_MainCharacter.OnDead += MainCharacter_OnDead;
-            m_StartScoreX = m_MainCharacter.transform.position.x;
         }
 
-        void MainCharacter_OnDead()
+        void UpdateDeathEvent(bool isDead)
+        {
+            if (isDead)
+            {
+                StartCoroutine(DeathCrt());
+            }
+            else
+            {
+                StopCoroutine("DeathCrt");
+            }
+        }
+
+        IEnumerator DeathCrt()
         {
             m_LastScore = m_Score;
             if (m_Score > m_HighScore)
@@ -142,10 +153,18 @@ namespace RedRunner
             {
                 OnScoreChanged(m_Score, m_HighScore, m_LastScore);
             }
+
+            yield return new WaitForSecondsRealtime(1.5f);
+
+            EndGame();
+            var endScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.END_SCREEN);
+            UIManager.Singleton.OpenScreen(endScreen);
         }
 
         private void Start()
         {
+            m_MainCharacter.IsDead.AddEventAndFire(UpdateDeathEvent, this);
+            m_StartScoreX = m_MainCharacter.transform.position.x;
             Init();
         }
 
