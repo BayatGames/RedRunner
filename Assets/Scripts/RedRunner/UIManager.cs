@@ -76,7 +76,7 @@ namespace RedRunner
 
         void Update()
         {
-            if (Input.GetButtonDown("Cancel") && GameManager.Singleton.gameRunning)
+            if (Input.GetButtonDown("Cancel"))
             {
                 //Added enumeration to store screen info, aka type, so it will be easier to understand it
                 var pauseScreen = GetUIScreen(UIScreenInfo.PAUSE_SCREEN);
@@ -85,15 +85,24 @@ namespace RedRunner
                 //If the pause screen is not open : open it otherwise close it
                 if (!pauseScreen.IsOpen)
                 {
-                    OpenScreen(pauseScreen);
-                    GameManager.Singleton.StopGame();
+                    if(m_ActiveScreen == ingameScreen)
+                    {
+                        if (IsAsScreenOpen())
+                            CloseAllScreens();
+
+                        OpenScreen(pauseScreen);
+                        GameManager.Singleton.StopGame();
+                    }
                 }
-                else
+                else 
                 {
-                    CloseScreen(pauseScreen);
-                    OpenScreen(ingameScreen);
-                    ////We are sure that we want to resume the game when we close a screen
-                    GameManager.Singleton.ResumeGame();
+                    if (m_ActiveScreen == pauseScreen)
+                    {
+                        CloseScreen(pauseScreen);
+                        OpenScreen(ingameScreen);
+                        ////We are sure that we want to resume the game when we close a screen
+                        GameManager.Singleton.ResumeGame();
+                    }
                 }
             }
 
@@ -150,6 +159,17 @@ namespace RedRunner
         {
             foreach (var screen in m_Screens)
                 CloseScreen(screen);
+        }
+
+        bool IsAsScreenOpen()
+        {
+            foreach (var screen in m_Screens)
+            {
+                if (screen.IsOpen)
+                    return true;
+            }
+
+            return false;
         }
     }
 
