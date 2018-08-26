@@ -37,19 +37,19 @@ public class ApplySelectedPrefabs : EditorWindow
 				//Is the selected gameobject a prefab?
 				if (prefabType == PrefabType.PrefabInstance || prefabType == PrefabType.DisconnectedPrefabInstance) {
 					//Prefab Root;
-					goPrefabRoot = ((GameObject)PrefabUtility.GetPrefabParent (go)).transform.root.gameObject;
+					goPrefabRoot = ((GameObject)PrefabUtility.GetCorrespondingObjectFromSource (go)).transform.root.gameObject;
 					goCur = go;
 					bTopHierarchyFound = false;
 					bCanApply = true;
 					//We go up in the hierarchy to apply the root of the go to the prefab
 					while (goCur.transform.parent != null && !bTopHierarchyFound) {  
 						//Are we still in the same prefab?
-						if (goPrefabRoot == ((GameObject)PrefabUtility.GetPrefabParent (goCur.transform.parent.gameObject)).transform.root.gameObject) {
+						if (goPrefabRoot == ((GameObject)PrefabUtility.GetCorrespondingObjectFromSource (goCur.transform.parent.gameObject)).transform.root.gameObject) {
 							goCur = goCur.transform.parent.gameObject;
 						} else {
 							//The gameobject parent is another prefab, we stop here
 							bTopHierarchyFound = true;
-							if (goPrefabRoot != ((GameObject)PrefabUtility.GetPrefabParent (goCur))) {
+							if (goPrefabRoot != ((GameObject)PrefabUtility.GetCorrespondingObjectFromSource (goCur))) {
 								//Gameobject is part of another prefab
 								bCanApply = false;
 							}
@@ -58,7 +58,7 @@ public class ApplySelectedPrefabs : EditorWindow
 
 					if (_applyOrRevert != null && bCanApply) {
 						iCount++;
-						_applyOrRevert (goCur, PrefabUtility.GetPrefabParent (goCur), ReplacePrefabOptions.ConnectToPrefab);
+						_applyOrRevert (goCur, PrefabUtility.GetCorrespondingObjectFromSource (goCur), ReplacePrefabOptions.ConnectToPrefab);
 					}
 				}
 			}
