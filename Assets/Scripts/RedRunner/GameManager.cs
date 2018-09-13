@@ -290,13 +290,15 @@ namespace RedRunner
         }
 
         public void OnPurchaseSuccessful() {
+			UIManager.Singleton.CloseAllScreens();
             Reset();
             UIManager.Singleton.OpenInGameScreen();
         }
 
         public void OnPurchaseFailed() {
             //If purchase failed show end screen again
-            UIManager.Singleton.OpenEndScreen();
+			UIManager.Singleton.CloseAllScreens();
+            UIManager.Singleton.OpenStartScreen();
         }
 
 		public void ShareOnTwitter ()

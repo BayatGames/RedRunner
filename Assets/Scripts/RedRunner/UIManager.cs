@@ -37,6 +37,8 @@ namespace RedRunner
         private UIScreen m_EndScreen;
         [SerializeField]
         private UIScreen m_InGameScreen;
+		[SerializeField]
+		private UIScreen m_StartScreen;
 		
         void Awake ()
 		{
@@ -110,6 +112,11 @@ namespace RedRunner
 			m_ActiveScreen.OnClosed += screen.Open;
 			m_ActiveScreen.Close ();
 			m_ActiveScreen = screen;
+		}
+
+		public void OpenStartScreen()
+		{
+			OpenScreen(m_StartScreen);
 		}
 
         public void OpenEndScreen()
