@@ -111,6 +111,6 @@ public sealed class GameManager : MonoBehaviour
 ```
 
 6. Create an empty game object with the name you want (we named it _Purchaser_) and add a component with the script that has the _Purchaser_ class. Then drag and drop it to the slot named _Purchaser Object_ in _AppcoinsUnity_ game object and _Game Manager_ object.
-![picture](Screenshots/Appcoins_4.gif)
+![picture](Screenshots/Appcoins_5.gif)
 
 7. Your game is ready to rock!
