@@ -298,7 +298,7 @@ namespace RedRunner
         public void OnPurchaseFailed() {
             //If purchase failed show end screen again
 			UIManager.Singleton.CloseAllScreens();
-            UIManager.Singleton.OpenStartScreen();
+            UIManager.Singleton.OpenInitialScreen();
         }
 
 		public void ShareOnTwitter ()

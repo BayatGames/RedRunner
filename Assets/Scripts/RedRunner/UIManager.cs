@@ -114,7 +114,7 @@ namespace RedRunner
 			m_ActiveScreen = screen;
 		}
 
-		public void OpenStartScreen()
+		public void OpenInitialScreen()
 		{
 			OpenScreen(m_StartScreen);
 		}
