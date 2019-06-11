@@ -1,37 +1,50 @@
-﻿using System.Collections;
+﻿//Global Libraries
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Local Libraries
 using RedRunner.Utilities;
 
 namespace RedRunner.Characters
 {
-
+	//Required Components 
 	[RequireComponent ( typeof ( Rigidbody2D ) )]
 	[RequireComponent ( typeof ( Collider2D ) )]
 	[RequireComponent ( typeof ( Animator ) )]
 	[RequireComponent ( typeof ( Skeleton ) )]
+
+	//This Class consist of public getter functions that allow other scripts in RedRunner to access information about otherwise private RedCharacter variables.
 	public abstract class Character : MonoBehaviour
 	{
-
+		//Function for handling a death event
 		public delegate void DeadHandler ();
 
+		//What to do upon death 
 		public virtual event DeadHandler OnDead;
 
+		//Returns Character Max Run Speed
 		public abstract float MaxRunSpeed { get; }
 
+		//Returns Character settling time 
 		public abstract float RunSmoothTime { get; }
 
+		//Returns current speed
 		public abstract float RunSpeed { get; }
 
+		//Returns walking speed 
 		public abstract float WalkSpeed { get; }
 
+		//Returns the strength constant associated with jumping
 		public abstract float JumpStrength { get; }
 
+		//Returns vector speed of Character 
 		public abstract Vector2 Speed { get; }
 
+		//Returns current actions in string array 
 		public abstract string[] Actions { get; }
 
+		//Retuns single string with current action
 		public abstract string CurrentAction { get; }
 
 		public abstract int CurrentActionIndex { get; }
