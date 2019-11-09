@@ -39,7 +39,7 @@ namespace RedRunner.Characters
 		[SerializeField]
 		protected Collider2D m_Collider2D;
 		[SerializeField]
-		protected Animator m_Animator;
+		protected Mirror.NetworkAnimator m_Animator;
 		[SerializeField]
 		protected GroundCheck m_GroundCheck;
 		[SerializeField]
@@ -188,7 +188,7 @@ namespace RedRunner.Characters
 		{
 			get
 			{
-				return m_Animator;
+				return m_Animator.animator;
 			}
 		}
 
@@ -374,13 +374,13 @@ namespace RedRunner.Characters
                 return;
             }
 
-            m_Animator.SetFloat ( "Speed", m_Speed.x );
-			m_Animator.SetFloat ( "VelocityX", Mathf.Abs ( m_Rigidbody2D.velocity.x ) );
-			m_Animator.SetFloat ( "VelocityY", m_Rigidbody2D.velocity.y );
-			m_Animator.SetBool ( "IsGrounded", m_GroundCheck.IsGrounded );
-			m_Animator.SetBool ( "IsDead", IsDead.Value );
-			m_Animator.SetBool ( "Block", m_Block );
-			m_Animator.SetBool ( "Guard", m_Guard );
+            m_Animator.animator.SetFloat ( "Speed", m_Speed.x );
+			m_Animator.animator.SetFloat ( "VelocityX", Mathf.Abs ( m_Rigidbody2D.velocity.x ) );
+			m_Animator.animator.SetFloat ( "VelocityY", m_Rigidbody2D.velocity.y );
+			m_Animator.animator.SetBool ( "IsGrounded", m_GroundCheck.IsGrounded );
+			m_Animator.animator.SetBool ( "IsDead", IsDead.Value );
+			m_Animator.animator.SetBool ( "Block", m_Block );
+			m_Animator.animator.SetBool ( "Guard", m_Guard );
 			if ( Input.GetButtonDown ( "Roll" ) )
 			{
 				m_Animator.SetTrigger ( "Roll" );
@@ -457,7 +457,7 @@ namespace RedRunner.Characters
 					Vector2 velocity = m_Rigidbody2D.velocity;
 					velocity.y = m_JumpStrength;
 					m_Rigidbody2D.velocity = velocity;
-					m_Animator.ResetTrigger ( "Jump" );
+					m_Animator.animator.ResetTrigger ( "Jump" );
 					m_Animator.SetTrigger ( "Jump" );
 					m_JumpParticleSystem.Play ();
 					AudioManager.Singleton.PlayJumpSound ( m_JumpAndGroundedAudioSource );
