@@ -270,26 +270,39 @@ namespace RedRunner.Characters
 
 		void Awake ()
 		{
-			m_InitialPosition = transform.position;
-			m_InitialScale = transform.localScale;
-			m_GroundCheck.OnGrounded += GroundCheck_OnGrounded;
-			m_Skeleton.OnActiveChanged += Skeleton_OnActiveChanged;
+            m_InitialPosition = transform.position;
+            m_InitialScale = transform.localScale;
+            m_GroundCheck.OnGrounded += GroundCheck_OnGrounded;
+            m_Skeleton.OnActiveChanged += Skeleton_OnActiveChanged;
             IsDead = new Property<bool>(false);
-			m_ClosingEye = false;
-			m_Guard = false;
-			m_Block = false;
-			m_CurrentFootstepSoundIndex = 0;
-			GameManager.OnReset += GameManager_OnReset;
-		}
+            m_ClosingEye = false;
+            m_Guard = false;
+            m_Block = false;
+            m_CurrentFootstepSoundIndex = 0;
+            GameManager.OnReset += GameManager_OnReset;
 
-		void Update ()
-		{
-            if (!isLocalPlayer)
+            // Default to static rigidbodies.
+            // We don't want to perform physics simulations for other players.
+            m_Rigidbody2D.bodyType = RigidbodyType2D.Static;
+
+            LocalPlayerSpawned += () =>
             {
-                return;
-            }
+                // Once we find out we are the local player, simulate our rigidbody.
+                Local.m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+            };
+		}
+        
+        public override void OnStartLocalPlayer()
+        {
+            base.OnStartLocalPlayer();
 
-            if ( !GameManager.Singleton.gameStarted || !GameManager.Singleton.gameRunning )
+            Local = this;
+            LocalPlayerSpawned();
+        }
+
+        void Update ()
+		{
+            if (Local != this)
 			{
 				return;
 			}
@@ -356,7 +369,12 @@ namespace RedRunner.Characters
 
 		void LateUpdate ()
 		{
-			m_Animator.SetFloat ( "Speed", m_Speed.x );
+            if (Local != this)
+            {
+                return;
+            }
+
+            m_Animator.SetFloat ( "Speed", m_Speed.x );
 			m_Animator.SetFloat ( "VelocityX", Mathf.Abs ( m_Rigidbody2D.velocity.x ) );
 			m_Animator.SetFloat ( "VelocityY", m_Rigidbody2D.velocity.y );
 			m_Animator.SetBool ( "IsGrounded", m_GroundCheck.IsGrounded );
@@ -489,14 +507,6 @@ namespace RedRunner.Characters
 			m_Rigidbody2D.velocity = Vector2.zero;
 			m_Skeleton.SetActive ( false, m_Rigidbody2D.velocity );
 		}
-
-        public override void OnStartLocalPlayer()
-        {
-            base.OnStartLocalPlayer();
-
-            Local = this;
-            LocalPlayerSpawned();
-        }
 
         #endregion
 
