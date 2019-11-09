@@ -11,8 +11,9 @@ namespace RedRunner.Networking
 		[SerializeField]
 		private CameraController cameraController;
 
-		private bool isServer = false;
 		private string host = "localhost";
+
+		public static bool IsServer { get; private set; } = false;
 
 		public static RedCharacter LocalCharacter { get; private set; }
 
@@ -34,8 +35,8 @@ namespace RedRunner.Networking
 		{
 			if (!Mirror.NetworkClient.isConnected && !Mirror.NetworkServer.active && !Mirror.NetworkClient.active)
 			{
-				isServer = GUILayout.Toggle(isServer, "Host");
-				if (!isServer)
+				IsServer = GUILayout.Toggle(IsServer, "Host");
+				if (!IsServer)
 				{
 					host = GUILayout.TextField(host);
 				}
@@ -44,7 +45,7 @@ namespace RedRunner.Networking
 
 		public void Connect()
 		{
-			if (isServer)
+			if (IsServer)
 			{
 				StartHost();
 			}
@@ -59,6 +60,16 @@ namespace RedRunner.Networking
 		{
 			GameObject player = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
 			Mirror.NetworkServer.AddPlayerForConnection(conn, player);
+		}
+
+		public static void RegisterSpawnablePrefab(GameObject prefab)
+		{
+			Mirror.ClientScene.RegisterPrefab(prefab);
+		}
+
+		public static void Spawn(GameObject gameObject)
+		{
+			Mirror.NetworkServer.Spawn(gameObject);
 		}
 	}
 }

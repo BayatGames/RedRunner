@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+using RedRunner.Networking;
 
 namespace RedRunner.TerrainGeneration
 {
-
-	public abstract class Block : MonoBehaviour
+	public abstract class Block : ServerSpawnable
 	{
-
 		[SerializeField]
 		protected float m_Width;
 		[SerializeField]
@@ -42,7 +40,5 @@ namespace RedRunner.TerrainGeneration
 		{
 			
 		}
-
 	}
-
 }
