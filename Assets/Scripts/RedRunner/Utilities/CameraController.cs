@@ -64,9 +64,7 @@ namespace RedRunner.Utilities
 
 		void Update ()
 		{
-//			if (!m_ShakeControl.IsShaking) {
 			Follow ();
-//			}
 			if ( transform.position != m_OldPosition )
 			{
 				if ( onCameraTranslate != null )
@@ -78,17 +76,17 @@ namespace RedRunner.Utilities
 			}
 		}
 
-        public void Follow(Transform followee)
-        {
-            m_Followee = followee;
-        }
+		public void Follow(Transform followee)
+		{
+			m_Followee = followee;
+		}
 
 		public void Follow ()
 		{
-            if (m_Followee == null)
-            {
-                return;
-            }
+			if (m_Followee == null)
+			{
+				return;
+			}
 
 			float speed = m_Speed;
 			if ( m_FastMove )

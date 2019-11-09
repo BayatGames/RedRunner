@@ -7,14 +7,14 @@ using RedRunner.Utilities;
 namespace RedRunner.Characters
 {
 
-	[RequireComponent ( typeof ( Rigidbody2D ) )]
-	[RequireComponent ( typeof ( Collider2D ) )]
-	[RequireComponent ( typeof ( Animator ) )]
-	[RequireComponent ( typeof ( Skeleton ) )]
+	[RequireComponent(typeof(Rigidbody2D))]
+	[RequireComponent(typeof(Collider2D))]
+	[RequireComponent(typeof(Animator))]
+	[RequireComponent(typeof(Skeleton))]
 	public abstract class Character : Mirror.NetworkBehaviour
 	{
 
-		public delegate void DeadHandler ();
+		public delegate void DeadHandler();
 
 		public virtual event DeadHandler OnDead;
 
@@ -64,17 +64,17 @@ namespace RedRunner.Characters
 
 		public abstract AudioSource Audio { get; }
 
-		public abstract void Move ( float horizontalAxis );
+		public abstract void Move(float horizontalAxis);
 
-		public abstract void Jump ();
+		public abstract void Jump();
 
-		public abstract void Die ();
+		public abstract void Die();
 
-		public abstract void Die ( bool blood );
+		public abstract void Die(bool blood);
 
-		public abstract void EmitRunParticle ();
+		public abstract void EmitRunParticle();
 
-		public abstract void Reset ();
+		public abstract void Reset();
 
 	}
 

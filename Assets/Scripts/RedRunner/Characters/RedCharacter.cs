@@ -64,9 +64,9 @@ namespace RedRunner.Characters
 		[SerializeField]
 		protected AudioSource m_JumpAndGroundedAudioSource;
 
-        public delegate void PlayerEvent();
+		public delegate void PlayerEvent();
 
-        public static event PlayerEvent LocalPlayerSpawned;
+		public static event PlayerEvent LocalPlayerSpawned;
 
 		#endregion
 
@@ -86,7 +86,7 @@ namespace RedRunner.Characters
 
 		#region Properties
 
-        public static RedCharacter Local { get; private set; }
+		public static RedCharacter Local { get; private set; }
 
 		public override float MaxRunSpeed
 		{
@@ -270,39 +270,39 @@ namespace RedRunner.Characters
 
 		void Awake ()
 		{
-            m_InitialPosition = transform.position;
-            m_InitialScale = transform.localScale;
-            m_GroundCheck.OnGrounded += GroundCheck_OnGrounded;
-            m_Skeleton.OnActiveChanged += Skeleton_OnActiveChanged;
-            IsDead = new Property<bool>(false);
-            m_ClosingEye = false;
-            m_Guard = false;
-            m_Block = false;
-            m_CurrentFootstepSoundIndex = 0;
-            GameManager.OnReset += GameManager_OnReset;
+			m_InitialPosition = transform.position;
+			m_InitialScale = transform.localScale;
+			m_GroundCheck.OnGrounded += GroundCheck_OnGrounded;
+			m_Skeleton.OnActiveChanged += Skeleton_OnActiveChanged;
+			IsDead = new Property<bool>(false);
+			m_ClosingEye = false;
+			m_Guard = false;
+			m_Block = false;
+			m_CurrentFootstepSoundIndex = 0;
+			GameManager.OnReset += GameManager_OnReset;
 
-            // Default to static rigidbodies.
-            // We don't want to perform physics simulations for other players.
-            m_Rigidbody2D.bodyType = RigidbodyType2D.Static;
+			// Default to static rigidbodies.
+			// We don't want to perform physics simulations for other players.
+			m_Rigidbody2D.bodyType = RigidbodyType2D.Static;
 
-            LocalPlayerSpawned += () =>
-            {
-                // Once we find out we are the local player, simulate our rigidbody.
-                Local.m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-            };
+			LocalPlayerSpawned += () =>
+			{
+				// Once we find out we are the local player, simulate our rigidbody.
+				Local.m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+			};
 		}
         
-        public override void OnStartLocalPlayer()
-        {
-            base.OnStartLocalPlayer();
+		public override void OnStartLocalPlayer()
+		{
+			base.OnStartLocalPlayer();
 
-            Local = this;
-            LocalPlayerSpawned();
-        }
+			Local = this;
+			LocalPlayerSpawned();
+		}
 
         void Update ()
 		{
-            if (Local != this)
+			if (Local != this)
 			{
 				return;
 			}
@@ -369,12 +369,12 @@ namespace RedRunner.Characters
 
 		void LateUpdate ()
 		{
-            if (Local != this)
-            {
-                return;
-            }
+			if (Local != this)
+			{
+				return;
+			}
 
-            m_Animator.animator.SetFloat ( "Speed", m_Speed.x );
+			m_Animator.animator.SetFloat ( "Speed", m_Speed.x );
 			m_Animator.animator.SetFloat ( "VelocityX", Mathf.Abs ( m_Rigidbody2D.velocity.x ) );
 			m_Animator.animator.SetFloat ( "VelocityY", m_Rigidbody2D.velocity.y );
 			m_Animator.animator.SetBool ( "IsGrounded", m_GroundCheck.IsGrounded );
@@ -508,11 +508,11 @@ namespace RedRunner.Characters
 			m_Skeleton.SetActive ( false, m_Rigidbody2D.velocity );
 		}
 
-        #endregion
+		#endregion
 
-        #region Events
+		#region Events
 
-        void GameManager_OnReset ()
+		void GameManager_OnReset ()
 		{
 			transform.position = m_InitialPosition;
 			Reset ();

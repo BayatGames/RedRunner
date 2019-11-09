@@ -155,13 +155,13 @@ namespace RedRunner.TerrainGeneration
 					newX = 0f;
 				}
 
-                // TODO(shane) fix this!
-                if (RedCharacter.Local == null)
-                {
-                    return;
-                }
+				// TODO(shane) fix this!
+				if (RedCharacter.Local == null)
+				{
+					return;
+				}
 
-                if ( block != null && ( m_LastBlock == null || newX < RedCharacter.Local.transform.position.x + m_GenerateRange ) )
+				if ( block != null && ( m_LastBlock == null || newX < RedCharacter.Local.transform.position.x + m_GenerateRange ) )
 				{
 					if ( isStart )
 					{
