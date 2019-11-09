@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using UnityStandardAssets.CrossPlatformInput;
 
 using RedRunner.Utilities;
+using RedRunner.Networking;
 
 namespace RedRunner.Characters
 {
@@ -38,7 +39,7 @@ namespace RedRunner.Characters
 		[SerializeField]
 		protected Collider2D m_Collider2D;
 		[SerializeField]
-		protected Animator m_Animator;
+		protected Mirror.NetworkAnimator m_Animator;
 		[SerializeField]
 		protected GroundCheck m_GroundCheck;
 		[SerializeField]
@@ -63,6 +64,10 @@ namespace RedRunner.Characters
 		[SerializeField]
 		protected AudioSource m_JumpAndGroundedAudioSource;
 
+		public delegate void PlayerEvent();
+
+		public static event PlayerEvent LocalPlayerSpawned;
+
 		#endregion
 
 		#region Private Variables
@@ -80,6 +85,8 @@ namespace RedRunner.Characters
 		#endregion
 
 		#region Properties
+
+		public static RedCharacter Local { get; private set; }
 
 		public override float MaxRunSpeed
 		{
@@ -181,7 +188,7 @@ namespace RedRunner.Characters
 		{
 			get
 			{
-				return m_Animator;
+				return m_Animator.animator;
 			}
 		}
 
@@ -267,17 +274,35 @@ namespace RedRunner.Characters
 			m_InitialScale = transform.localScale;
 			m_GroundCheck.OnGrounded += GroundCheck_OnGrounded;
 			m_Skeleton.OnActiveChanged += Skeleton_OnActiveChanged;
-            IsDead = new Property<bool>(false);
+			IsDead = new Property<bool>(false);
 			m_ClosingEye = false;
 			m_Guard = false;
 			m_Block = false;
 			m_CurrentFootstepSoundIndex = 0;
 			GameManager.OnReset += GameManager_OnReset;
+
+			// Default to static rigidbodies.
+			// We don't want to perform physics simulations for other players.
+			m_Rigidbody2D.bodyType = RigidbodyType2D.Static;
+
+			LocalPlayerSpawned += () =>
+			{
+				// Once we find out we are the local player, simulate our rigidbody.
+				Local.m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+			};
+		}
+        
+		public override void OnStartLocalPlayer()
+		{
+			base.OnStartLocalPlayer();
+
+			Local = this;
+			LocalPlayerSpawned();
 		}
 
-		void Update ()
+        void Update ()
 		{
-			if ( !GameManager.Singleton.gameStarted || !GameManager.Singleton.gameRunning )
+			if (Local != this)
 			{
 				return;
 			}
@@ -344,42 +369,23 @@ namespace RedRunner.Characters
 
 		void LateUpdate ()
 		{
-			m_Animator.SetFloat ( "Speed", m_Speed.x );
-			m_Animator.SetFloat ( "VelocityX", Mathf.Abs ( m_Rigidbody2D.velocity.x ) );
-			m_Animator.SetFloat ( "VelocityY", m_Rigidbody2D.velocity.y );
-			m_Animator.SetBool ( "IsGrounded", m_GroundCheck.IsGrounded );
-			m_Animator.SetBool ( "IsDead", IsDead.Value );
-			m_Animator.SetBool ( "Block", m_Block );
-			m_Animator.SetBool ( "Guard", m_Guard );
+			if (Local != this)
+			{
+				return;
+			}
+
+			m_Animator.animator.SetFloat ( "Speed", m_Speed.x );
+			m_Animator.animator.SetFloat ( "VelocityX", Mathf.Abs ( m_Rigidbody2D.velocity.x ) );
+			m_Animator.animator.SetFloat ( "VelocityY", m_Rigidbody2D.velocity.y );
+			m_Animator.animator.SetBool ( "IsGrounded", m_GroundCheck.IsGrounded );
+			m_Animator.animator.SetBool ( "IsDead", IsDead.Value );
+			m_Animator.animator.SetBool ( "Block", m_Block );
+			m_Animator.animator.SetBool ( "Guard", m_Guard );
 			if ( Input.GetButtonDown ( "Roll" ) )
 			{
 				m_Animator.SetTrigger ( "Roll" );
 			}
 		}
-
-		//		void OnCollisionEnter2D ( Collision2D collision2D )
-		//		{
-		//			bool isGround = collision2D.collider.CompareTag ( GroundCheck.GROUND_TAG );
-		//			if ( isGround && !m_IsDead )
-		//			{
-		//				bool isBottom = false;
-		//				for ( int i = 0; i < collision2D.contacts.Length; i++ )
-		//				{
-		//					if ( !isBottom )
-		//					{
-		//						isBottom = collision2D.contacts [ i ].normal.y == 1;
-		//					}
-		//					else
-		//					{
-		//						break;
-		//					}
-		//				}
-		//				if ( isBottom )
-		//				{
-		//					m_JumpParticleSystem.Play ();
-		//				}
-		//			}
-		//		}
 
 		#endregion
 
@@ -424,10 +430,6 @@ namespace RedRunner.Characters
 			if ( !IsDead.Value )
 			{
 				float speed = m_CurrentRunSpeed;
-//				if ( CrossPlatformInputManager.GetButton ( "Walk" ) )
-//				{
-//					speed = m_WalkSpeed;
-				//				}
 				Vector2 velocity = m_Rigidbody2D.velocity;
 				velocity.x = speed * horizontalAxis;
 				m_Rigidbody2D.velocity = velocity;
@@ -455,7 +457,7 @@ namespace RedRunner.Characters
 					Vector2 velocity = m_Rigidbody2D.velocity;
 					velocity.y = m_JumpStrength;
 					m_Rigidbody2D.velocity = velocity;
-					m_Animator.ResetTrigger ( "Jump" );
+					m_Animator.animator.ResetTrigger ( "Jump" );
 					m_Animator.SetTrigger ( "Jump" );
 					m_JumpParticleSystem.Play ();
 					AudioManager.Singleton.PlayJumpSound ( m_JumpAndGroundedAudioSource );

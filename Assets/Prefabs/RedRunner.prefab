@@ -6021,6 +6021,9 @@ GameObject:
   - component: {fileID: 95029887990676034}
   - component: {fileID: 70389374301985556}
   - component: {fileID: 114564310135457314}
+  - component: {fileID: 813364799}
+  - component: {fileID: -8569562308554010601}
+  - component: {fileID: 1081473167}
   m_Layer: 10
   m_Name: RedRunner
   m_TagString: Player
@@ -6063,11 +6066,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e4f8ed82ed8184baa9f937d33e3e2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxRunSpeed: 9
-  m_RunSmoothTime: 5
-  m_RunSpeed: 4.5
-  m_WalkSpeed: 1.75
-  m_JumpStrength: 12
+  syncMode: 0
+  syncInterval: 0.1
+  m_MaxRunSpeed: 20
+  m_RunSmoothTime: 3
+  m_RunSpeed: 10
+  m_WalkSpeed: 5
+  m_JumpStrength: 25
   m_Actions:
   - Left Punch
   - Left Punch
@@ -6076,7 +6081,7 @@ MonoBehaviour:
   m_CurrentActionIndex: 0
   m_Rigidbody2D: {fileID: 50120193809232062}
   m_Collider2D: {fileID: 70389374301985556}
-  m_Animator: {fileID: 95029887990676034}
+  m_Animator: {fileID: 1081473167}
   m_GroundCheck: {fileID: 114717820864580112}
   m_RunParticleSystem: {fileID: 198270310177792922}
   m_JumpParticleSystem: {fileID: 198568243280554294}
@@ -6104,7 +6109,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1.5
+  m_GravityScale: 4
   m_Material: {fileID: 0}
   m_Interpolate: 1
   m_SleepingMode: 1
@@ -6167,6 +6172,52 @@ MonoBehaviour:
   m_LeftEye: {fileID: 4975222190246084}
   m_RightEye: {fileID: 4243295230387160}
   m_IsActive: 0
+--- !u!114 &813364799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824055877161594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverOnly: 0
+  m_AssetId: 
+  m_SceneId: 0
+--- !u!114 &-8569562308554010601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824055877161594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  compressRotation: 1
+--- !u!114 &1081473167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824055877161594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  animator: {fileID: 95029887990676034}
+  clientAuthority: 1
 --- !u!1 &1863000636641838
 GameObject:
   m_ObjectHideFlags: 0

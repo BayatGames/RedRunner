@@ -1146,7 +1146,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &79
 Transform:
@@ -1383,12 +1383,6 @@ Transform:
   m_Father: {fileID: 1044227964}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &109 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4765768628993670, guid: 639fab1b9d4c44d44908b5a6ecaceafc,
-    type: 3}
-  m_PrefabInstance: {fileID: 404170161}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49523,7 +49517,7 @@ RectTransform:
   - {fileID: 2002146931}
   - {fileID: 521407041}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -49562,7 +49556,7 @@ RectTransform:
   m_Children:
   - {fileID: 220}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -49899,7 +49893,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: x 38
+  m_Text: x 1
   m_CoinTextFormat: x {0}
 --- !u!114 &254
 MonoBehaviour:
@@ -49914,7 +49908,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Camera: {fileID: 111}
-  m_Followee: {fileID: 109}
+  m_Followee: {fileID: 0}
   m_MinY: 0
   m_MinX: 0
   m_ShakeControl: {fileID: 0}
@@ -50694,7 +50688,6 @@ MonoBehaviour:
   m_DestroyRange: 100
   m_GenerateRange: 400
   m_BackgroundGenerateRange: 600
-  m_Character: {fileID: 292}
 --- !u!114 &290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50735,22 +50728,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00d5c04fc2bc8c845aa165b46aa4a6e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MainCharacter: {fileID: 292}
   m_ShareText: "I have played Red Runner game and enjoyed! this is really amazing!\r\n\r\nGet
     it now!"
   m_ShareUrl: https://bayat.itch.io/red-runner
---- !u!114 &292 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114034318196363972, guid: 639fab1b9d4c44d44908b5a6ecaceafc,
-    type: 3}
-  m_PrefabInstance: {fileID: 404170161}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4e4f8ed82ed8184baa9f937d33e3e2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51414,6 +51394,109 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 256958659}
   m_CullTransparentMesh: 0
+--- !u!1 &266052185
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 266052186}
+  - component: {fileID: 266052188}
+  - component: {fileID: 266052187}
+  m_Layer: 0
+  m_Name: NetworkManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &266052186
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266052185}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.253023, y: 12.5059395, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1044227964}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &266052187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266052185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7424c1070fad4ba2a7a96b02fbeb4bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnClientConnected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClientDataReceived:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClientError:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClientDisconnected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerConnected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerDataReceived:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerError:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerDisconnected:
+    m_PersistentCalls:
+      m_Calls: []
+  port: 7777
+  NoDelay: 1
+  serverMaxMessageSize: 16384
+  clientMaxMessageSize: 16384
+--- !u!114 &266052188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266052185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00f8ad2ef158a0640be0ccdf8ff0779e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 1
+  runInBackground: 1
+  startOnHeadless: 1
+  serverTickRate: 30
+  showDebugMessages: 0
+  offlineScene: 
+  onlineScene: 
+  transport: {fileID: 266052187}
+  networkAddress: localhost
+  maxConnections: 4
+  authenticator: {fileID: 0}
+  playerPrefab: {fileID: 1824055877161594, guid: 639fab1b9d4c44d44908b5a6ecaceafc,
+    type: 3}
+  autoCreatePlayer: 1
+  playerSpawnMethod: 0
+  spawnPrefabs:
+  - {fileID: 1824055877161594, guid: 639fab1b9d4c44d44908b5a6ecaceafc, type: 3}
+  spawnPoint: {fileID: 1966883456}
+  cameraController: {fileID: 254}
 --- !u!1 &313703411
 GameObject:
   m_ObjectHideFlags: 0
@@ -56116,112 +56199,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1001 &404170161
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4765768628993670, guid: 639fab1b9d4c44d44908b5a6ecaceafc, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 7.24
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765768628993670, guid: 639fab1b9d4c44d44908b5a6ecaceafc, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 12.59
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765768628993670, guid: 639fab1b9d4c44d44908b5a6ecaceafc, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765768628993670, guid: 639fab1b9d4c44d44908b5a6ecaceafc, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765768628993670, guid: 639fab1b9d4c44d44908b5a6ecaceafc, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765768628993670, guid: 639fab1b9d4c44d44908b5a6ecaceafc, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765768628993670, guid: 639fab1b9d4c44d44908b5a6ecaceafc, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4765768628993670, guid: 639fab1b9d4c44d44908b5a6ecaceafc, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114034318196363972, guid: 639fab1b9d4c44d44908b5a6ecaceafc,
-        type: 3}
-      propertyPath: m_OnCharacterDead.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114034318196363972, guid: 639fab1b9d4c44d44908b5a6ecaceafc,
-        type: 3}
-      propertyPath: m_OnCharacterDead.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 713917016}
-    - target: {fileID: 114034318196363972, guid: 639fab1b9d4c44d44908b5a6ecaceafc,
-        type: 3}
-      propertyPath: m_OnCharacterDead.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114034318196363972, guid: 639fab1b9d4c44d44908b5a6ecaceafc,
-        type: 3}
-      propertyPath: m_OnCharacterDead.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OpenScreen
-      objectReference: {fileID: 0}
-    - target: {fileID: 114034318196363972, guid: 639fab1b9d4c44d44908b5a6ecaceafc,
-        type: 3}
-      propertyPath: m_OnCharacterDead.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114034318196363972, guid: 639fab1b9d4c44d44908b5a6ecaceafc,
-        type: 3}
-      propertyPath: m_OnCharacterDead.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: RedRunner.UI.UIScreen, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 114034318196363972, guid: 639fab1b9d4c44d44908b5a6ecaceafc,
-        type: 3}
-      propertyPath: m_OnCharacterDead.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114034318196363972, guid: 639fab1b9d4c44d44908b5a6ecaceafc,
-        type: 3}
-      propertyPath: m_WalkSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114034318196363972, guid: 639fab1b9d4c44d44908b5a6ecaceafc,
-        type: 3}
-      propertyPath: m_RunSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114034318196363972, guid: 639fab1b9d4c44d44908b5a6ecaceafc,
-        type: 3}
-      propertyPath: m_MaxRunSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 114034318196363972, guid: 639fab1b9d4c44d44908b5a6ecaceafc,
-        type: 3}
-      propertyPath: m_JumpStrength
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 114034318196363972, guid: 639fab1b9d4c44d44908b5a6ecaceafc,
-        type: 3}
-      propertyPath: m_RunSmoothTime
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 50120193809232062, guid: 639fab1b9d4c44d44908b5a6ecaceafc,
-        type: 3}
-      propertyPath: m_GravityScale
-      value: 4
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 639fab1b9d4c44d44908b5a6ecaceafc, type: 3}
 --- !u!1 &438519020
 GameObject:
   m_ObjectHideFlags: 0
@@ -57501,6 +57478,7 @@ Transform:
   - {fileID: 91}
   - {fileID: 713917017}
   - {fileID: 103}
+  - {fileID: 266052186}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -59232,6 +59210,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1832802695}
   m_CullTransparentMesh: 0
+--- !u!1 &1966883455
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1966883456}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1966883456
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966883455}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.24, y: 12.59, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2002146930
 GameObject:
   m_ObjectHideFlags: 0
