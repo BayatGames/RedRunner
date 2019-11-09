@@ -12,6 +12,7 @@ namespace RedRunner.Networking
         private CameraController cameraController;
 
         private bool isServer = false;
+        private string host = "localhost";
 
         public static RedCharacter LocalCharacter { get; private set; }
 
@@ -34,6 +35,10 @@ namespace RedRunner.Networking
             if (!Mirror.NetworkClient.isConnected && !Mirror.NetworkServer.active && !Mirror.NetworkClient.active)
             {
                 isServer = GUILayout.Toggle(isServer, "Host");
+                if (!isServer)
+                {
+                    host = GUILayout.TextField(host);
+                }
             }
         }
 
@@ -45,7 +50,7 @@ namespace RedRunner.Networking
             }
             else
             {
-                networkAddress = "localhost";
+                networkAddress = host;
                 StartClient();
             }
         }
