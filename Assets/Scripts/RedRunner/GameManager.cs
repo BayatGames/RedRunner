@@ -45,8 +45,6 @@ namespace RedRunner
         private float m_HighScore = 0f;
         private float m_LastScore = 0f;
         private float m_Score = 0f;
-        [SerializeField]
-        private bool m_IsServer = false;
 
         private bool m_GameStarted = false;
         private bool m_GameRunning = false;
@@ -231,18 +229,6 @@ namespace RedRunner
             if (OnAudioEnabled != null)
             {
                 OnAudioEnabled(active);
-            }
-        }
-
-        public void ConnectToGame()
-        {
-            if (m_IsServer)
-            {
-                NetworkManager.Instance.StartServer();
-            } else
-            {
-                NetworkManager.Instance.networkAddress = "localhost";
-                NetworkManager.Instance.StartClient();
             }
         }
 

@@ -9,7 +9,9 @@ namespace RedRunner.Networking
         [SerializeField]
         private Transform spawnPoint;
         [SerializeField]
-        private CameraController cameraController; 
+        private CameraController cameraController;
+
+        private bool isServer = false;
 
         public static RedCharacter LocalCharacter { get; private set; }
 
@@ -24,6 +26,28 @@ namespace RedRunner.Networking
             {
                 cameraController.Follow(RedCharacter.Local.transform);
             };
+        }
+
+        // TODO(shane) get rid of this nasty hack when we have a proper dedicated server.
+        public void OnGUI()
+        {
+            if (!Mirror.NetworkClient.isConnected && !Mirror.NetworkServer.active && !Mirror.NetworkClient.active)
+            {
+                isServer = GUILayout.Toggle(isServer, "Host");
+            }
+        }
+
+        public void Connect()
+        {
+            if (isServer)
+            {
+                StartHost();
+            }
+            else
+            {
+                networkAddress = "localhost";
+                StartClient();
+            }
         }
 
         public override void OnServerAddPlayer(Mirror.NetworkConnection conn)

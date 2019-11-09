@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using RedRunner.Networking;
 
 namespace RedRunner.UI
 {
@@ -25,7 +26,7 @@ namespace RedRunner.UI
                 if (InGameScreen != null)
                 {
                     uiManager.OpenScreen(InGameScreen);
-                    GameManager.Singleton.ConnectToGame();
+                    NetworkManager.Instance.Connect();
                 }
             });
 
