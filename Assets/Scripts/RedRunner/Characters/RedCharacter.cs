@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,6 +14,7 @@ namespace RedRunner.Characters
 
 	public class RedCharacter : Character
 	{
+
 		#region Fields
 
 		[Header ( "Character Details" )]
@@ -68,10 +70,10 @@ namespace RedRunner.Characters
 
 		public static event PlayerEvent LocalPlayerSpawned;
 
-		#endregion
+        #endregion
 
-		#region Private Variables
-
+        #region Private Variables
+        protected CharacterState state = CharacterState.Stopped;
 		protected bool m_ClosingEye = false;
 		protected bool m_Guard = false;
 		protected bool m_Block = false;
@@ -81,6 +83,10 @@ namespace RedRunner.Characters
 		protected int m_CurrentFootstepSoundIndex = 0;
 		protected Vector3 m_InitialScale;
 		protected Vector3 m_InitialPosition;
+        [SerializeField]
+        private GameEvent leftEvent;
+        [SerializeField]
+        private GameEvent rightEvent;
 
 		#endregion
 
@@ -290,8 +296,36 @@ namespace RedRunner.Characters
 				// Once we find out we are the local player, simulate our rigidbody.
 				Local.m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
 			};
-		}
+
+            rightEvent.RegisterAction(RightEvent);
+            leftEvent.RegisterAction(LeftEvent);
+        }
         
+        private void LeftEvent()
+        {
+            Debug.Log("LEFT");
+            if (state == CharacterState.Left)
+            {
+                Jump();
+            }
+            else
+            {
+                state = CharacterState.Left;
+            }
+        }
+        private void RightEvent()
+        {
+            Debug.Log("Right");
+            if (state == CharacterState.Right)
+            {
+                Jump();
+            }
+            else
+            {
+                state = CharacterState.Right;
+            }
+        }
+
 		public override void OnStartLocalPlayer()
 		{
 			base.OnStartLocalPlayer();
@@ -299,6 +333,35 @@ namespace RedRunner.Characters
 			Local = this;
 			LocalPlayerSpawned();
 		}
+
+        private void UpdateMovement()
+        {
+            // Speed
+            m_Speed = new Vector2(Mathf.Abs(m_Rigidbody2D.velocity.x), Mathf.Abs(m_Rigidbody2D.velocity.y));
+
+            // Speed Calculations
+            m_CurrentRunSpeed = m_RunSpeed;
+            if (m_Speed.x >= m_RunSpeed)
+            {
+                m_CurrentRunSpeed = Mathf.SmoothDamp(m_Speed.x, m_MaxRunSpeed, ref m_CurrentSmoothVelocity, m_RunSmoothTime);
+            }
+
+            // Input Processing
+
+            switch (state)
+            {
+                case CharacterState.Left:
+                    Move(-1f);
+                    break;
+
+                case CharacterState.Right:
+                    Move(1f);
+                    break;
+
+                default:
+                    break;
+            }
+        }
 
         void Update ()
 		{
@@ -312,22 +375,8 @@ namespace RedRunner.Characters
 				Die ();
 			}
 
-			// Speed
-			m_Speed = new Vector2 ( Mathf.Abs ( m_Rigidbody2D.velocity.x ), Mathf.Abs ( m_Rigidbody2D.velocity.y ) );
+            UpdateMovement();
 
-			// Speed Calculations
-			m_CurrentRunSpeed = m_RunSpeed;
-			if ( m_Speed.x >= m_RunSpeed )
-			{
-				m_CurrentRunSpeed = Mathf.SmoothDamp ( m_Speed.x, m_MaxRunSpeed, ref m_CurrentSmoothVelocity, m_RunSmoothTime );
-			}
-
-			// Input Processing
-			Move ( CrossPlatformInputManager.GetAxis ( "Horizontal" ) );
-			if ( CrossPlatformInputManager.GetButtonDown ( "Jump" ) )
-			{
-				Jump ();
-			}
 			if ( IsDead.Value && !m_ClosingEye )
 			{
 				StartCoroutine ( CloseEye () );
