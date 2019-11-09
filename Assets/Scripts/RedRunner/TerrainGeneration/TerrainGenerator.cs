@@ -37,8 +37,6 @@ namespace RedRunner.TerrainGeneration
 		protected float m_GenerateRange = 100f;
 		[SerializeField]
 		protected float m_BackgroundGenerateRange = 200f;
-		[SerializeField]
-		protected Character m_Character;
 		protected Block m_LastBlock;
 		protected BackgroundBlock m_LastBackgroundBlock;
 		protected float m_RemoveTime = 0f;
@@ -156,7 +154,14 @@ namespace RedRunner.TerrainGeneration
 				{
 					newX = 0f;
 				}
-				if ( block != null && ( m_LastBlock == null || newX < m_Character.transform.position.x + m_GenerateRange ) )
+
+				// TODO(shane) fix this!
+				if (RedCharacter.Local == null)
+				{
+					return;
+				}
+
+				if ( block != null && ( m_LastBlock == null || newX < RedCharacter.Local.transform.position.x + m_GenerateRange ) )
 				{
 					if ( isStart )
 					{
@@ -201,7 +206,7 @@ namespace RedRunner.TerrainGeneration
 				{
 					newX = 0f;
 				}
-				if ( block != null && ( m_BackgroundLayers [ i ].LastBlock == null || newX < m_Character.transform.position.x + m_BackgroundGenerateRange ) )
+				if ( block != null && ( m_BackgroundLayers [ i ].LastBlock == null || newX < RedCharacter.Local.transform.position.x + m_BackgroundGenerateRange ) )
 				{
 					CreateBackgroundBlock ( block, current, m_BackgroundLayers [ i ], i );
 				}
@@ -322,7 +327,7 @@ namespace RedRunner.TerrainGeneration
 			Block characterBlock = null;
 			foreach ( KeyValuePair<Vector3, Block> block in m_Blocks )
 			{
-				if ( block.Key.x <= m_Character.transform.position.x && block.Key.x + block.Value.Width > m_Character.transform.position.x )
+				if ( block.Key.x <= RedCharacter.Local.transform.position.x && block.Key.x + block.Value.Width > RedCharacter.Local.transform.position.x )
 				{
 					characterBlock = block.Value;
 					break;
