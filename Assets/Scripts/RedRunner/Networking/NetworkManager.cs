@@ -68,7 +68,7 @@ namespace RedRunner.Networking
 		}
 
 		public static void Spawn(GameObject gameObject)
-		{			
+		{
 			Mirror.NetworkServer.Spawn(gameObject);
 		}
 	}

@@ -138,8 +138,6 @@ namespace RedRunner.TerrainGeneration
 
 		public virtual void Generate ()
 		{
-			Debug.Log("Generating!");
-
 			if ( m_CurrentX < m_Settings.LevelLength || m_Settings.LevelLength <= 0 )
 			{
 				bool isEnd = false, isStart = false, isMiddle = false;
@@ -170,7 +168,6 @@ namespace RedRunner.TerrainGeneration
 					newX = 0f;
 				}
 
-				// TODO(shane) fix this!
 				if (RedCharacter.Local == null)
 				{
 					return;
@@ -304,10 +301,7 @@ namespace RedRunner.TerrainGeneration
 				return false;
 			}
 			blockPrefab.PreGenerate ( this );
-
 			Block block = Instantiate(blockPrefab, position, Quaternion.identity);
-			//NetworkManager.Spawn(block.gameObject);
-
 			m_PreviousX = m_CurrentX;
 			m_CurrentX += block.Width;
 			m_Blocks.Add ( position, block );
@@ -325,10 +319,7 @@ namespace RedRunner.TerrainGeneration
 			blockPrefab.PreGenerate ( this );
 			position.z = blockPrefab.transform.position.z;
 			position.y = blockPrefab.transform.position.y;
-
 			BackgroundBlock block = Instantiate(blockPrefab, position, Quaternion.identity);
-			//NetworkManager.Spawn(block.gameObject);
-
 			float width = Random.Range ( block.MinWidth, block.MaxWidth );
 			m_BackgroundLayers [ layerIndex ].PreviousX = m_BackgroundLayers [ layerIndex ].CurrentX;
 			m_BackgroundLayers [ layerIndex ].CurrentX += width;
@@ -409,5 +400,4 @@ namespace RedRunner.TerrainGeneration
 			}
 		}
 	}
-
 }
