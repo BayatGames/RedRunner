@@ -6073,6 +6073,7 @@ MonoBehaviour:
   m_RunSpeed: 10
   m_WalkSpeed: 5
   m_JumpStrength: 25
+  m_AllowedJumps: 2
   m_Actions:
   - Left Punch
   - Left Punch
@@ -6094,8 +6095,8 @@ MonoBehaviour:
   m_MainAudioSource: {fileID: 82060983664169858}
   m_FootstepAudioSource: {fileID: 82936932590503182}
   m_JumpAndGroundedAudioSource: {fileID: 82591523578895352}
-  leftEvent: {fileID: 11400000, guid: 963c8bfb7bceb4245bbef649f7f63849, type: 2}
-  rightEvent: {fileID: 11400000, guid: 79e7196f0e5b7774ebac655b6cba07f5, type: 2}
+  m_LeftEvent: {fileID: 11400000, guid: 963c8bfb7bceb4245bbef649f7f63849, type: 2}
+  m_RightEvent: {fileID: 11400000, guid: 79e7196f0e5b7774ebac655b6cba07f5, type: 2}
 --- !u!50 &50120193809232062
 Rigidbody2D:
   serializedVersion: 4
