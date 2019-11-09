@@ -10,6 +10,7 @@ using BayatGames.SaveGameFree.Serializers;
 using RedRunner.Characters;
 using RedRunner.Collectables;
 using RedRunner.TerrainGeneration;
+using RedRunner.Networking;
 
 namespace RedRunner
 {
@@ -36,8 +37,6 @@ namespace RedRunner
         }
 
         [SerializeField]
-        private Character m_MainCharacter;
-        [SerializeField]
         [TextArea(3, 30)]
         private string m_ShareText;
         [SerializeField]
@@ -46,6 +45,8 @@ namespace RedRunner
         private float m_HighScore = 0f;
         private float m_LastScore = 0f;
         private float m_Score = 0f;
+        [SerializeField]
+        private bool m_IsServer = false;
 
         private bool m_GameStarted = false;
         private bool m_GameRunning = false;
@@ -128,6 +129,13 @@ namespace RedRunner
                 m_HighScore = 0f;
             }
 
+            RedCharacter.LocalPlayerSpawned += () =>
+            {
+                RedCharacter.Local.IsDead.AddEventAndFire(UpdateDeathEvent, this);
+                m_StartScoreX = RedCharacter.Local.transform.position.x;
+
+                StartGame();
+            };
         }
 
         void UpdateDeathEvent(bool isDead)
@@ -163,8 +171,6 @@ namespace RedRunner
 
         private void Start()
         {
-            m_MainCharacter.IsDead.AddEventAndFire(UpdateDeathEvent, this);
-            m_StartScoreX = m_MainCharacter.transform.position.x;
             Init();
         }
 
@@ -179,9 +185,9 @@ namespace RedRunner
         {
             if (m_GameRunning)
             {
-                if (m_MainCharacter.transform.position.x > m_StartScoreX && m_MainCharacter.transform.position.x > m_Score)
+                if (RedCharacter.Local.transform.position.x > m_StartScoreX && RedCharacter.Local.transform.position.x > m_Score)
                 {
-                    m_Score = m_MainCharacter.transform.position.x;
+                    m_Score = RedCharacter.Local.transform.position.x;
                     if (OnScoreChanged != null)
                     {
                         OnScoreChanged(m_Score, m_HighScore, m_LastScore);
@@ -228,6 +234,18 @@ namespace RedRunner
             }
         }
 
+        public void ConnectToGame()
+        {
+            if (m_IsServer)
+            {
+                NetworkManager.Instance.StartServer();
+            } else
+            {
+                NetworkManager.Instance.networkAddress = "localhost";
+                NetworkManager.Instance.StartClient();
+            }
+        }
+
         public void StartGame()
         {
             m_GameStarted = true;
@@ -254,7 +272,7 @@ namespace RedRunner
 
         public void RespawnMainCharacter()
         {
-            RespawnCharacter(m_MainCharacter);
+            RespawnCharacter(RedCharacter.Local);
         }
 
         public void RespawnCharacter(Character character)

@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using UnityStandardAssets.CrossPlatformInput;
 
 using RedRunner.Utilities;
+using RedRunner.Networking;
 
 namespace RedRunner.Characters
 {
@@ -63,6 +64,10 @@ namespace RedRunner.Characters
 		[SerializeField]
 		protected AudioSource m_JumpAndGroundedAudioSource;
 
+        public delegate void PlayerEvent();
+
+        public static event PlayerEvent LocalPlayerSpawned;
+
 		#endregion
 
 		#region Private Variables
@@ -80,6 +85,8 @@ namespace RedRunner.Characters
 		#endregion
 
 		#region Properties
+
+        public static RedCharacter Local { get; private set; }
 
 		public override float MaxRunSpeed
 		{
@@ -277,7 +284,12 @@ namespace RedRunner.Characters
 
 		void Update ()
 		{
-			if ( !GameManager.Singleton.gameStarted || !GameManager.Singleton.gameRunning )
+            if (!isLocalPlayer)
+            {
+                return;
+            }
+
+            if ( !GameManager.Singleton.gameStarted || !GameManager.Singleton.gameRunning )
 			{
 				return;
 			}
@@ -357,30 +369,6 @@ namespace RedRunner.Characters
 			}
 		}
 
-		//		void OnCollisionEnter2D ( Collision2D collision2D )
-		//		{
-		//			bool isGround = collision2D.collider.CompareTag ( GroundCheck.GROUND_TAG );
-		//			if ( isGround && !m_IsDead )
-		//			{
-		//				bool isBottom = false;
-		//				for ( int i = 0; i < collision2D.contacts.Length; i++ )
-		//				{
-		//					if ( !isBottom )
-		//					{
-		//						isBottom = collision2D.contacts [ i ].normal.y == 1;
-		//					}
-		//					else
-		//					{
-		//						break;
-		//					}
-		//				}
-		//				if ( isBottom )
-		//				{
-		//					m_JumpParticleSystem.Play ();
-		//				}
-		//			}
-		//		}
-
 		#endregion
 
 		#region Private Methods
@@ -424,10 +412,6 @@ namespace RedRunner.Characters
 			if ( !IsDead.Value )
 			{
 				float speed = m_CurrentRunSpeed;
-//				if ( CrossPlatformInputManager.GetButton ( "Walk" ) )
-//				{
-//					speed = m_WalkSpeed;
-				//				}
 				Vector2 velocity = m_Rigidbody2D.velocity;
 				velocity.x = speed * horizontalAxis;
 				m_Rigidbody2D.velocity = velocity;
@@ -506,11 +490,19 @@ namespace RedRunner.Characters
 			m_Skeleton.SetActive ( false, m_Rigidbody2D.velocity );
 		}
 
-		#endregion
+        public override void OnStartLocalPlayer()
+        {
+            base.OnStartLocalPlayer();
 
-		#region Events
+            Local = this;
+            LocalPlayerSpawned();
+        }
 
-		void GameManager_OnReset ()
+        #endregion
+
+        #region Events
+
+        void GameManager_OnReset ()
 		{
 			transform.position = m_InitialPosition;
 			Reset ();

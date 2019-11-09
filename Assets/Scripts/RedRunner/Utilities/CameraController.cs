@@ -78,8 +78,18 @@ namespace RedRunner.Utilities
 			}
 		}
 
+        public void Follow(Transform followee)
+        {
+            m_Followee = followee;
+        }
+
 		public void Follow ()
 		{
+            if (m_Followee == null)
+            {
+                return;
+            }
+
 			float speed = m_Speed;
 			if ( m_FastMove )
 			{

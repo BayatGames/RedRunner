@@ -25,7 +25,7 @@ namespace RedRunner.UI
                 if (InGameScreen != null)
                 {
                     uiManager.OpenScreen(InGameScreen);
-                    GameManager.Singleton.StartGame();
+                    GameManager.Singleton.ConnectToGame();
                 }
             });
 

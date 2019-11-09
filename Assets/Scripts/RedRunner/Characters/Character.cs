@@ -11,7 +11,7 @@ namespace RedRunner.Characters
 	[RequireComponent ( typeof ( Collider2D ) )]
 	[RequireComponent ( typeof ( Animator ) )]
 	[RequireComponent ( typeof ( Skeleton ) )]
-	public abstract class Character : MonoBehaviour
+	public abstract class Character : Mirror.NetworkBehaviour
 	{
 
 		public delegate void DeadHandler ();
