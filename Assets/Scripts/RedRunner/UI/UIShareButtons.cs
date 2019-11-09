@@ -17,8 +17,9 @@ namespace RedRunner.UI
 
 		void Start ()
 		{
-			
-		}
+            m_IsOpen = false;
+            SetTrigger("Close");
+        }
 
 		public void Toggle ()
 		{
