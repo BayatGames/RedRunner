@@ -27,6 +27,8 @@ namespace RedRunner.Characters
 		protected float m_WalkSpeed = 1.75f;
 		[SerializeField]
 		protected float m_JumpStrength = 10f;
+        [SerializeField]
+        protected int m_AllowedJumps = 2;
 		[SerializeField]
 		protected string[] m_Actions = new string[0];
 		[SerializeField]
@@ -81,6 +83,7 @@ namespace RedRunner.Characters
 		protected int m_CurrentFootstepSoundIndex = 0;
 		protected Vector3 m_InitialScale;
 		protected Vector3 m_InitialPosition;
+        protected int m_JumpsSoFar = 0;
 
 		#endregion
 
@@ -450,18 +453,16 @@ namespace RedRunner.Characters
 
 		public override void Jump ()
 		{
-			if ( !IsDead.Value )
+			if ( !IsDead.Value && m_JumpsSoFar < m_AllowedJumps)
 			{
-				if ( m_GroundCheck.IsGrounded )
-				{
-					Vector2 velocity = m_Rigidbody2D.velocity;
-					velocity.y = m_JumpStrength;
-					m_Rigidbody2D.velocity = velocity;
-					m_Animator.animator.ResetTrigger ( "Jump" );
-					m_Animator.SetTrigger ( "Jump" );
-					m_JumpParticleSystem.Play ();
-					AudioManager.Singleton.PlayJumpSound ( m_JumpAndGroundedAudioSource );
-				}
+                m_JumpsSoFar++;
+                Vector2 velocity = m_Rigidbody2D.velocity;
+				velocity.y = m_JumpStrength;
+				m_Rigidbody2D.velocity = velocity;
+				m_Animator.animator.ResetTrigger ( "Jump" );
+				m_Animator.SetTrigger ( "Jump" );
+				m_JumpParticleSystem.Play ();
+				AudioManager.Singleton.PlayJumpSound ( m_JumpAndGroundedAudioSource );
 			}
 		}
 
@@ -531,6 +532,7 @@ namespace RedRunner.Characters
 			{
 				m_JumpParticleSystem.Play ();
 				AudioManager.Singleton.PlayGroundedSound ( m_JumpAndGroundedAudioSource );
+                m_JumpsSoFar = 0;
 			}
 		}
 
