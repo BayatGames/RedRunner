@@ -49895,7 +49895,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: x 0
+  m_Text: x 25
   m_CoinTextFormat: x {0}
 --- !u!114 &254
 MonoBehaviour:
@@ -50732,7 +50732,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ShareText: "I have played Red Runner game and enjoyed! this is really amazing!\r\n\r\nGet
     it now!"
-  m_ShareUrl: https://bayat.itch.io/red-runner
+  m_ShareUrl: https://www.google.com/
 --- !u!114 &293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57054,8 +57054,8 @@ GameObject:
   - component: {fileID: 847802080}
   - component: {fileID: 847802082}
   - component: {fileID: 847802081}
-  m_Layer: 5
-  m_Name: LeftRegion
+  m_Layer: 23
+  m_Name: RightRegion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57094,7 +57094,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 79e7196f0e5b7774ebac655b6cba07f5, type: 2}
+        m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!61 &847802082
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -58566,8 +58577,8 @@ GameObject:
   - component: {fileID: 1324616625}
   - component: {fileID: 1324616627}
   - component: {fileID: 1324616626}
-  m_Layer: 5
-  m_Name: RightRegion
+  m_Layer: 23
+  m_Name: LeftRegion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58606,7 +58617,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 963c8bfb7bceb4245bbef649f7f63849, type: 2}
+        m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!61 &1324616627
 BoxCollider2D:
   m_ObjectHideFlags: 0
