@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using RedRunner.Networking;
+
 namespace RedRunner.TerrainGeneration
 {
 
-	public abstract class Block : MonoBehaviour
+	public abstract class Block : Mirror.NetworkBehaviour
 	{
 
 		[SerializeField]
@@ -25,6 +27,14 @@ namespace RedRunner.TerrainGeneration
 		public virtual float Probability {
 			get {
 				return m_Probability;
+			}
+		}
+
+		public virtual void Awake()
+		{
+			if (NetworkManager.IsServer)
+			{
+				NetworkManager.Spawn(gameObject);
 			}
 		}
 

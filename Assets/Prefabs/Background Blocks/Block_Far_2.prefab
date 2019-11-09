@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4962735055055568}
   - component: {fileID: 212072382232727084}
   - component: {fileID: 114503496299374618}
+  - component: {fileID: 1192447788667865354}
   m_Layer: 11
   m_Name: Block_Far_2
   m_TagString: Untagged
@@ -93,7 +94,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e788f58610f8224ba45224582f90b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   m_Width: 100
   m_Probability: 1
   m_MinWidth: 200
   m_MaxWidth: 300
+--- !u!114 &1192447788667865354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894323184451462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverOnly: 0
+  m_AssetId: 
+  m_SceneId: 0

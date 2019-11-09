@@ -1,8 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 using RedRunner.Characters;
+using RedRunner.Networking;
 
 namespace RedRunner.TerrainGeneration
 {
@@ -74,6 +74,7 @@ namespace RedRunner.TerrainGeneration
 				return;
 			}
 			m_Singleton = this;
+
 			m_Blocks = new Dictionary<Vector3, Block> ();
 			m_BackgroundBlocks = new Dictionary<Vector3, BackgroundBlock> ();
 			m_BackgroundLayers = new BackgroundLayer[m_Settings.BackgroundLayers.Length];
@@ -82,10 +83,17 @@ namespace RedRunner.TerrainGeneration
 				m_BackgroundLayers [ i ] = m_Settings.BackgroundLayers [ i ];
 			}
 			GameManager.OnReset += Reset;
+
+			RegisterSpawnablePrefabs();
 		}
 
 		protected virtual void Reset ()
 		{
+			if (!NetworkManager.IsServer)
+			{
+				return;
+			}
+
 			m_Reset = true;
 			RemoveAll ();
 			m_CurrentX = 0f;
@@ -111,6 +119,11 @@ namespace RedRunner.TerrainGeneration
 
 		protected virtual void Update ()
 		{
+			if (!NetworkManager.IsServer)
+			{
+				return;
+			}
+
 			if ( m_Reset )
 			{
 				return;
@@ -125,6 +138,8 @@ namespace RedRunner.TerrainGeneration
 
 		public virtual void Generate ()
 		{
+			Debug.Log("Generating!");
+
 			if ( m_CurrentX < m_Settings.LevelLength || m_Settings.LevelLength <= 0 )
 			{
 				bool isEnd = false, isStart = false, isMiddle = false;
@@ -289,7 +304,10 @@ namespace RedRunner.TerrainGeneration
 				return false;
 			}
 			blockPrefab.PreGenerate ( this );
-			Block block = Instantiate<Block> ( blockPrefab, position, Quaternion.identity );
+
+			Block block = Instantiate(blockPrefab, position, Quaternion.identity);
+			//NetworkManager.Spawn(block.gameObject);
+
 			m_PreviousX = m_CurrentX;
 			m_CurrentX += block.Width;
 			m_Blocks.Add ( position, block );
@@ -307,7 +325,10 @@ namespace RedRunner.TerrainGeneration
 			blockPrefab.PreGenerate ( this );
 			position.z = blockPrefab.transform.position.z;
 			position.y = blockPrefab.transform.position.y;
-			BackgroundBlock block = Instantiate<BackgroundBlock> ( blockPrefab, position, Quaternion.identity );
+
+			BackgroundBlock block = Instantiate(blockPrefab, position, Quaternion.identity);
+			//NetworkManager.Spawn(block.gameObject);
+
 			float width = Random.Range ( block.MinWidth, block.MaxWidth );
 			m_BackgroundLayers [ layerIndex ].PreviousX = m_BackgroundLayers [ layerIndex ].CurrentX;
 			m_BackgroundLayers [ layerIndex ].CurrentX += width;
@@ -362,6 +383,31 @@ namespace RedRunner.TerrainGeneration
 			return blocks [ blocks.Length - 1 ];
 		}
 
+		private void RegisterSpawnablePrefabs()
+		{
+			foreach (var block in m_Settings.StartBlocks)
+			{
+				NetworkManager.RegisterSpawnablePrefab(block.gameObject);
+			}
+
+			foreach (var block in m_Settings.MiddleBlocks)
+			{
+				NetworkManager.RegisterSpawnablePrefab(block.gameObject);
+			}
+
+			foreach (var block in m_Settings.EndBlocks)
+			{
+				NetworkManager.RegisterSpawnablePrefab(block.gameObject);
+			}
+
+			foreach (var layer in m_BackgroundLayers)
+			{
+				foreach (var block in layer.Blocks)
+				{
+					NetworkManager.RegisterSpawnablePrefab(block.gameObject);
+				}
+			}
+		}
 	}
 
 }

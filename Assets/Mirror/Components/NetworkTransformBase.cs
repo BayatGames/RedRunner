@@ -29,7 +29,7 @@ namespace Mirror
         // -> can still be modified in the Inspector while the game is running,
         //    but would cause errors immediately and be pretty obvious.
         [Tooltip("Compresses 16 Byte Quaternion into None=12, Much=3, Lots=2 Byte")]
-        [SerializeField] Compression compressRotation = Compression.Much;
+        [SerializeField] public Compression compressRotation = Compression.Much;
         public enum Compression { None, Much, Lots, NoRotation }; // easily understandable and funny
 
         // server
