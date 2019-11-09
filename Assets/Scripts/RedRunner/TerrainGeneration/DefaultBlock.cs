@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+using RedRunner.Networking;
 
 namespace RedRunner.TerrainGeneration
 {
-
 	public class DefaultBlock : Block
 	{
 
 	}
-
 }

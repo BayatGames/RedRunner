@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LevelLength: -1
   m_StartBlocksCount: 1
-  m_MiddleBlocksCount: -1
+  m_MiddleBlocksCount: 1
   m_EndBlocksCount: 1
   m_StartBlocks:
   - {fileID: 114470893495785418, guid: 9a775b549d469f74196fb38cb84acf0b, type: 3}
@@ -35,7 +35,8 @@ MonoBehaviour:
   - {fileID: 114620694829996460, guid: 0983e63aa3847904aad91fb0009b7cdf, type: 3}
   - {fileID: 114490593543241952, guid: 5febe23f5b0e58046be8b965ae251e23, type: 3}
   - {fileID: 114601894619822566, guid: e3e2f45933978fb46bc321b3062cfe3b, type: 3}
-  m_EndBlocks: []
+  m_EndBlocks:
+  - {fileID: 114470893495785418, guid: 9a775b549d469f74196fb38cb84acf0b, type: 3}
   m_BackgroundLayers:
   - name: Far
     Blocks:
