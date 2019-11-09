@@ -49895,7 +49895,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: x 25
+  m_Text: x 29
   m_CoinTextFormat: x {0}
 --- !u!114 &254
 MonoBehaviour:
@@ -50733,6 +50733,8 @@ MonoBehaviour:
   m_ShareText: "I have played Red Runner game and enjoyed! this is really amazing!\r\n\r\nGet
     it now!"
   m_ShareUrl: https://www.google.com/
+  leftEvent: {fileID: 11400000, guid: 963c8bfb7bceb4245bbef649f7f63849, type: 2}
+  rightEvent: {fileID: 11400000, guid: 79e7196f0e5b7774ebac655b6cba07f5, type: 2}
 --- !u!114 &293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57052,8 +57054,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 847802080}
-  - component: {fileID: 847802082}
   - component: {fileID: 847802081}
+  - component: {fileID: 847802083}
+  - component: {fileID: 847802082}
   m_Layer: 23
   m_Name: RightRegion
   m_TagString: Untagged
@@ -57106,32 +57109,29 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!61 &847802082
-BoxCollider2D:
+--- !u!114 &847802082
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 847802079}
   m_Enabled: 1
-  m_Density: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8936d94bdaeab0449c4a3d8b9c4718b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 500, y: 1}
-  m_EdgeRadius: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+--- !u!222 &847802083
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847802079}
+  m_CullTransparentMesh: 0
 --- !u!1 &867841076
 GameObject:
   m_ObjectHideFlags: 0
@@ -58575,8 +58575,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1324616625}
-  - component: {fileID: 1324616627}
   - component: {fileID: 1324616626}
+  - component: {fileID: 1324616628}
+  - component: {fileID: 1324616627}
   m_Layer: 23
   m_Name: LeftRegion
   m_TagString: Untagged
@@ -58629,32 +58630,29 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!61 &1324616627
-BoxCollider2D:
+--- !u!114 &1324616627
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1324616624}
   m_Enabled: 1
-  m_Density: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8936d94bdaeab0449c4a3d8b9c4718b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 500, y: 1}
-  m_EdgeRadius: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+--- !u!222 &1324616628
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324616624}
+  m_CullTransparentMesh: 0
 --- !u!1 &1336058483
 GameObject:
   m_ObjectHideFlags: 0

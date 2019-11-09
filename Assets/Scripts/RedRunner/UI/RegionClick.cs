@@ -2,23 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(BoxCollider2D))]
-public class RegionClick : MonoBehaviour
+public class RegionClick : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField]
     private UnityEvent onClick = new UnityEvent();
 
-    void Start()
-    {
-        BoxCollider2D bc = GetComponent<BoxCollider2D>();
-        RectTransform rect = GetComponent<RectTransform>();
-        bc.size = new Vector2(rect.rect.width, rect.rect.height);
-    }
-
-    void OnMouseDown()
+    public void OnPointerDown(PointerEventData eventData)
     {
         onClick.Invoke();
     }
-
 }
