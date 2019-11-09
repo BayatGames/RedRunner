@@ -27,8 +27,8 @@ namespace RedRunner.Characters
 		protected float m_WalkSpeed = 1.75f;
 		[SerializeField]
 		protected float m_JumpStrength = 10f;
-        [SerializeField]
-        protected int m_AllowedJumps = 2;
+		[SerializeField]
+		protected int m_AllowedJumps = 2;
 		[SerializeField]
 		protected string[] m_Actions = new string[0];
 		[SerializeField]
@@ -83,7 +83,7 @@ namespace RedRunner.Characters
 		protected int m_CurrentFootstepSoundIndex = 0;
 		protected Vector3 m_InitialScale;
 		protected Vector3 m_InitialPosition;
-        protected int m_JumpsSoFar = 0;
+		protected int m_JumpsSoFar = 0;
 
 		#endregion
 
@@ -235,7 +235,7 @@ namespace RedRunner.Characters
 			}
 		}
 
-        public override bool ClosingEye
+		public override bool ClosingEye
 		{
 			get
 			{
@@ -294,7 +294,7 @@ namespace RedRunner.Characters
 				Local.m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
 			};
 		}
-        
+		
 		public override void OnStartLocalPlayer()
 		{
 			base.OnStartLocalPlayer();
@@ -303,7 +303,7 @@ namespace RedRunner.Characters
 			LocalPlayerSpawned();
 		}
 
-        void Update ()
+		void Update ()
 		{
 			if (Local != this)
 			{
@@ -455,8 +455,8 @@ namespace RedRunner.Characters
 		{
 			if ( !IsDead.Value && m_JumpsSoFar < m_AllowedJumps)
 			{
-                m_JumpsSoFar++;
-                Vector2 velocity = m_Rigidbody2D.velocity;
+				m_JumpsSoFar++;
+				Vector2 velocity = m_Rigidbody2D.velocity;
 				velocity.y = m_JumpStrength;
 				m_Rigidbody2D.velocity = velocity;
 				m_Animator.animator.ResetTrigger ( "Jump" );
@@ -475,14 +475,14 @@ namespace RedRunner.Characters
 		{
 			if ( !IsDead.Value )
 			{
-                IsDead.Value = true;
+				IsDead.Value = true;
 				m_Skeleton.SetActive ( true, m_Rigidbody2D.velocity );
 				if ( blood )
 				{
 					ParticleSystem particle = Instantiate<ParticleSystem> ( 
-						                          m_BloodParticleSystem,
-						                          transform.position,
-						                          Quaternion.identity );
+													m_BloodParticleSystem,
+													transform.position,
+													Quaternion.identity );
 					Destroy ( particle.gameObject, particle.main.duration );
 				}
 				CameraController.Singleton.fastMove = true;
@@ -499,7 +499,7 @@ namespace RedRunner.Characters
 
 		public override void Reset ()
 		{
-            IsDead.Value = false;
+			IsDead.Value = false;
 			m_ClosingEye = false;
 			m_Guard = false;
 			m_Block = false;
@@ -532,7 +532,7 @@ namespace RedRunner.Characters
 			{
 				m_JumpParticleSystem.Play ();
 				AudioManager.Singleton.PlayGroundedSound ( m_JumpAndGroundedAudioSource );
-                m_JumpsSoFar = 0;
+				m_JumpsSoFar = 0;
 			}
 		}
 
