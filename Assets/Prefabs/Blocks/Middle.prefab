@@ -5370,7 +5370,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4153197513139256}
   - component: {fileID: 114259622553350070}
-  - component: {fileID: -7005655391943515612}
+  - component: {fileID: 5966923422078980570}
   m_Layer: 9
   m_Name: Middle
   m_TagString: Untagged
@@ -5408,11 +5408,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 492bac9ee3503c44eb7bdac5861a7875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   m_Width: 17.92
   m_Probability: 1
---- !u!114 &-7005655391943515612
+--- !u!114 &5966923422078980570
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

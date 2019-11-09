@@ -1,15 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 using RedRunner.Networking;
 
 namespace RedRunner.TerrainGeneration
 {
-
-	public abstract class Block : Mirror.NetworkBehaviour
+	public abstract class Block : ServerSpawnable
 	{
-
 		[SerializeField]
 		protected float m_Width;
 		[SerializeField]
@@ -30,14 +26,6 @@ namespace RedRunner.TerrainGeneration
 			}
 		}
 
-		public virtual void Awake()
-		{
-			if (NetworkManager.IsServer)
-			{
-				NetworkManager.Spawn(gameObject);
-			}
-		}
-
 		public virtual void OnRemove (TerrainGenerator generator)
 		{
 			
@@ -52,7 +40,5 @@ namespace RedRunner.TerrainGeneration
 		{
 			
 		}
-
 	}
-
 }
