@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,6 +14,7 @@ namespace RedRunner.Characters
 
 	public class RedCharacter : Character
 	{
+
 		#region Fields
 
 		[Header ( "Character Details" )]
@@ -70,10 +72,10 @@ namespace RedRunner.Characters
 
 		public static event PlayerEvent LocalPlayerSpawned;
 
-		#endregion
+        #endregion
 
-		#region Private Variables
-
+        #region Private Variables
+        protected CharacterState m_State = CharacterState.Stopped;
 		protected bool m_ClosingEye = false;
 		protected bool m_Guard = false;
 		protected bool m_Block = false;
@@ -83,6 +85,10 @@ namespace RedRunner.Characters
 		protected int m_CurrentFootstepSoundIndex = 0;
 		protected Vector3 m_InitialScale;
 		protected Vector3 m_InitialPosition;
+        [SerializeField]
+        private GameEvent m_LeftEvent;
+        [SerializeField]
+        private GameEvent m_RightEvent;
 		protected int m_JumpsSoFar = 0;
 
 		#endregion
@@ -293,8 +299,41 @@ namespace RedRunner.Characters
 				// Once we find out we are the local player, simulate our rigidbody.
 				Local.m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
 			};
-		}
-		
+
+            m_RightEvent.RegisterAction(RightEvent);
+            m_LeftEvent.RegisterAction(LeftEvent);
+        }
+        
+        private void LeftEvent()
+        {
+            if (m_State == CharacterState.Left)
+            {
+                Jump();
+            }
+            else
+            {
+                m_State = CharacterState.Left;
+                ResetMovement();
+            }
+        }
+        private void RightEvent()
+        {
+            if (m_State == CharacterState.Right)
+            {
+                Jump();
+            }
+            else
+            {
+                m_State = CharacterState.Right;
+                ResetMovement();
+            }
+        }
+
+        private void ResetMovement()
+        {
+            m_CurrentRunSpeed = m_RunSpeed;
+        }
+
 		public override void OnStartLocalPlayer()
 		{
 			base.OnStartLocalPlayer();
@@ -303,7 +342,36 @@ namespace RedRunner.Characters
 			LocalPlayerSpawned();
 		}
 
-		void Update ()
+        private void UpdateMovement()
+        {
+             // Speed Calculations
+            if (m_CurrentRunSpeed < m_MaxRunSpeed)
+            {
+                m_CurrentRunSpeed = Mathf.SmoothDamp(m_CurrentRunSpeed, m_MaxRunSpeed, ref m_CurrentSmoothVelocity, m_RunSmoothTime);
+            }
+
+            // Input Processing
+
+            switch (m_State)
+            {
+                case CharacterState.Left:
+                    Move(-1f);
+                    break;
+
+                case CharacterState.Right:
+                    Move(1f);
+                    break;
+
+                default:
+                    // Don't move
+                    break;
+            }
+
+            // Speed
+            m_Speed = new Vector2(Mathf.Abs(m_Rigidbody2D.velocity.x), Mathf.Abs(m_Rigidbody2D.velocity.y));
+        }
+
+        void Update ()
 		{
 			if (Local != this)
 			{
@@ -315,22 +383,8 @@ namespace RedRunner.Characters
 				Die ();
 			}
 
-			// Speed
-			m_Speed = new Vector2 ( Mathf.Abs ( m_Rigidbody2D.velocity.x ), Mathf.Abs ( m_Rigidbody2D.velocity.y ) );
+            UpdateMovement();
 
-			// Speed Calculations
-			m_CurrentRunSpeed = m_RunSpeed;
-			if ( m_Speed.x >= m_RunSpeed )
-			{
-				m_CurrentRunSpeed = Mathf.SmoothDamp ( m_Speed.x, m_MaxRunSpeed, ref m_CurrentSmoothVelocity, m_RunSmoothTime );
-			}
-
-			// Input Processing
-			Move ( CrossPlatformInputManager.GetAxis ( "Horizontal" ) );
-			if ( CrossPlatformInputManager.GetButtonDown ( "Jump" ) )
-			{
-				Jump ();
-			}
 			if ( IsDead.Value && !m_ClosingEye )
 			{
 				StartCoroutine ( CloseEye () );
@@ -507,6 +561,7 @@ namespace RedRunner.Characters
 			transform.localScale = m_InitialScale;
 			m_Rigidbody2D.velocity = Vector2.zero;
 			m_Skeleton.SetActive ( false, m_Rigidbody2D.velocity );
+            m_State = CharacterState.Stopped;
 		}
 
 		#endregion

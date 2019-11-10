@@ -50,6 +50,11 @@ namespace RedRunner
 		private bool m_GameRunning = false;
 		private bool m_AudioEnabled = true;
 
+        [SerializeField]
+        private GameEvent leftEvent;
+        [SerializeField]
+        private GameEvent rightEvent;
+
 		/// <summary>
 		/// This is my developed callbacks compoents, because callbacks are so dangerous to use we need something that automate the sub/unsub to functions
 		/// with this in-house developed callbacks feature, we garantee that the callback will be removed when we don't need it.
@@ -192,9 +197,21 @@ namespace RedRunner
 					}
 				}
 			}
-		}
 
-		IEnumerator Load()
+            #if UNITY_EDITOR || UNITY_STANDALONE
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                leftEvent.Raise();
+            } 
+            
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                rightEvent.Raise();
+            }
+            #endif
+        }
+
+        IEnumerator Load()
 		{
 			var startScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.START_SCREEN);
 			yield return new WaitForSecondsRealtime(3f);

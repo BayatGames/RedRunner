@@ -13,8 +13,9 @@ namespace RedRunner.Characters
 	[RequireComponent(typeof(Skeleton))]
 	public abstract class Character : Mirror.NetworkBehaviour
 	{
+        protected enum CharacterState { Stopped = 0, Left = 1, Right = 2 }
 
-		public delegate void DeadHandler();
+        public delegate void DeadHandler();
 
 		public virtual event DeadHandler OnDead;
 
