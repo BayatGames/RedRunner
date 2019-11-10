@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace RedRunner.Utilities
 {
-
-	public class WallJump : MonoBehaviour
+	public class WallDetector : MonoBehaviour
 	{
+		public Action OnWallEnter;
+		public Action OnWallExit;
+
 		public const string WALL_LAYER_NAME = "Ground";
 		private int m_ClippedWalls = 0;
 
@@ -41,6 +44,12 @@ namespace RedRunner.Utilities
 
 		private void UpdateWallStatus()
 		{
+			if (m_ClippedWalls>0 && !m_TouchingWall && OnWallEnter!=null){
+				OnWallEnter.Invoke();
+			}else if (m_ClippedWalls<=0 && m_TouchingWall && OnWallExit != null)
+			{
+				OnWallExit.Invoke();
+			}
 			m_TouchingWall = (m_ClippedWalls > 0);
 		}
 	}
