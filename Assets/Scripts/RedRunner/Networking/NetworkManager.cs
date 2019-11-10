@@ -11,9 +11,24 @@ namespace RedRunner.Networking
 		[SerializeField]
 		private CameraController cameraController;
 
-		private string host = "localhost";
+		private static bool shouldHost = false;
+		private static string host = "localhost";
 
-		public static bool IsServer { get; private set; } = false;
+		public static bool IsConnected
+		{
+			get
+			{
+				return Mirror.NetworkClient.isConnected;
+			}
+		}
+
+		public static bool IsServer
+		{
+			get
+			{
+				return shouldHost && IsConnected;
+			}
+		}
 
 		public static RedCharacter LocalCharacter { get; private set; }
 
@@ -35,8 +50,8 @@ namespace RedRunner.Networking
 		{
 			if (!Mirror.NetworkClient.isConnected && !Mirror.NetworkServer.active && !Mirror.NetworkClient.active)
 			{
-				IsServer = GUILayout.Toggle(IsServer, "Host");
-				if (!IsServer)
+				shouldHost = GUILayout.Toggle(shouldHost, "Host");
+				if (!shouldHost)
 				{
 					host = GUILayout.TextField(host);
 				}
@@ -45,7 +60,7 @@ namespace RedRunner.Networking
 
 		public void Connect()
 		{
-			if (IsServer)
+			if (shouldHost)
 			{
 				StartHost();
 			}
