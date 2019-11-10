@@ -47,6 +47,8 @@ namespace RedRunner.Characters
 		[SerializeField]
 		protected GroundCheck m_GroundCheck;
 		[SerializeField]
+		protected WallJump m_WallJump;
+		[SerializeField]
 		protected ParticleSystem m_RunParticleSystem;
 		[SerializeField]
 		protected ParticleSystem m_JumpParticleSystem;
@@ -507,16 +509,31 @@ namespace RedRunner.Characters
 
 		public override void Jump ()
 		{
-			if ( !IsDead.Value && m_JumpsSoFar < m_AllowedJumps)
+			if ( !IsDead.Value)
 			{
-				m_JumpsSoFar++;
-				Vector2 velocity = m_Rigidbody2D.velocity;
-				velocity.y = m_JumpStrength;
-				m_Rigidbody2D.velocity = velocity;
-				m_Animator.animator.ResetTrigger ( "Jump" );
-				m_Animator.SetTrigger ( "Jump" );
-				m_JumpParticleSystem.Play ();
-				AudioManager.Singleton.PlayJumpSound ( m_JumpAndGroundedAudioSource );
+				if (m_WallJump.TouchingWall)
+				{
+					//wall jumping - same as normal jump for now
+					Vector2 velocity = m_Rigidbody2D.velocity;
+					velocity.y = m_JumpStrength;
+					m_Rigidbody2D.velocity = velocity;
+					m_Animator.animator.ResetTrigger("Jump");
+					m_Animator.SetTrigger("Jump");
+					m_JumpParticleSystem.Play();
+					AudioManager.Singleton.PlayJumpSound(m_JumpAndGroundedAudioSource);
+				}
+				else if (m_JumpsSoFar < m_AllowedJumps){
+					//normal jumping
+					Vector2 velocity = m_Rigidbody2D.velocity;
+					velocity.y = m_JumpStrength;
+					m_Rigidbody2D.velocity = velocity;
+					m_Animator.animator.ResetTrigger("Jump");
+					m_Animator.SetTrigger("Jump");
+					m_JumpParticleSystem.Play();
+					AudioManager.Singleton.PlayJumpSound(m_JumpAndGroundedAudioSource);
+					m_JumpsSoFar++;
+				}
+				
 			}
 		}
 
