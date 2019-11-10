@@ -1,10 +1,14 @@
 fileFormatVersion: 2
 guid: 5ee4a9175eb60f445a0368035063ea67
-timeCreated: 1491843655
-licenseType: Pro
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - m_Collider2D: {instanceID: 0}
+  - targetRotation: {instanceID: 0}
+  - m_DefaultSound: {fileID: 8300000, guid: 2ef0beac4af64de49a7e1e93b9645a3a, type: 3}
+  - m_SawingSound: {fileID: 8300000, guid: 70b3c96416a46f34b829d259afb09559, type: 3}
+  - m_AudioSource: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

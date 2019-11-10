@@ -449,26 +449,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6a4de97e3c9f2cd4a8400d14e61f15df, type: 3}
   m_JumpSound: {fileID: 8300000, guid: 55ea64a0b4c3068439385bbc1a37aebd, type: 3}
   m_FootstepSounds:
-  - {fileID: 8300000, guid: 701f4fd2ed05a6e47a664dbe700d74b8, type: 3}
-  - {fileID: 8300000, guid: 80fdce88cf5da0646a1efdd69a03fd12, type: 3}
-  - {fileID: 8300000, guid: 2049ddefbd478cb4297b30a821e9f540, type: 3}
-  - {fileID: 8300000, guid: ff8c9ffb719ee8043ab01048ed240e8b, type: 3}
-  - {fileID: 8300000, guid: 25906f917595d554c83679ef59578c69, type: 3}
-  - {fileID: 8300000, guid: d115bceb97468d04c9e64479a3bf9613, type: 3}
-  - {fileID: 8300000, guid: f76e719771b33ea44a4bc4804ef82808, type: 3}
-  - {fileID: 8300000, guid: 3613b3401de5136448cba685202abb1c, type: 3}
-  - {fileID: 8300000, guid: 41aceb20f5421534094b6bccd77a3879, type: 3}
-  - {fileID: 8300000, guid: 652bd32a03bca67458cd5885714f8aaf, type: 3}
-  - {fileID: 8300000, guid: 49825c7ad209f77469f476459b52206a, type: 3}
-  - {fileID: 8300000, guid: d086b8c76c6d3ce4d8b15074da8722f3, type: 3}
-  - {fileID: 8300000, guid: 943f543f104057e41ae7b1d36b04dcfc, type: 3}
-  - {fileID: 8300000, guid: cd9d8e92ae133954c83c70a611be7ba0, type: 3}
-  - {fileID: 8300000, guid: 5e4f08795f2d41d44b75934d652f5778, type: 3}
-  - {fileID: 8300000, guid: 626b8ca60ed3d4c49b8f0367735264c5, type: 3}
-  - {fileID: 8300000, guid: 8bb77c1740d52c147b5284beb1932431, type: 3}
-  - {fileID: 8300000, guid: 7ec52203dea23084e9930e986a7ce65c, type: 3}
-  - {fileID: 8300000, guid: 0c4fc1537aa49e845b9742a828f3babd, type: 3}
-  - {fileID: 8300000, guid: 499c9c4363f91594f8db341022d2ff9d, type: 3}
+  - {fileID: 8300000, guid: e235f68c939c248469edf596d0004dab, type: 3}
+  - {fileID: 8300000, guid: 86e84fb3fbd597741a606dc2d763fbce, type: 3}
+  - {fileID: 8300000, guid: dbcfa03e381c64e4a94aa49a0e5d1520, type: 3}
+  - {fileID: 8300000, guid: 3c36417f875d83240b91f76137f073d2, type: 3}
+  - {fileID: 8300000, guid: f9cba3eba40ceae4695766793d65f2bb, type: 3}
+  - {fileID: 8300000, guid: ecb7dca06444f7a4c9965e350341be65, type: 3}
+  - {fileID: 8300000, guid: 16e44d984dc04fe428bea8bb289ae23a, type: 3}
   m_MaceSlamSound: {fileID: 8300000, guid: 2e20c06a65e531e47ba6de492cceb345, type: 3}
   m_ButtonClickSound: {fileID: 8300000, guid: a180fc841f3fbdc4d83b7d2993ca8693, type: 3}
 --- !u!1 &1552723576657106
