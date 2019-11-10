@@ -393,11 +393,20 @@ namespace RedRunner.Characters
             m_Speed = new Vector2(Mathf.Abs(m_Rigidbody2D.velocity.x), Mathf.Abs(m_Rigidbody2D.velocity.y));
         }
 
+				[Mirror.ClientRpc]
+				void RpcPing() {
+					Debug.Log("Ping!");
+				}
+
         void Update ()
 		{
 			if (Local != this)
 			{
 				return;
+			}
+
+			if (NetworkManager.IsServer) {
+				RpcPing();
 			}
 
 			if ( transform.position.y < 0f )
