@@ -6070,11 +6070,12 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   m_MaxRunSpeed: 10
-  m_RunSmoothTime: 0.25
+  m_RunSmoothTime: 0.5
   m_RunSpeed: 2
   m_WalkSpeed: 5
-  m_JumpStrength: 15
-  m_AllowedJumps: 2
+  m_JumpStrength: 20
+  m_DoubleJumpStrength: 18
+  m_WallSlideDrag: 9
   m_Actions:
   - Left Punch
   - Left Punch
@@ -6085,7 +6086,7 @@ MonoBehaviour:
   m_Collider2D: {fileID: 70389374301985556}
   m_Animator: {fileID: 1081473167}
   m_GroundCheck: {fileID: 114717820864580112}
-  m_WallJump: {fileID: 4823136284292071133}
+  m_WallDetector: {fileID: 6453200077801769656}
   m_RunParticleSystem: {fileID: 198270310177792922}
   m_JumpParticleSystem: {fileID: 198568243280554294}
   m_WaterParticleSystem: {fileID: 198332193062908510, guid: 8dd7c1a7934a4294db7147a9d20054a5,
@@ -11185,10 +11186,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7950497244521818202}
   - component: {fileID: 3839517307072831579}
-  - component: {fileID: 4823136284292071133}
   - component: {fileID: 86229537199612226}
+  - component: {fileID: 6453200077801769656}
   m_Layer: 0
-  m_Name: Wall Jump
+  m_Name: Wall Detector
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11234,19 +11235,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 0.15}
   m_EdgeRadius: 0
---- !u!114 &4823136284292071133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7472525215635775631}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 303b4ccd3cb068b4dae2ab0fcb00dcb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Collider2D: {fileID: 3839517307072831579}
 --- !u!50 &86229537199612226
 Rigidbody2D:
   serializedVersion: 4
@@ -11268,3 +11256,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6453200077801769656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7472525215635775631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 303b4ccd3cb068b4dae2ab0fcb00dcb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Collider2D: {fileID: 3839517307072831579}

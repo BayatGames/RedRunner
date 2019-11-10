@@ -30,7 +30,9 @@ namespace RedRunner.Characters
 		[SerializeField]
 		protected float m_JumpStrength = 10f;
 		[SerializeField]
-		protected int m_AllowedJumps = 2;
+		protected float m_DoubleJumpStrength = 8f;
+		[SerializeField]
+		protected float m_WallSlideDrag = 10f;
 		[SerializeField]
 		protected string[] m_Actions = new string[0];
 		[SerializeField]
@@ -47,7 +49,7 @@ namespace RedRunner.Characters
 		[SerializeField]
 		protected GroundCheck m_GroundCheck;
 		[SerializeField]
-		protected WallJump m_WallJump;
+		protected WallDetector m_WallDetector;
 		[SerializeField]
 		protected ParticleSystem m_RunParticleSystem;
 		[SerializeField]
@@ -91,7 +93,7 @@ namespace RedRunner.Characters
         private GameEvent m_LeftEvent;
         [SerializeField]
         private GameEvent m_RightEvent;
-		protected int m_JumpsSoFar = 0;
+		protected bool m_HasDoubleJump = false;
 
 		#endregion
 
@@ -284,6 +286,8 @@ namespace RedRunner.Characters
 			m_InitialPosition = transform.position;
 			m_InitialScale = transform.localScale;
 			m_GroundCheck.OnGrounded += GroundCheck_OnGrounded;
+			m_WallDetector.OnWallEnter += StartWallSlide;
+			m_WallDetector.OnWallExit += StopWallSlide;
 			m_Skeleton.OnActiveChanged += Skeleton_OnActiveChanged;
 			IsDead = new Property<bool>(false);
 			m_ClosingEye = false;
@@ -309,26 +313,42 @@ namespace RedRunner.Characters
         private void LeftEvent()
         {
             if (m_State == CharacterState.Left)
-            {
-                Jump();
-            }
-            else
-            {
+			{
+				if (!m_WallDetector.TouchingWall || GroundCheck.IsGrounded)
+				{
+					
+					Jump();
+				}
+			}
+			else{
                 m_State = CharacterState.Left;
                 ResetMovement();
+				if (m_WallDetector.TouchingWall && !GroundCheck.IsGrounded)
+				{
+					StopWallSlide();
+					Jump();
+				}
             }
-        }
+		}
         private void RightEvent()
         {
             if (m_State == CharacterState.Right)
-            {
-                Jump();
-            }
-            else
-            {
-                m_State = CharacterState.Right;
-                ResetMovement();
-            }
+			{
+				if (!m_WallDetector.TouchingWall || GroundCheck.IsGrounded)
+				{
+					Jump();
+				}
+			}
+			else
+			{
+				m_State = CharacterState.Right;
+				ResetMovement();
+				if (m_WallDetector.TouchingWall && !GroundCheck.IsGrounded)
+				{
+					StopWallSlide();
+					Jump();
+				}
+			}
         }
 
         private void ResetMovement()
@@ -509,11 +529,11 @@ namespace RedRunner.Characters
 
 		public override void Jump ()
 		{
-			if ( !IsDead.Value)
+			if (!IsDead.Value)
 			{
-				if (m_WallJump.TouchingWall)
+				StopWallSlide();
+				if (m_GroundCheck.IsGrounded || m_WallDetector.TouchingWall)
 				{
-					//wall jumping - same as normal jump for now
 					Vector2 velocity = m_Rigidbody2D.velocity;
 					velocity.y = m_JumpStrength;
 					m_Rigidbody2D.velocity = velocity;
@@ -522,19 +542,28 @@ namespace RedRunner.Characters
 					m_JumpParticleSystem.Play();
 					AudioManager.Singleton.PlayJumpSound(m_JumpAndGroundedAudioSource);
 				}
-				else if (m_JumpsSoFar < m_AllowedJumps){
-					//normal jumping
+				else if (m_HasDoubleJump)
+				{
 					Vector2 velocity = m_Rigidbody2D.velocity;
-					velocity.y = m_JumpStrength;
+					velocity.y = m_DoubleJumpStrength;
 					m_Rigidbody2D.velocity = velocity;
 					m_Animator.animator.ResetTrigger("Jump");
 					m_Animator.SetTrigger("Jump");
 					m_JumpParticleSystem.Play();
 					AudioManager.Singleton.PlayJumpSound(m_JumpAndGroundedAudioSource);
-					m_JumpsSoFar++;
+					m_HasDoubleJump = false;
 				}
-				
 			}
+		}
+
+		public void StartWallSlide()
+		{
+			m_Rigidbody2D.drag = m_WallSlideDrag;
+		}
+
+		public void StopWallSlide()
+		{
+			m_Rigidbody2D.drag = 0;
 		}
 
 		public override void Die ()
@@ -604,7 +633,7 @@ namespace RedRunner.Characters
 			{
 				m_JumpParticleSystem.Play ();
 				AudioManager.Singleton.PlayGroundedSound ( m_JumpAndGroundedAudioSource );
-				m_JumpsSoFar = 0;
+				m_HasDoubleJump = true;
 			}
 		}
 
