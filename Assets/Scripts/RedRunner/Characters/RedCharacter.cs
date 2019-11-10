@@ -531,7 +531,6 @@ namespace RedRunner.Characters
 		{
 			if (!IsDead.Value)
 			{
-				StopWallSlide();
 				if (m_GroundCheck.IsGrounded || m_WallDetector.TouchingWall)
 				{
 					Vector2 velocity = m_Rigidbody2D.velocity;
