@@ -538,6 +538,7 @@ namespace RedRunner.Characters
 				else if (m_HasDoubleJump)
 				{
 					ApplyJumpPhysics(m_DoubleJumpStrength);
+					m_HasDoubleJump = false;
 				}
 			}
 		}
@@ -551,7 +552,6 @@ namespace RedRunner.Characters
 			m_Animator.SetTrigger("Jump");
 			m_JumpParticleSystem.Play();
 			AudioManager.Singleton.PlayJumpSound(m_JumpAndGroundedAudioSource);
-			m_HasDoubleJump = false;
 		}
 
 		public void StartWallSlide()
