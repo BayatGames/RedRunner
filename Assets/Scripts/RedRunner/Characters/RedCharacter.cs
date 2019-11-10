@@ -314,7 +314,7 @@ namespace RedRunner.Characters
         {
             if (m_State == CharacterState.Left)
 			{
-				if (!m_WallDetector.TouchingWall || GroundCheck.IsGrounded)
+				if (!m_WallDetector.TouchingWall || GroundCheck.IsGrounded || m_HasDoubleJump)
 				{
 					
 					Jump();
@@ -334,7 +334,7 @@ namespace RedRunner.Characters
         {
             if (m_State == CharacterState.Right)
 			{
-				if (!m_WallDetector.TouchingWall || GroundCheck.IsGrounded)
+				if (!m_WallDetector.TouchingWall || GroundCheck.IsGrounded || m_HasDoubleJump)
 				{
 					Jump();
 				}
@@ -533,26 +533,25 @@ namespace RedRunner.Characters
 			{
 				if (m_GroundCheck.IsGrounded || m_WallDetector.TouchingWall)
 				{
-					Vector2 velocity = m_Rigidbody2D.velocity;
-					velocity.y = m_JumpStrength;
-					m_Rigidbody2D.velocity = velocity;
-					m_Animator.animator.ResetTrigger("Jump");
-					m_Animator.SetTrigger("Jump");
-					m_JumpParticleSystem.Play();
-					AudioManager.Singleton.PlayJumpSound(m_JumpAndGroundedAudioSource);
+					ApplyJumpPhysics(m_JumpStrength);
 				}
 				else if (m_HasDoubleJump)
 				{
-					Vector2 velocity = m_Rigidbody2D.velocity;
-					velocity.y = m_DoubleJumpStrength;
-					m_Rigidbody2D.velocity = velocity;
-					m_Animator.animator.ResetTrigger("Jump");
-					m_Animator.SetTrigger("Jump");
-					m_JumpParticleSystem.Play();
-					AudioManager.Singleton.PlayJumpSound(m_JumpAndGroundedAudioSource);
-					m_HasDoubleJump = false;
+					ApplyJumpPhysics(m_DoubleJumpStrength);
 				}
 			}
+		}
+
+		private void ApplyJumpPhysics(float jumpStrength)
+		{
+			Vector2 velocity = m_Rigidbody2D.velocity;
+			velocity.y = jumpStrength;
+			m_Rigidbody2D.velocity = velocity;
+			m_Animator.animator.ResetTrigger("Jump");
+			m_Animator.SetTrigger("Jump");
+			m_JumpParticleSystem.Play();
+			AudioManager.Singleton.PlayJumpSound(m_JumpAndGroundedAudioSource);
+			m_HasDoubleJump = false;
 		}
 
 		public void StartWallSlide()
