@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4801703471685930}
   - component: {fileID: 212034220645584724}
   - component: {fileID: 60954210566660022}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: dirt hill right 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

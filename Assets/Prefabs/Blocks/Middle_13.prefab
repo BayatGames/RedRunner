@@ -6778,7 +6778,7 @@ GameObject:
   - component: {fileID: 4635474221338902}
   - component: {fileID: 212858998209339126}
   - component: {fileID: 61901275170579634}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DirtRight 1 (37)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7316,7 +7316,7 @@ GameObject:
   - component: {fileID: 4868256891193022}
   - component: {fileID: 212803813212958390}
   - component: {fileID: 61141695596538832}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Column 1 (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8840,7 +8840,7 @@ GameObject:
   - component: {fileID: 4377980086274144}
   - component: {fileID: 212593237147118514}
   - component: {fileID: 61264767268998314}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Column 1 (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24236,7 +24236,7 @@ GameObject:
   - component: {fileID: 4903780573846276}
   - component: {fileID: 212217567600890546}
   - component: {fileID: 61257197764371988}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DirtRight 1 (36)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
