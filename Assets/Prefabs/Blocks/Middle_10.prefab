@@ -25243,7 +25243,7 @@ GameObject:
   - component: {fileID: 4898007629889248}
   - component: {fileID: 212724997182871288}
   - component: {fileID: 61958227382949756}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DirtRight 1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30730,7 +30730,7 @@ GameObject:
   - component: {fileID: 4274394444850070}
   - component: {fileID: 212435269080197354}
   - component: {fileID: 61655065347305396}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DirtRight 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

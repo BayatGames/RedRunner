@@ -11877,7 +11877,7 @@ GameObject:
   - component: {fileID: 4412587969350988}
   - component: {fileID: 212420005538805754}
   - component: {fileID: 61498504467891050}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DirtRight 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

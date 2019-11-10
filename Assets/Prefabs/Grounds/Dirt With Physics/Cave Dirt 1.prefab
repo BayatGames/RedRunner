@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4444885833205330}
   - component: {fileID: 212188960219066504}
   - component: {fileID: 61284143774870790}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cave Dirt 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
