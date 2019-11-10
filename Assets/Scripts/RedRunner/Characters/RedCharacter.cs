@@ -306,7 +306,6 @@ namespace RedRunner.Characters
         
         private void LeftEvent()
         {
-            Debug.Log("LEFT");
             if (m_State == CharacterState.Left)
             {
                 Jump();
@@ -319,7 +318,6 @@ namespace RedRunner.Characters
         }
         private void RightEvent()
         {
-            Debug.Log("Right");
             if (m_State == CharacterState.Right)
             {
                 Jump();
@@ -365,6 +363,7 @@ namespace RedRunner.Characters
                     break;
 
                 default:
+                    // Don't move
                     break;
             }
 
