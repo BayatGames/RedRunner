@@ -314,6 +314,7 @@ namespace RedRunner.Characters
             else
             {
                 m_State = CharacterState.Left;
+                ResetMovement();
             }
         }
         private void RightEvent()
@@ -326,7 +327,13 @@ namespace RedRunner.Characters
             else
             {
                 m_State = CharacterState.Right;
+                ResetMovement();
             }
+        }
+
+        private void ResetMovement()
+        {
+            m_CurrentRunSpeed = m_RunSpeed;
         }
 
 		public override void OnStartLocalPlayer()
@@ -339,14 +346,10 @@ namespace RedRunner.Characters
 
         private void UpdateMovement()
         {
-            // Speed
-            m_Speed = new Vector2(Mathf.Abs(m_Rigidbody2D.velocity.x), Mathf.Abs(m_Rigidbody2D.velocity.y));
-
-            // Speed Calculations
-            m_CurrentRunSpeed = m_RunSpeed;
-            if (m_Speed.x >= m_RunSpeed)
+             // Speed Calculations
+            if (m_CurrentRunSpeed < m_MaxRunSpeed)
             {
-                m_CurrentRunSpeed = Mathf.SmoothDamp(m_Speed.x, m_MaxRunSpeed, ref m_CurrentSmoothVelocity, m_RunSmoothTime);
+                m_CurrentRunSpeed = Mathf.SmoothDamp(m_CurrentRunSpeed, m_MaxRunSpeed, ref m_CurrentSmoothVelocity, m_RunSmoothTime);
             }
 
             // Input Processing
@@ -364,6 +367,9 @@ namespace RedRunner.Characters
                 default:
                     break;
             }
+
+            // Speed
+            m_Speed = new Vector2(Mathf.Abs(m_Rigidbody2D.velocity.x), Mathf.Abs(m_Rigidbody2D.velocity.y));
         }
 
         void Update ()
