@@ -476,7 +476,7 @@ namespace RedRunner.Characters
 				m_Skeleton.SetActive ( true, m_Rigidbody2D.velocity );
 				if ( blood )
 				{
-					ParticleSystem particle = Instantiate<ParticleSystem> ( 
+					ParticleSystem particle = Instantiate<ParticleSystem> (
 						                          m_BloodParticleSystem,
 						                          transform.position,
 						                          Quaternion.identity );
@@ -537,7 +537,7 @@ namespace RedRunner.Characters
 		[System.Serializable]
 		public class CharacterDeadEvent : UnityEvent
 		{
-			
+
 		}
 
 	}
