@@ -7,7 +7,7 @@ using RedRunner.Utilities;
 
 namespace RedRunner.Enemies
 {
-
+	[CreateAssetMenu]
 	public class Mace : Enemy
 	{
 
@@ -48,32 +48,14 @@ namespace RedRunner.Enemies
 
 		void OnCollisionEnter2D (Collision2D collision2D)
 		{
-			Vector2 position = collision2D.contacts [0].point;
 			Character character = collision2D.collider.GetComponent<Character> ();
-			bool pressable = false;
-			for (int i = 0; i < collision2D.contacts.Length; i++) {
-				if (!pressable) {
-					pressable = (collision2D.contacts [i].normal.y >= 0.8f && collision2D.contacts [i].normal.y <= 1f && m_PathFollower.Velocity.y > m_MaulSpeed) ||
-					(collision2D.contacts [i].normal.y <= -0.8f && collision2D.contacts [i].normal.y >= -1f && m_PathFollower.Velocity.y < m_MaulSpeed) ||
-					(collision2D.contacts [i].normal.x >= 0.8f && collision2D.contacts [i].normal.x <= 1f && m_PathFollower.Velocity.x < m_MaulSpeed) ||
-					(collision2D.contacts [i].normal.x <= -0.8f && collision2D.contacts [i].normal.x >= -1f && m_PathFollower.Velocity.x > m_MaulSpeed);
-				} else {
-					break;
-				}
-			}
-			if (pressable && character == null && !collision2D.collider.CompareTag ("Player")) {
-				Slam (position);
-			}
 			if (character != null && !character.IsDead.Value) {
-				if (pressable) {
-					Slam (position);
-					Vector3 scale = character.transform.localScale;
-					scale.y = m_MaulScale;
-					character.transform.localScale = scale;
-				}
+				Vector3 scale = character.transform.localScale;
+				scale.y = m_MaulScale;
+				character.transform.localScale = scale;
 				Kill (character);
 			}
-//			Camera.main.GetComponent<CameraControl> ().Shake (3f, 30, 300f);
+			Camera.main.GetComponent<CameraControl> ().Shake (3f, 30, 300f);
 		}
 
 		public virtual void Slam (Vector3 position)
@@ -86,7 +68,7 @@ namespace RedRunner.Enemies
 		public override void Kill (Character target)
 		{
 			m_PathFollower.Stopped = true;
-			target.Die (true);
+			base.Kill(target);
 			m_Animator.SetTrigger ("Smile");
 			AudioManager.Singleton.PlaySpikeSound (transform.position);
 		}

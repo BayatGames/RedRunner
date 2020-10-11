@@ -12,7 +12,9 @@ namespace RedRunner.Enemies
 
 		public abstract Collider2D Collider2D { get; }
 
-		public abstract void Kill ( Character target );
+		public virtual void Kill ( Character target ){
+			target.Die(true);
+		}
 
 	}
 

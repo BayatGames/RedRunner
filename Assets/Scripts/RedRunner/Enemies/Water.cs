@@ -29,7 +29,7 @@ namespace RedRunner.Enemies
 
 		public override void Kill (Character target)
 		{
-			target.Die ();
+			base.Kill(target);
 			Vector3 spawnPosition = target.transform.position;
 			spawnPosition.y += -1f;
 			ParticleSystem particle = Instantiate<ParticleSystem> (target.WaterParticleSystem, spawnPosition, Quaternion.identity);

@@ -78,11 +78,6 @@ namespace RedRunner.Enemies
 			}
 		}
 
-		public override void Kill (Character target)
-		{
-			target.Die (true);
-		}
-
 	}
 
 }
