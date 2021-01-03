@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -263,7 +263,7 @@ namespace RedRunner
             if (block != null)
             {
                 Vector3 position = block.transform.position;
-                position.y += 2.56f;
+                position.y += 8.56f;
                 position.x += 1.28f;
                 character.transform.position = position;
                 character.Reset();
