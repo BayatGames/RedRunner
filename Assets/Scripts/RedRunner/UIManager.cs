@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RedRunner.UI;
@@ -38,6 +38,11 @@ namespace RedRunner
         private Texture2D m_CursorClickTexture;
         [SerializeField]
         private float m_CursorHideDelay = 1f;
+
+        // The cursor timer, which will keep track of how long the cursor has been inactive
+        private float cursorTimer;
+        // The cursor position, we will use this to compare the cursor position to check if it has moved.
+        private Vector3 lastCursorPosition;
 
         public List<UIScreen> UISCREENS
         {
@@ -85,7 +90,7 @@ namespace RedRunner
                 //If the pause screen is not open : open it otherwise close it
                 if (!pauseScreen.IsOpen)
                 {
-                    if(m_ActiveScreen == ingameScreen)
+                    if (m_ActiveScreen == ingameScreen)
                     {
                         if (IsAsScreenOpen())
                             CloseAllScreens();
@@ -94,7 +99,7 @@ namespace RedRunner
                         GameManager.Singleton.StopGame();
                     }
                 }
-                else 
+                else
                 {
                     if (m_ActiveScreen == pauseScreen)
                     {
@@ -108,12 +113,46 @@ namespace RedRunner
 
             if (Input.GetMouseButtonDown(0))
             {
+                // If the player clicks, also let the cursor be visible
+                Cursor.visible = true;
+                cursorTimer = 0;
                 Cursor.SetCursor(m_CursorClickTexture, Vector2.zero, CursorMode.Auto);
             }
             else if (Input.GetMouseButtonUp(0))
             {
                 Cursor.SetCursor(m_CursorDefaultTexture, Vector2.zero, CursorMode.Auto);
             }
+
+
+            // CURSOR VISIBILITY CODE
+            // Check if the cursor has moved
+            // If it hasn't moved, add the time between frames to the timer using DeltaTime
+
+            if (lastCursorPosition == Input.mousePosition)
+            {
+                // Check if the timer is lower than the threshold (M_cursorhidedelay in this case)
+                if (cursorTimer < m_CursorHideDelay)
+                {
+                    // Add the time difference between frames to the counter
+                    cursorTimer += Time.deltaTime;
+                }
+                // If we crossed the timer, set the cursor visibility to false.
+                else
+                {
+                    Cursor.visible = false;
+                }
+            }
+            // If the cursor did move, set it to visible and reset the timer 
+            else
+            {
+                Cursor.visible = true;
+                cursorTimer = 0;
+            }
+
+            // finally, update the last cursor position
+            lastCursorPosition = Input.mousePosition;
+
+
         }
 
         public void OpenWindow(UIWindow window)
