@@ -1,30 +1,63 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 namespace RedRunner.UI
 {
-	public class UIScreen : MonoBehaviour
-	{
+    public class EndScreen : UIScreen
+    {
         [SerializeField]
-        internal UIScreenInfo ScreenInfo;
-		[SerializeField]
-		protected Animator m_Animator;
-		[SerializeField]
-		protected CanvasGroup m_CanvasGroup;
+        protected Button ResetButton = null;
+        [SerializeField]
+        protected Button HomeButton = null;
+        [SerializeField]
+        protected Button ExitButton = null;
 
-        public bool IsOpen { get; set; }
+        // The Continue button
+        [SerializeField]
+        Button ContinueButton = null;
 
-        public virtual void UpdateScreenStatus(bool open)
+        private void Start()
         {
-            m_Animator.SetBool("Open", open);
-            m_CanvasGroup.interactable = open;
-            m_CanvasGroup.blocksRaycasts = open;
-            IsOpen = open;
+            ResetButton.SetButtonAction(() =>
+            {
+                GameManager.Singleton.Reset();
+                var ingameScreen = UIManager.Singleton.GetUIScreen(UIScreenInfo.IN_GAME_SCREEN);
+                UIManager.Singleton.OpenScreen(ingameScreen);
+                GameManager.Singleton.StartGame();
+            });
+
+            // Add a function to the continue button
+            ContinueButton.SetButtonAction(() =>
+            {
+                // Remove 50 gold when the player clicks the button
+                GameManager.Singleton.m_Coin.Value -= 50;
+                GameManager.Singleton.RespawnMainCharacter();
+                var ingameScreen = UIManager.Singleton.GetUIScreen(UIScreenInfo.IN_GAME_SCREEN);
+                UIManager.Singleton.OpenScreen(ingameScreen);
+                GameManager.Singleton.StartGame();
+            }
+            );
         }
-	}
+
+        // Check for if the player has enough coins. If so, enable the button. Otherwise, disable it
+        private void Update()
+        {
+            if (GameManager.Singleton.m_Coin.Value >= 50)
+            {
+                ContinueButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                ContinueButton.gameObject.SetActive(false);
+            }
+        }
+
+        public override void UpdateScreenStatus(bool open)
+        {
+            base.UpdateScreenStatus(open);
+        }
+    }
 
 }
