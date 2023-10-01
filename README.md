@@ -4,6 +4,17 @@ Red Runner, Awesome Platformer Game.
 
 It is now free and open source and always will be. :clap: :tada:
 
+## Table of Contents:
+- [Project Introduction](#Project-Introduction)
+- [Getting Started](#Getting-Started)
+- [Requirements](#Requirements)
+- [Download](#Download)
+- [Screenshots](#Screenshots)
+- [Credits](#Credits)
+- [Related](#Related)
+- [Resources](#Resources)
+- [License](#License)
+
 | [:sparkles: Getting Started](#getting-started) | [:rocket: Download](#download) | [:camera: Screenshots](#screenshots) |
 | --------------- | -------- | ----------- |
 
@@ -14,6 +25,12 @@ It is now free and open source and always will be. :clap: :tada:
 [:camera: See Screenshots](#screenshots)
 
 [:movie_camera: **See the Trailer**](https://youtu.be/MO2yJhgtMes)
+
+## Project Introduction
+
+Red Runner is an open-source platformer that merges unique aspects of beloved games like ‘Super Mario Bros’ while also maintaining a level of simplicity similar to minimalist games like ‘Runner.’  It incorporates a colorful environment with a user-friendly control system, unifying the open-source community around a vibrant side-scroller.
+
+Last Updated: October 2, 2020.
 
 ## Getting Started
 
@@ -45,6 +62,25 @@ git clone https://github.com/BayatGames/RedRunner.git
 Also you can the build version of the Red Runner using the following ways:
 
 - [:star: Download from Itch.io](https://bayat.itch.io/red-runner)
+
+Once Downloaded, input the files into Unity, allowing for the software to do the rest and the game to run!
+
+**Disclaimer: Unity requires payment or a granted license in order for users to utilize it.
+
+## How To Play/ Controls
+
+Red Runner is an innovative take on platformers, with the objective being to avoid obstacles and hindering objects while collecting coins that improve a players score and are saved/added onto the next game. The game can go infinitely long, so a distance meter is provided at the top of the screen to provide the total distance players have traveled, with unique challenges provided along the way. 
+
+Controls:
+Keyboard:
+Movement: WASD, Arrow Keys
+Jump: Space, Up Arrow
+Roll: Left Shift
+
+Controller:
+Movement: D-Pad
+Jump: Y
+Roll: B
 
 ## Screenshots
 
