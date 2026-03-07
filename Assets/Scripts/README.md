@@ -1,0 +1,136 @@
+
+```
+D:\DLU\HocKy6\LapTrinhGame\SourcesGame\RedRunner\Assets\Scripts
+|-- RedRunner
+|   |-- AudioControl
+|   |   |-- VolumeControl.cs
+|   |   ``-- VolumeControl.cs.meta
+|   |-- Characters
+|   |   |-- Character.cs
+|   |   |-- Character.cs.meta
+|   |   |-- RedCharacter.cs
+|   |   ``-- RedCharacter.cs.meta
+|   |-- Collectables
+|   |   |-- Interface
+|   |   |   |-- IPoolable.cs
+|   |   |   ``-- IPoolable.cs.meta
+|   |   |-- Chest.cs
+|   |   |-- Chest.cs.meta
+|   |   |-- Coin.cs
+|   |   |-- Coin.cs.meta
+|   |   |-- CoinRigidbody2D.cs
+|   |   |-- CoinRigidbody2D.cs.meta
+|   |   |-- Collectable.cs
+|   |   |-- Collectable.cs.meta
+|   |   ``-- Interface.meta
+|   |-- Enemies
+|   |   |-- Enemy.cs
+|   |   |-- Enemy.cs.meta
+|   |   |-- Eye.cs
+|   |   |-- Eye.cs.meta
+|   |   |-- Mace.cs
+|   |   |-- Mace.cs.meta
+|   |   |-- Saw.cs
+|   |   |-- Saw.cs.meta
+|   |   |-- Spike.cs
+|   |   |-- Spike.cs.meta
+|   |   |-- Water.cs
+|   |   ``-- Water.cs.meta
+|   |-- ObjectPool
+|   |   |-- ObjectPool.cs
+|   |   ``-- ObjectPool.cs.meta
+|   |-- Skeleton
+|   |   |-- Skeleton.cs
+|   |   ``-- Skeleton.cs.meta
+|   |-- TerrainGeneration
+|   |   |-- BackgroundBlock.cs
+|   |   |-- BackgroundBlock.cs.meta
+|   |   |-- BackgroundLayer.cs
+|   |   |-- BackgroundLayer.cs.meta
+|   |   |-- Block.cs
+|   |   |-- Block.cs.meta
+|   |   |-- DefaultBlock.cs
+|   |   |-- DefaultBlock.cs.meta
+|   |   |-- DefaultTerrainGenerator.cs
+|   |   |-- DefaultTerrainGenerator.cs.meta
+|   |   |-- TerrainGenerationSettings.cs
+|   |   |-- TerrainGenerationSettings.cs.meta
+|   |   |-- TerrainGenerator.cs
+|   |   ``-- TerrainGenerator.cs.meta
+|   |-- UI
+|   |   |-- UIScreen
+|   |   |   |-- EndScreen.cs
+|   |   |   |-- EndScreen.cs.meta
+|   |   |   |-- InGameScreen.cs
+|   |   |   |-- InGameScreen.cs.meta
+|   |   |   |-- LoadingScreen.cs
+|   |   |   |-- LoadingScreen.cs.meta
+|   |   |   |-- PauseScreen.cs
+|   |   |   |-- PauseScreen.cs.meta
+|   |   |   |-- StartScreen.cs
+|   |   |   |-- StartScreen.cs.meta
+|   |   |   |-- UIScreen.cs
+|   |   |   ``-- UIScreen.cs.meta
+|   |   |-- UIButton.cs
+|   |   |-- UIButton.cs.meta
+|   |   |-- UICoinImage.cs
+|   |   |-- UICoinImage.cs.meta
+|   |   |-- UICoinText.cs
+|   |   |-- UICoinText.cs.meta
+|   |   |-- UIHighScoreText.cs
+|   |   |-- UIHighScoreText.cs.meta
+|   |   |-- UIImageRandom.cs
+|   |   |-- UIImageRandom.cs.meta
+|   |   |-- UILastScoreText.cs
+|   |   |-- UILastScoreText.cs.meta
+|   |   |-- UIScoreText.cs
+|   |   |-- UIScoreText.cs.meta
+|   |   |-- UIScreen.meta
+|   |   |-- UIShareButtons.cs
+|   |   |-- UIShareButtons.cs.meta
+|   |   |-- UISoundButton.cs
+|   |   |-- UISoundButton.cs.meta
+|   |   |-- UIText.cs
+|   |   |-- UIText.cs.meta
+|   |   |-- UIWindow.cs
+|   |   ``-- UIWindow.cs.meta
+|   |-- Utilities
+|   |   |-- CameraController.cs
+|   |   |-- CameraController.cs.meta
+|   |   |-- Extensions.cs
+|   |   |-- Extensions.cs.meta
+|   |   |-- GroundCheck.cs
+|   |   |-- GroundCheck.cs.meta
+|   |   |-- PathDefinition.cs
+|   |   |-- PathDefinition.cs.meta
+|   |   |-- PathFollower.cs
+|   |   |-- PathFollower.cs.meta
+|   |   |-- PathPoint.cs
+|   |   ``-- PathPoint.cs.meta
+|   |-- AudioControl.meta
+|   |-- AudioManager.cs
+|   |-- AudioManager.cs.meta
+|   |-- Characters.meta
+|   |-- Collectables.meta
+|   |-- Enemies.meta
+|   |-- GameManager.cs
+|   |-- GameManager.cs.meta
+|   |-- ObjectPool.meta
+|   |-- Skeleton.meta
+|   |-- TerrainGeneration.meta
+|   |-- UI.meta
+|   |-- UIManager.cs
+|   |-- UIManager.cs.meta
+|   ``-- Utilities.meta
+|-- Utils
+|   |-- Property.cs
+|   |-- Property.cs.meta
+|   |-- PropertyEvent.cs
+|   |-- PropertyEvent.cs.meta
+|   |-- UtilsUI.cs
+|   ``-- UtilsUI.cs.meta
+|-- CameraControl.cs
+|-- CameraControl.cs.meta
+|-- RedRunner.meta
+``-- Utils.meta
+```
