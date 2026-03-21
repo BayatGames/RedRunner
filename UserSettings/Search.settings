@@ -9,62 +9,8 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
-	"picker_window_position_offset.00000000" = "145;143;320;550"
-	"picker_visibility_flags.00000000" = "0"
-	"picker_item_size.00000000" = "1"
-	"picker_inspector.00000000" = "0"
 }
 providers = {
-	asset = {
-		active = true
-		priority = 25
-		defaultAction = null
-	}
-	scene = {
-		active = true
-		priority = 50
-		defaultAction = null
-	}
-	adb = {
-		active = false
-		priority = 2500
-		defaultAction = null
-	}
-	presets_provider = {
-		active = false
-		priority = -10
-		defaultAction = null
-	}
-	find = {
-		active = true
-		priority = 25
-		defaultAction = null
-	}
-	packages = {
-		active = false
-		priority = 90
-		defaultAction = null
-	}
-	performance = {
-		active = false
-		priority = 100
-		defaultAction = null
-	}
-	store = {
-		active = false
-		priority = 100
-		defaultAction = null
-	}
-	profilermarkers = {
-		active = false
-		priority = 100
-		defaultAction = null
-	}
-	log = {
-		active = false
-		priority = 210
-		defaultAction = null
-	}
 }
 objectSelectors = {
 }
@@ -76,7 +22,7 @@ savedSearchesSortOrder = 0
 showSavedSearchPanel = false
 hideTabs = false
 indexOnEditorStartup = true
-logIndexingPerformanceReport = true
+logIndexingPerformanceReport = false
 expandedQueries = [
 ]
 queryBuilder = true

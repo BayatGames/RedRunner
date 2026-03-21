@@ -66,5 +66,5 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "tilevania-3.slnx"
+    "dotnet.defaultSolution": "starblaster-main.slnx"
 }
