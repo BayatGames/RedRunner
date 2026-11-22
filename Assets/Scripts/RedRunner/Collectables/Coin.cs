@@ -24,10 +24,7 @@ namespace RedRunner.Collectables
 		[SerializeField]
 		protected float m_destructTime = 0.0f;
 
-		[SerializeField]
-		protected PoolTag m_destructTag;
-		[SerializeField]
-		protected ObjectPool m_objectPool = null;
+		protected PoolTag m_PoolTag = PoolTag.None;
 
 		public override SpriteRenderer SpriteRenderer {
 			get {
@@ -79,14 +76,26 @@ namespace RedRunner.Collectables
 			m_ParticleSystem.Play ();
 			m_SpriteRenderer.enabled = false;
 			m_Collider2D.enabled = false;
-			//Destroy (gameObject, m_ParticleSystem.main.duration);
-			ReturnToPool();
 			AudioManager.Singleton.PlayCoinSound (transform.position);
+			ReturnToPool();
+		}
+
+		public override void OnSpawn (PoolTag tag)
+		{
+			m_PoolTag = tag;
+			m_SpriteRenderer.enabled = true;
+			m_Collider2D.enabled = true;
+			m_Animator.Rebind ();
 		}
 
 		public override void ReturnToPool()
 		{
-			m_objectPool.ReturnToPool(m_destructTag, this, m_destructTime);
+			if (m_PoolTag == PoolTag.None || ObjectPool.Instance == null) {
+				return;
+			}
+			float delay = m_destructTime > 0f ? m_destructTime : m_ParticleSystem.main.duration;
+			ObjectPool.Instance.ReturnToPool(m_PoolTag, this, delay);
+			m_PoolTag = PoolTag.None;
 		}
 	}
 }
