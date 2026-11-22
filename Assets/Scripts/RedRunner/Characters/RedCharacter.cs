@@ -51,8 +51,15 @@ namespace RedRunner.Characters
 		protected ParticleSystem m_BloodParticleSystem;
 		[SerializeField]
 		protected Skeleton m_Skeleton;
+
+		[Header ( "Character Roll" )]
+		[Space]
 		[SerializeField]
-		protected float m_RollForce = 10f;
+		protected float m_RollSpeed = 12f;
+		[SerializeField]
+		protected float m_RollDuration = 0.4f;
+		[SerializeField]
+		protected float m_RollCooldown = 0.8f;
 
 		[Header ( "Character Audio" )]
 		[Space]
@@ -76,6 +83,9 @@ namespace RedRunner.Characters
 		protected int m_CurrentFootstepSoundIndex = 0;
 		protected Vector3 m_InitialScale;
 		protected Vector3 m_InitialPosition;
+		protected float m_RollTimeRemaining = 0f;
+		protected float m_RollCooldownRemaining = 0f;
+		protected float m_RollDirection = 1f;
 
 		#endregion
 
@@ -257,6 +267,14 @@ namespace RedRunner.Characters
 			}
 		}
 
+		public virtual bool IsRolling
+		{
+			get
+			{
+				return m_RollTimeRemaining > 0f;
+			}
+		}
+
 		#endregion
 
 		#region MonoBehaviour Messages
@@ -297,6 +315,20 @@ namespace RedRunner.Characters
 				m_CurrentRunSpeed = Mathf.SmoothDamp ( m_Speed.x, m_MaxRunSpeed, ref m_CurrentSmoothVelocity, m_RunSmoothTime );
 			}
 
+			// Roll Timers
+			if ( m_RollTimeRemaining > 0f )
+			{
+				m_RollTimeRemaining -= Time.deltaTime;
+				if ( m_RollTimeRemaining <= 0f )
+				{
+					m_Animator.ResetTrigger ( "Roll" );
+				}
+			}
+			if ( m_RollCooldownRemaining > 0f )
+			{
+				m_RollCooldownRemaining -= Time.deltaTime;
+			}
+
 			// Input Processing
 			Move ( CrossPlatformInputManager.GetAxis ( "Horizontal" ) );
 			if ( CrossPlatformInputManager.GetButtonDown ( "Jump" ) )
@@ -327,18 +359,9 @@ namespace RedRunner.Characters
 				}
 			}
 
-			if ( Input.GetButtonDown ( "Roll" ) )
+			if ( CrossPlatformInputManager.GetButtonDown ( "Roll" ) )
 			{
-				Vector2 force = new Vector2 ( 0f, 0f );
-				if ( transform.localScale.z > 0f )
-				{
-					force.x = m_RollForce;
-				}
-				else if ( transform.localScale.z < 0f )
-				{
-					force.x = -m_RollForce;
-				}
-				m_Rigidbody2D.AddForce ( force );
+				Roll ();
 			}
 		}
 
@@ -351,10 +374,6 @@ namespace RedRunner.Characters
 			m_Animator.SetBool ( "IsDead", IsDead.Value );
 			m_Animator.SetBool ( "Block", m_Block );
 			m_Animator.SetBool ( "Guard", m_Guard );
-			if ( Input.GetButtonDown ( "Roll" ) )
-			{
-				m_Animator.SetTrigger ( "Roll" );
-			}
 		}
 
 		//		void OnCollisionEnter2D ( Collision2D collision2D )
@@ -423,6 +442,13 @@ namespace RedRunner.Characters
 		{
 			if ( !IsDead.Value )
 			{
+				if ( IsRolling )
+				{
+					Vector2 rollVelocity = m_Rigidbody2D.linearVelocity;
+					rollVelocity.x = m_RollDirection * m_RollSpeed;
+					m_Rigidbody2D.linearVelocity = rollVelocity;
+					return;
+				}
 				float speed = m_CurrentRunSpeed;
 //				if ( CrossPlatformInputManager.GetButton ( "Walk" ) )
 //				{
@@ -463,6 +489,22 @@ namespace RedRunner.Characters
 			}
 		}
 
+		public virtual void Roll ()
+		{
+			if ( IsDead.Value || IsRolling || m_RollCooldownRemaining > 0f )
+			{
+				return;
+			}
+			m_RollDirection = transform.localScale.x < 0f ? -1f : 1f;
+			m_RollTimeRemaining = m_RollDuration;
+			m_RollCooldownRemaining = m_RollCooldown;
+			Vector2 velocity = m_Rigidbody2D.linearVelocity;
+			velocity.x = m_RollDirection * m_RollSpeed;
+			m_Rigidbody2D.linearVelocity = velocity;
+			m_Animator.ResetTrigger ( "Roll" );
+			m_Animator.SetTrigger ( "Roll" );
+		}
+
 		public override void Die ()
 		{
 			Die ( false );
@@ -501,6 +543,9 @@ namespace RedRunner.Characters
 			m_Guard = false;
 			m_Block = false;
 			m_CurrentFootstepSoundIndex = 0;
+			m_RollTimeRemaining = 0f;
+			m_RollCooldownRemaining = 0f;
+			m_Animator.ResetTrigger ( "Roll" );
 			transform.localScale = m_InitialScale;
 			m_Rigidbody2D.linearVelocity = Vector2.zero;
 			m_Skeleton.SetActive ( false, m_Rigidbody2D.linearVelocity );
