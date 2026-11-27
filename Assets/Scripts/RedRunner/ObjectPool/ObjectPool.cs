@@ -5,13 +5,35 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
+    public static ObjectPool Instance { get; private set; }
+
     [SerializeField] List<Pool> m_pools;
     private Dictionary<PoolTag, Queue<Collectable>> m_poolDictionary;
     private Dictionary<PoolTag, Pool> m_poolPrefabDictionary;
 
-    void Start()
+    void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning("More than one ObjectPool in the scene; using the first one.");
+            return;
+        }
+
+        Instance = this;
         Initialize();
+    }
+
+    void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
+
+    public bool HasPool(PoolTag tag)
+    {
+        return m_poolDictionary != null && m_poolDictionary.ContainsKey(tag);
     }
 
     public void Initialize()
@@ -47,7 +69,7 @@ public class ObjectPool : MonoBehaviour
 
     public Collectable SpawnFromPool(PoolTag tag, Vector3 position, Quaternion rotation)
     {
-        if (!m_poolDictionary.ContainsKey(tag))
+        if (!HasPool(tag))
         {
             Debug.LogWarning($"Pool with tag {tag} doesn't exist.");
             return null;
@@ -75,9 +97,10 @@ public class ObjectPool : MonoBehaviour
 
         if (objectToSpawn != null)
         {
-            objectToSpawn.gameObject.SetActive(true);
             objectToSpawn.transform.position = position;
             objectToSpawn.transform.rotation = rotation;
+            objectToSpawn.gameObject.SetActive(true);
+            objectToSpawn.OnSpawn(tag);
         }
 
         return objectToSpawn;
@@ -92,7 +115,12 @@ public class ObjectPool : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        if (!m_poolDictionary.ContainsKey(tag))
+        if (objectToReturn == null)
+        {
+            yield break;
+        }
+
+        if (!HasPool(tag))
         {
             Debug.LogWarning($"Pool with tag {tag} doesn't exist.");
             yield break;
@@ -115,5 +143,6 @@ public class Pool
 public enum PoolTag
 {
     None = 0,
-    Coins = 1
+    Coins = 1,
+    ChestCoins = 2
 }

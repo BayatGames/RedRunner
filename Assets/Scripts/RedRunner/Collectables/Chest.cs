@@ -165,13 +165,26 @@ namespace RedRunner.Collectables
 			m_ParticleSystem.Play ();
 			int coinsCount = Random.Range (m_MinimumCoins, m_MaximumCoins);
 			for (int i = 0; i < coinsCount; i++) {
-				CoinRigidbody2D coin = Instantiate<CoinRigidbody2D> (m_CoinRigidbody2D, m_SpawnPoint.position, Quaternion.identity, transform);
+				CoinRigidbody2D coin = SpawnCoin ();
 				float x = Random.Range (m_RandomForceXMinimum, m_RandomForceXMaximum);
 				float y = Random.Range (m_RandomForceYMinimum, m_RandomForceYMaximum);
 				Vector2 force = new Vector2 (x, y);
 				coin.Rigidbody2D.AddForce (force, ForceMode2D.Impulse);
 				StartCoroutine (IgnoreAndEnableCollision (m_CurrentCharacter.Collider2D, coin.Collider2D));
 			}
+		}
+
+		protected virtual CoinRigidbody2D SpawnCoin ()
+		{
+			ObjectPool pool = ObjectPool.Instance;
+			if (pool != null && pool.HasPool (PoolTag.ChestCoins)) {
+				CoinRigidbody2D pooledCoin = pool.SpawnFromPool (PoolTag.ChestCoins, m_SpawnPoint.position, Quaternion.identity) as CoinRigidbody2D;
+				if (pooledCoin != null) {
+					pooledCoin.transform.SetParent (transform);
+					return pooledCoin;
+				}
+			}
+			return Instantiate<CoinRigidbody2D> (m_CoinRigidbody2D, m_SpawnPoint.position, Quaternion.identity, transform);
 		}
 
 		protected virtual IEnumerator IgnoreAndEnableCollision (Collider2D collider2D1, Collider2D collider2D2)

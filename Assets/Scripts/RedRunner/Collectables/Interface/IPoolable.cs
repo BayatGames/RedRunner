@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface IPoolable
 {
+    void OnSpawn(PoolTag tag);
     void ReturnToPool();
 }
 

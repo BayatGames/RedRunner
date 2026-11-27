@@ -26,6 +26,14 @@ namespace RedRunner.Collectables
 			base.Collect ();
 		}
 
+		public override void OnSpawn (PoolTag tag)
+		{
+			base.OnSpawn (tag);
+			m_SecondCollider2D.enabled = true;
+			m_Rigidbody2D.linearVelocity = Vector2.zero;
+			m_Rigidbody2D.angularVelocity = 0f;
+		}
+
 	}
 
 }
